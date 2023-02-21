@@ -35,7 +35,7 @@ https://developer.arm.com/documentation/ddi0471/b/Introduction
 
 LS1046A uses a common GIC-400, which implements whe GICv2 architecture.
 
-According to the DTS, the maximum interrupt number is 160. Temporarily let `MAX_IRQ=162`.
+I search on GitHub for keyword "GIC_SPI 16x", according to DTS I found, the maximum interrupt number is 169. Temporarily let `MAX_IRQ=169`.
 
 `NUM_PPI=32`.
 
