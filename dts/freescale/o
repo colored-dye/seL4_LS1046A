@@ -1,0 +1,258 @@
+--- fsl-ls1046a-frwy.dts	2023-02-20 17:27:53.954471229 -0800
++++ fsl-ls1046a-qds.dts	2023-02-20 17:28:41.506092426 -0800
+@@ -2,8 +2,10 @@
+ /*
+  * Device Tree Include file for Freescale Layerscape-1046A family SoC.
+  *
+- * Copyright 2019 NXP.
++ * Copyright 2016 Freescale Semiconductor, Inc.
++ * Copyright 2018 NXP
+  *
++ * Shaohui Xie <Shaohui.Xie@nxp.com>
+  */
+ 
+ /dts-v1/;
+@@ -11,10 +13,14 @@
+ #include "fsl-ls1046a.dtsi"
+ 
+ / {
+-	model = "LS1046A FRWY Board";
+-	compatible = "fsl,ls1046a-frwy", "fsl,ls1046a";
++	model = "LS1046A QDS Board";
++	compatible = "fsl,ls1046a-qds", "fsl,ls1046a";
+ 
+ 	aliases {
++		gpio0 = &gpio0;
++		gpio1 = &gpio1;
++		gpio2 = &gpio2;
++		gpio3 = &gpio3;
+ 		serial0 = &duart0;
+ 		serial1 = &duart1;
+ 		serial2 = &duart2;
+@@ -24,67 +30,101 @@
+ 	chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+-
+-	sb_3v3: regulator-sb3v3 {
+-		compatible = "regulator-fixed";
+-		regulator-name = "LT8642SEV-3.3V";
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-		regulator-boot-on;
+-		regulator-always-on;
+-	};
+ };
+ 
+-&duart0 {
++&dspi {
++	bus-num = <0>;
+ 	status = "okay";
+-};
+ 
+-&duart1 {
+-	status = "okay";
++	flash@0 {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		compatible = "n25q128a11", "jedec,spi-nor";
++		reg = <0>;
++		spi-max-frequency = <10000000>;
++	};
++
++	flash@1 {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		compatible = "sst25wf040b", "jedec,spi-nor";
++		spi-cpol;
++		spi-cpha;
++		reg = <1>;
++		spi-max-frequency = <10000000>;
++	};
++
++	flash@2 {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		compatible = "en25s64", "jedec,spi-nor";
++		spi-cpol;
++		spi-cpha;
++		reg = <2>;
++		spi-max-frequency = <10000000>;
++	};
+ };
+ 
+-&duart2 {
++&duart0 {
+ 	status = "okay";
+ };
+ 
+-&duart3 {
++&duart1 {
+ 	status = "okay";
+ };
+ 
+ &i2c0 {
+ 	status = "okay";
+ 
+-	i2c-mux@77 {
+-		compatible = "nxp,pca9546";
++	pca9547@77 {
++		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		i2c@0 {
++		i2c@2 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-			reg = <0>;
++			reg = <0x2>;
+ 
+-			power-monitor@40 {
++			ina220@40 {
+ 				compatible = "ti,ina220";
+ 				reg = <0x40>;
+ 				shunt-resistor = <1000>;
+ 			};
+ 
+-			temperature-sensor@4c {
+-				compatible = "nxp,sa56004";
+-				reg = <0x4c>;
+-				vcc-supply = <&sb_3v3>;
++			ina220@41 {
++				compatible = "ti,ina220";
++				reg = <0x41>;
++				shunt-resistor = <1000>;
+ 			};
++		};
++
++		i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x3>;
+ 
+ 			rtc@51 {
+ 				compatible = "nxp,pcf2129";
+ 				reg = <0x51>;
++				/* IRQ10_B */
++				interrupts = <0 150 0x4>;
++			};
++
++			eeprom@56 {
++				compatible = "atmel,24c512";
++				reg = <0x56>;
+ 			};
+ 
+-			eeprom@52 {
+-				compatible = "onnn,cat24c04", "atmel,24c04";
+-				reg = <0x52>;
++			eeprom@57 {
++				compatible = "atmel,24c512";
++				reg = <0x57>;
++			};
++
++			temp-sensor@4c {
++				compatible = "adi,adt7461a";
++				reg = <0x4c>;
+ 			};
+ 		};
+ 	};
+@@ -93,71 +133,47 @@
+ &ifc {
+ 	#address-cells = <2>;
+ 	#size-cells = <1>;
+-	/* NAND Flash */
+-	ranges = <0x0 0x0 0x0 0x7e800000 0x00010000>;
++	/* NOR, NAND Flashes and FPGA on board */
++	ranges = <0x0 0x0 0x0 0x60000000 0x08000000
++		  0x1 0x0 0x0 0x7e800000 0x00010000
++		  0x2 0x0 0x0 0x7fb00000 0x00000100>;
+ 	status = "okay";
+ 
+-	nand@0,0 {
++	nor@0,0 {
++		compatible = "cfi-flash";
++		reg = <0x0 0x0 0x8000000>;
++		big-endian;
++		bank-width = <2>;
++		device-width = <1>;
++	};
++
++	nand@1,0 {
+ 		compatible = "fsl,ifc-nand";
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		reg = <0x0 0x0 0x10000>;
++		reg = <0x1 0x0 0x10000>;
+ 	};
+ 
++	fpga: board-control@2,0 {
++		compatible = "fsl,ls1046aqds-fpga", "fsl,fpga-qixis";
++		reg = <0x2 0x0 0x0000100>;
++	};
++};
++
++&lpuart0 {
++	status = "okay";
+ };
+ 
+ &qspi {
+ 	status = "okay";
+ 
+-	mt25qu512a0: flash@0 {
+-		compatible = "jedec,spi-nor";
++	qflash0: flash@0 {
++		compatible = "spansion,m25p80";
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		spi-max-frequency = <50000000>;
++		spi-max-frequency = <20000000>;
+ 		spi-rx-bus-width = <4>;
+-		spi-tx-bus-width = <1>;
++		spi-tx-bus-width = <4>;
+ 		reg = <0>;
+ 	};
+ };
+ 
+ #include "fsl-ls1046-post.dtsi"
+-
+-&fman0 {
+-	ethernet@e0000 {
+-		phy-handle = <&qsgmii_phy4>;
+-		phy-connection-type = "qsgmii";
+-	};
+-
+-	ethernet@e8000 {
+-		phy-handle = <&qsgmii_phy2>;
+-		phy-connection-type = "qsgmii";
+-	};
+-
+-	ethernet@ea000 {
+-		phy-handle = <&qsgmii_phy1>;
+-		phy-connection-type = "qsgmii";
+-	};
+-
+-	ethernet@f2000 {
+-		phy-handle = <&qsgmii_phy3>;
+-		phy-connection-type = "qsgmii";
+-	};
+-
+-	mdio@fd000 {
+-		qsgmii_phy1: ethernet-phy@1c {
+-			reg = <0x1c>;
+-		};
+-
+-		qsgmii_phy2: ethernet-phy@1d {
+-			reg = <0x1d>;
+-		};
+-
+-		qsgmii_phy3: ethernet-phy@1e {
+-			reg = <0x1e>;
+-		};
+-
+-		qsgmii_phy4: ethernet-phy@1f {
+-			reg = <0x1f>;
+-		};
+-	};
+-};
