@@ -18,7 +18,11 @@ dts/
 
 ## seL4 kernel (`kernel/`)
 
-Version: 12.1.0-dev
+URL: https://github.com/seL4/seL4
+
+Version: 12.1.0-dev.
+
+Commit: dd41d4de63949e689e54844089f851425e2ab748
 
 ### `tools/dts/ok1046a-c2.dts`
 
@@ -60,7 +64,9 @@ declare_default_headers(
 	According to `ok1046a.dts`, the compatible string for timer is `arm,armv8-timer`.
 
 
-## ELF Loader
+## seL4 tools
 
+URL: https://github.com/seL4/seL4_tools
 
+Commit: 074a54aedcef97bfcc4ea0724a4c5d75fa311b3e
 

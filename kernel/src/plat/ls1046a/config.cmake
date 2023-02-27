@@ -14,7 +14,7 @@ if(KernelPlatformOK1046AC2)
     config_set(KernelARMPlatform ARM_PLAT ls1046a)
     set(KernelArmMachFeatureModifiers "+crc" CACHE INTERNAL "")
     list(APPEND KernelDTSList "tools/dts/ok1046a-c2.dts")
-    list(APPEND KernelDTSList "src/plat/bcm2711/overlay-ls1046a.dts")
+    list(APPEND KernelDTSList "src/plat/ls1046a/overlay-ls1046a.dts")
 
     declare_default_headers(
         TIMER_FREQUENCY 100000000
