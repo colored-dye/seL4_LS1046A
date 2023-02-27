@@ -8,7 +8,7 @@ Forlinx OK1046A-C2 board.
 
 `dtb2dts/freescale/`: DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 
-## seL4 kernel
+## seL4 kernel (`kernel/`)
 
 `src/plat/ls1046a/config.cmake`:
 
