@@ -44,3 +44,8 @@ register_driver(
     PREFIX src/drivers/serial
     CFILES "meson-gx-uart.c"
 )
+register_driver(
+    compatibility_strings "fsl,ns16550;ns16550a"
+    PREFIX src/drivers/serial
+    CFILES "ns16550a-uart.c"
+)

@@ -1,6 +1,8 @@
 # Port seL4 to LS1046A platform.
 
-Forlinx OK1046A-C2 board.
+Forlinx OK1046A-C2 board with FET1046A-C core platform.
+
+## DTS & DTB files
 
 ```
 dts/
@@ -9,7 +11,8 @@ dts/
 ├── dtb2dts
 │   └── freescale	-- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 └── dts-linux
-    └── freescale	-- Device tree source. Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+    └── freescale	-- Device tree source.
+					   Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
 ```
 
 
@@ -17,9 +20,17 @@ dts/
 
 Version: 12.1.0-dev
 
-`src/plat/ls1046a/config.cmake`:
+### `tools/dts/ok1046a-c2.dts`
+
+Copied from `dts/dtb2dts/freescale/fsl-ok1046a-1133-5a59-c2.dts`.
+
+### `src/plat/ls1046a/`
+
+`config.cmake`:
 
 ```cmake
+declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
+
 declare_default_headers(
 	TIMER_FREQUENCY xxx
 	MAX_IRQ xxx
@@ -32,19 +43,24 @@ declare_default_headers(
 )
 ```
 
-### `CLK_MAGIC` & `CLK_SHIFT`
+0. `TIMER_FREQUENCY`
+	As is shown in `ok1046a.dts`, section `sysclk.clock-frequency`, the clock frequency is 100MHz.
 
-These two can be calculated with `kernel/tools/reciprocal.py`. As is shown in `fsl-ls1046a.dtsi`, section `sysclk.clock-frequency`, the clock frequency is 100MHz. So run `kernel/tools/reciprocal.py --divisor 100000000`.
+1.  `CLK_MAGIC` & `CLK_SHIFT`
+	These two can be calculated with `kernel/tools/reciprocal.py`. So run `kernel/tools/reciprocal.py --divisor 100000000`.
 
-`CLK_MAGIC=1441151881`, `CLK_SHIFT=57`.
+	`CLK_MAGIC=1441151881`, `CLK_SHIFT=57`.
 
-### `MAX_IRQ`, `NUM_PPI`
+2.  `MAX_IRQ`, `NUM_PPI`
+	According to NXP's "QorIQ LS1046A Reference Manual.pdf", Chapter 5: Interrupt Assignments, Table 5-1 Interrupt Assignments, on page 313, the maximum Internal Interrupt Number is 232. So `MAX_IRQ=232`.
 
-https://developer.arm.com/documentation/ddi0471/b/Introduction
+	`NUM_PPI=32`.
 
-LS1046A uses a common GIC-400, which implements whe GICv2 architecture.
+3. `TIMER`
+	According to `ok1046a.dts`, the compatible string for timer is `arm,armv8-timer`.
 
-I search on GitHub for keyword "GIC_SPI 16x", according to DTS I found, the maximum interrupt number is 169. Temporarily let `MAX_IRQ=169`.
 
-`NUM_PPI=32`.
+## ELF Loader
+
+
 

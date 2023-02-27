@@ -4,11 +4,11 @@
 // boot_cpuid_phys:	0x0
 
 / {
-    compatible = "fsl,ls1046a-qds", "fsl,ls1046a";
+    compatible = "fsl,ls1046a-rdb", "fsl,ls1046a";
     interrupt-parent = <0x00000001>;
     #address-cells = <0x00000002>;
     #size-cells = <0x00000002>;
-    model = "LS1046A QDS Board";
+    model = "LS1046A RDB Board";
     aliases {
         crypto = "/soc/crypto@1700000";
         fman0 = "/soc/fman@1a00000";
@@ -20,10 +20,6 @@
         ethernet5 = "/soc/fman@1a00000/ethernet@ea000";
         ethernet6 = "/soc/fman@1a00000/ethernet@f0000";
         ethernet7 = "/soc/fman@1a00000/ethernet@f2000";
-        gpio0 = "/soc/gpio@2300000";
-        gpio1 = "/soc/gpio@2310000";
-        gpio2 = "/soc/gpio@2320000";
-        gpio3 = "/soc/gpio@2330000";
         serial0 = "/soc/serial@21c0500";
         serial1 = "/soc/serial@21c0600";
         serial2 = "/soc/serial@21d0500";
@@ -40,7 +36,8 @@
             next-level-cache = <0x00000003>;
             cpu-idle-states = <0x00000004>;
             #cooling-cells = <0x00000002>;
-            phandle = <0x00000008>;
+            linux,phandle = <0x00000006>;
+            phandle = <0x00000006>;
         };
         cpu@1 {
             device_type = "cpu";
@@ -49,8 +46,8 @@
             clocks = <0x00000002 0x00000001 0x00000000>;
             next-level-cache = <0x00000003>;
             cpu-idle-states = <0x00000004>;
-            #cooling-cells = <0x00000002>;
-            phandle = <0x00000009>;
+            linux,phandle = <0x00000007>;
+            phandle = <0x00000007>;
         };
         cpu@2 {
             device_type = "cpu";
@@ -59,8 +56,8 @@
             clocks = <0x00000002 0x00000001 0x00000000>;
             next-level-cache = <0x00000003>;
             cpu-idle-states = <0x00000004>;
-            #cooling-cells = <0x00000002>;
-            phandle = <0x0000000a>;
+            linux,phandle = <0x00000008>;
+            phandle = <0x00000008>;
         };
         cpu@3 {
             device_type = "cpu";
@@ -69,16 +66,17 @@
             clocks = <0x00000002 0x00000001 0x00000000>;
             next-level-cache = <0x00000003>;
             cpu-idle-states = <0x00000004>;
-            #cooling-cells = <0x00000002>;
-            phandle = <0x0000000b>;
+            linux,phandle = <0x00000009>;
+            phandle = <0x00000009>;
         };
         l2-cache {
             compatible = "cache";
+            linux,phandle = <0x00000003>;
             phandle = <0x00000003>;
         };
     };
     idle-states {
-        entry-method = "psci";
+        entry-method = "arm,psci";
         cpu-ph20 {
             compatible = "arm,idle-state";
             idle-state-name = "PH20";
@@ -86,51 +84,26 @@
             entry-latency-us = <0x000003e8>;
             exit-latency-us = <0x000003e8>;
             min-residency-us = <0x00000bb8>;
+            linux,phandle = <0x00000004>;
             phandle = <0x00000004>;
         };
     };
     memory@80000000 {
         device_type = "memory";
-        reg = <0x00000000 0x80000000 0x00000000 0x00000000>;
     };
     sysclk {
         compatible = "fixed-clock";
         #clock-cells = <0x00000000>;
         clock-frequency = <0x05f5e100>;
         clock-output-names = "sysclk";
-        phandle = <0x0000000f>;
+        linux,phandle = <0x0000000d>;
+        phandle = <0x0000000d>;
     };
     reboot {
         compatible = "syscon-reboot";
         regmap = <0x00000005>;
         offset = <0x000000b0>;
         mask = <0x00000002>;
-    };
-    thermal-zones {
-        cpu-thermal {
-            polling-delay-passive = <0x000003e8>;
-            polling-delay = <0x00001388>;
-            thermal-sensors = <0x00000006 0x00000003>;
-            trips {
-                cpu-alert {
-                    temperature = <0x00014c08>;
-                    hysteresis = <0x000007d0>;
-                    type = "passive";
-                    phandle = <0x00000007>;
-                };
-                cpu-crit {
-                    temperature = <0x00017318>;
-                    hysteresis = <0x000007d0>;
-                    type = "critical";
-                };
-            };
-            cooling-maps {
-                map0 {
-                    trip = <0x00000007>;
-                    cooling-device = <0x00000008 0xffffffff 0xffffffff>;
-                };
-            };
-        };
     };
     timer {
         compatible = "arm,armv8-timer";
@@ -139,7 +112,7 @@
     pmu {
         compatible = "arm,cortex-a72-pmu";
         interrupts = <0x00000000 0x0000006a 0x00000004 0x00000000 0x0000006b 0x00000004 0x00000000 0x0000005f 0x00000004 0x00000000 0x00000061 0x00000004>;
-        interrupt-affinity = <0x00000008 0x00000009 0x0000000a 0x0000000b>;
+        interrupt-affinity = <0x00000006 0x00000007 0x00000008 0x00000009>;
     };
     interrupt-controller@1400000 {
         compatible = "arm,gic-400";
@@ -147,6 +120,7 @@
         interrupt-controller;
         reg = <0x00000000 0x01410000 0x00000000 0x00010000 0x00000000 0x01420000 0x00000000 0x00020000 0x00000000 0x01440000 0x00000000 0x00020000 0x00000000 0x01460000 0x00000000 0x00020000>;
         interrupts = <0x00000001 0x00000009 0x00000f08>;
+        linux,phandle = <0x00000001>;
         phandle = <0x00000001>;
     };
     soc {
@@ -165,26 +139,9 @@
             reg = <0x00000000 0x01530000 0x00000000 0x00010000>;
             big-endian;
             interrupts = <0x00000000 0x0000002b 0x00000004>;
-            #address-cells = <0x00000002>;
-            #size-cells = <0x00000001>;
-            ranges = <0x00000000 0x00000000 0x00000000 0x60000000 0x08000000 0x00000001 0x00000000 0x00000000 0x7e800000 0x00010000 0x00000002 0x00000000 0x00000000 0x7fb00000 0x00000100>;
-            status = "okay";
-            nor@0,0 {
-                compatible = "cfi-flash";
-                reg = <0x00000000 0x00000000 0x08000000>;
-                bank-width = <0x00000002>;
-                device-width = <0x00000001>;
-            };
-            nand@1,0 {
-                compatible = "fsl,ifc-nand";
-                reg = <0x00000001 0x00000000 0x00010000>;
-            };
-            board-control@2,0 {
-                compatible = "fsl,ls1046aqds-fpga", "fsl,fpga-qixis";
-                reg = <0x00000002 0x00000000 0x00000100>;
-            };
+            status = "disabled";
         };
-        spi@1550000 {
+        quadspi@1550000 {
             compatible = "fsl,ls1021a-qspi";
             #address-cells = <0x00000001>;
             #size-cells = <0x00000000>;
@@ -194,16 +151,18 @@
             clock-names = "qspi_en", "qspi";
             clocks = <0x00000002 0x00000004 0x00000001 0x00000002 0x00000004 0x00000001>;
             big-endian;
-            fsl,qspi-has-second-chip;
             status = "okay";
             num-cs = <0x00000002>;
             bus-num = <0x00000000>;
-            s25fl128s@0 {
+            s25fs512s@0 {
                 compatible = "spansion,m25p80";
                 #address-cells = <0x00000001>;
                 #size-cells = <0x00000001>;
                 spi-max-frequency = <0x01312d00>;
+                m25p,fast-read;
                 reg = <0x00000000>;
+                spi-rx-bus-width = <0x00000004>;
+                spi-tx-bus-width = <0x00000004>;
             };
         };
         esdhc@1560000 {
@@ -211,10 +170,15 @@
             reg = <0x00000000 0x01560000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000003e 0x00000004>;
             clocks = <0x00000002 0x00000002 0x00000001>;
-            voltage-ranges = <0x00000708 0x00000708 0x00000ce4 0x00000ce4>;
+            voltage-ranges = <0x00000708 0x00000708 0x00000708 0x00000708>;
             sdhci,auto-cmd12;
             big-endian;
             bus-width = <0x00000004>;
+            mmc-hs200-1_8v;
+            sd-uhs-sdr104;
+            sd-uhs-sdr50;
+            sd-uhs-sdr25;
+            sd-uhs-sdr12;
         };
         scfg@1570000 {
             compatible = "fsl,ls1046a-scfg", "syscon";
@@ -229,7 +193,6 @@
             ranges = <0x00000000 0x00000000 0x01700000 0x00100000>;
             reg = <0x00000000 0x01700000 0x00000000 0x00100000>;
             interrupts = <0x00000000 0x0000004b 0x00000004>;
-            dma-coherent;
             jr@10000 {
                 compatible = "fsl,sec-v5.4-job-ring", "fsl,sec-v5.0-job-ring", "fsl,sec-v4.0-job-ring";
                 reg = <0x00010000 0x00010000>;
@@ -255,13 +218,13 @@
             compatible = "fsl,qman";
             reg = <0x00000000 0x01880000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000002d 0x00000004>;
-            memory-region = <0x0000000c 0x0000000d>;
+            memory-region = <0x0000000a 0x0000000b>;
         };
         bman@1890000 {
             compatible = "fsl,bman";
             reg = <0x00000000 0x01890000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000002d 0x00000004>;
-            memory-region = <0x0000000e>;
+            memory-region = <0x0000000c>;
         };
         qman-portals@500000000 {
             ranges = <0x00000000 0x00000005 0x00000000 0x08000000>;
@@ -328,6 +291,29 @@
                 interrupts = <0x00000000 0x000000be 0x00000004>;
                 cell-index = <0x00000009>;
             };
+            qman-fqids@0 {
+                compatible = "fsl,fqid-range";
+                fsl,fqid-range = <0x00000100 0x00000100>;
+            };
+            qman-fqids@1 {
+                compatible = "fsl,fqid-range";
+                fsl,fqid-range = <0x00008000 0x00008000>;
+            };
+            qman-pools@0 {
+                compatible = "fsl,pool-channel-range";
+                fsl,pool-channel-range = <0x00000401 0x0000000f>;
+            };
+            qman-cgrids@0 {
+                compatible = "fsl,cgrid-range";
+                fsl,cgrid-range = <0x00000000 0x00000100>;
+            };
+            qman-ceetm@0 {
+                compatible = "fsl,qman-ceetm";
+                fsl,ceetm-lfqid-range = <0x00f00000 0x00001000>;
+                fsl,ceetm-sp-range = <0x00000000 0x00000010>;
+                fsl,ceetm-lni-range = <0x00000000 0x00000008>;
+                fsl,ceetm-channel-range = <0x00000000 0x00000020>;
+            };
         };
         bman-portals@508000000 {
             ranges = <0x00000000 0x00000005 0x08000000 0x08000000>;
@@ -338,64 +324,80 @@
                 compatible = "fsl,bman-portal";
                 reg = <0x00000000 0x00004000 0x04000000 0x00004000>;
                 interrupts = <0x00000000 0x000000ad 0x00000004>;
+                cell-index = <0x00000000>;
             };
             bman-portal@10000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00010000 0x00004000 0x04010000 0x00004000>;
                 interrupts = <0x00000000 0x000000af 0x00000004>;
+                cell-index = <0x00000001>;
             };
             bman-portal@20000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00020000 0x00004000 0x04020000 0x00004000>;
                 interrupts = <0x00000000 0x000000b1 0x00000004>;
+                cell-index = <0x00000002>;
             };
             bman-portal@30000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00030000 0x00004000 0x04030000 0x00004000>;
                 interrupts = <0x00000000 0x000000b3 0x00000004>;
+                cell-index = <0x00000003>;
             };
             bman-portal@40000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00040000 0x00004000 0x04040000 0x00004000>;
                 interrupts = <0x00000000 0x000000b5 0x00000004>;
+                cell-index = <0x00000004>;
             };
             bman-portal@50000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00050000 0x00004000 0x04050000 0x00004000>;
                 interrupts = <0x00000000 0x000000b7 0x00000004>;
+                cell-index = <0x00000005>;
             };
             bman-portal@60000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00060000 0x00004000 0x04060000 0x00004000>;
                 interrupts = <0x00000000 0x000000b9 0x00000004>;
+                cell-index = <0x00000006>;
             };
             bman-portal@70000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00070000 0x00004000 0x04070000 0x00004000>;
                 interrupts = <0x00000000 0x000000bb 0x00000004>;
+                cell-index = <0x00000007>;
             };
             bman-portal@80000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00080000 0x00004000 0x04080000 0x00004000>;
                 interrupts = <0x00000000 0x000000bd 0x00000004>;
+                cell-index = <0x00000008>;
             };
             bman-portal@90000 {
                 compatible = "fsl,bman-portal";
                 reg = <0x00090000 0x00004000 0x04090000 0x00004000>;
                 interrupts = <0x00000000 0x000000bf 0x00000004>;
+                cell-index = <0x00000009>;
+            };
+            bman-bpids@0 {
+                compatible = "fsl,bpid-range";
+                fsl,bpid-range = <0x00000020 0x00000020>;
             };
         };
         dcfg@1ee0000 {
             compatible = "fsl,ls1046a-dcfg", "syscon";
             reg = <0x00000000 0x01ee0000 0x00000000 0x00001000>;
             big-endian;
+            linux,phandle = <0x00000005>;
             phandle = <0x00000005>;
         };
         clocking@1ee1000 {
             compatible = "fsl,ls1046a-clockgen";
             reg = <0x00000000 0x01ee1000 0x00000000 0x00001000>;
             #clock-cells = <0x00000002>;
-            clocks = <0x0000000f>;
+            clocks = <0x0000000d>;
+            linux,phandle = <0x00000002>;
             phandle = <0x00000002>;
         };
         tmu@1f00000 {
@@ -406,9 +408,48 @@
             fsl,tmu-calibration = <0x00000000 0x00000026 0x00000001 0x0000002d 0x00000002 0x00000032 0x00000003 0x00000039 0x00000004 0x0000003f 0x00000005 0x00000046 0x00000006 0x0000004d 0x00000007 0x00000054 0x00000008 0x0000005a 0x00000009 0x00000061 0x0000000a 0x0000006a 0x0000000b 0x00000071 0x00010000 0x00000025 0x00010001 0x0000002c 0x00010002 0x00000035 0x00010003 0x0000003d 0x00010004 0x00000045 0x00010005 0x0000004e 0x00010006 0x00000057 0x00010007 0x00000061 0x00010008 0x0000006b 0x00010009 0x00000076 0x00020000 0x00000029 0x00020001 0x00000033 0x00020002 0x0000003d 0x00020003 0x00000049 0x00020004 0x00000056 0x00020005 0x00000061 0x00020006 0x0000006d 0x00030000 0x00000021 0x00030001 0x0000002a 0x00030002 0x0000003c 0x00030003 0x0000004e>;
             big-endian;
             #thermal-sensor-cells = <0x00000001>;
-            phandle = <0x00000006>;
+            linux,phandle = <0x0000000e>;
+            phandle = <0x0000000e>;
         };
-        spi@2100000 {
+        thermal-zones {
+            cpu-thermal {
+                polling-delay-passive = <0x000003e8>;
+                polling-delay = <0x00001388>;
+                thermal-sensors = <0x0000000e 0x00000003>;
+                trips {
+                    cpu-alert {
+                        temperature = <0x000186a0>;
+                        hysteresis = <0x000007d0>;
+                        type = "passive";
+                        linux,phandle = <0x0000000f>;
+                        phandle = <0x0000000f>;
+                    };
+                    cpu-crit {
+                        temperature = <0x00019a28>;
+                        hysteresis = <0x000007d0>;
+                        type = "critical";
+                    };
+                    fan_alert {
+                        temperature = <0x00009c40>;
+                        hysteresis = <0x000007d0>;
+                        type = "active";
+                        linux,phandle = <0x00000010>;
+                        phandle = <0x00000010>;
+                    };
+                };
+                cooling-maps {
+                    map0 {
+                        trip = <0x0000000f>;
+                        cooling-device = <0x00000006 0xffffffff 0xffffffff>;
+                    };
+                    map1 {
+                        trip = <0x00000010>;
+                        cooling-device = <0x00000011 0xffffffff 0xffffffff>;
+                    };
+                };
+            };
+        };
+        dspi@2100000 {
             compatible = "fsl,ls1021a-v1.0-dspi";
             #address-cells = <0x00000001>;
             #size-cells = <0x00000000>;
@@ -418,86 +459,38 @@
             clocks = <0x00000002 0x00000004 0x00000001>;
             spi-num-chipselects = <0x00000005>;
             big-endian;
-            status = "okay";
-            bus-num = <0x00000000>;
-            flash@0 {
-                #address-cells = <0x00000001>;
-                #size-cells = <0x00000001>;
-                compatible = "n25q128a11", "jedec,spi-nor";
-                reg = <0x00000000>;
-                spi-max-frequency = <0x00989680>;
-            };
-            flash@1 {
-                #address-cells = <0x00000001>;
-                #size-cells = <0x00000001>;
-                compatible = "sst25wf040b", "jedec,spi-nor";
-                spi-cpol;
-                spi-cpha;
-                reg = <0x00000001>;
-                spi-max-frequency = <0x00989680>;
-            };
-            flash@2 {
-                #address-cells = <0x00000001>;
-                #size-cells = <0x00000001>;
-                compatible = "en25s64", "jedec,spi-nor";
-                spi-cpol;
-                spi-cpha;
-                reg = <0x00000002>;
-                spi-max-frequency = <0x00989680>;
-            };
+            status = "disabled";
         };
         i2c@2180000 {
-            compatible = "fsl,vf610-i2c";
+            compatible = "fsl,vf610-i2c", "fsl,ls1046a-vf610-i2c";
             #address-cells = <0x00000001>;
             #size-cells = <0x00000000>;
             reg = <0x00000000 0x02180000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x00000038 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
-            dmas = <0x00000010 0x00000001 0x00000027 0x00000010 0x00000001 0x00000026>;
+            dmas = <0x00000012 0x00000001 0x00000027 0x00000012 0x00000001 0x00000026>;
             dma-names = "tx", "rx";
+            fsl-scl-gpio = <0x00000013 0x0000000c 0x00000000>;
             status = "okay";
-            pca9547@77 {
-                compatible = "nxp,pca9547";
-                reg = <0x00000077>;
-                #address-cells = <0x00000001>;
-                #size-cells = <0x00000000>;
-                i2c@2 {
-                    #address-cells = <0x00000001>;
-                    #size-cells = <0x00000000>;
-                    reg = <0x00000002>;
-                    ina220@40 {
-                        compatible = "ti,ina220";
-                        reg = <0x00000040>;
-                        shunt-resistor = <0x000003e8>;
-                    };
-                    ina220@41 {
-                        compatible = "ti,ina220";
-                        reg = <0x00000041>;
-                        shunt-resistor = <0x000003e8>;
-                    };
-                };
-                i2c@3 {
-                    #address-cells = <0x00000001>;
-                    #size-cells = <0x00000000>;
-                    reg = <0x00000003>;
-                    rtc@51 {
-                        compatible = "nxp,pcf2129";
-                        reg = <0x00000051>;
-                        interrupts = <0x00000000 0x00000096 0x00000004>;
-                    };
-                    eeprom@56 {
-                        compatible = "atmel,24c512";
-                        reg = <0x00000056>;
-                    };
-                    eeprom@57 {
-                        compatible = "atmel,24c512";
-                        reg = <0x00000057>;
-                    };
-                    temp-sensor@4c {
-                        compatible = "adi,adt7461a";
-                        reg = <0x0000004c>;
-                    };
-                };
+            ina220@40 {
+                compatible = "ti,ina220";
+                reg = <0x00000040>;
+                shunt-resistor = <0x0000c350>;
+                status = "disabled";
+            };
+            adt7461a@4c {
+                compatible = "adi,adt7461";
+                reg = <0x0000004c>;
+                #thermal-sensor-cells = <0x00000001>;
+                status = "disabled";
+            };
+            eeprom@52 {
+                compatible = "atmel,24c512";
+                reg = <0x00000052>;
+            };
+            eeprom@53 {
+                compatible = "atmel,24c512";
+                reg = <0x00000053>;
             };
         };
         i2c@2190000 {
@@ -507,7 +500,7 @@
             reg = <0x00000000 0x02190000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x00000039 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
-            status = "disabled";
+            status = "okay";
         };
         i2c@21a0000 {
             compatible = "fsl,vf610-i2c";
@@ -516,16 +509,26 @@
             reg = <0x00000000 0x021a0000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000003a 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
-            status = "disabled";
+            status = "okay";
+            rtc@32 {
+                compatible = "rx8010";
+                reg = <0x00000032>;
+            };
+            pcf8563@51 {
+                compatible = "nxp,pcf8563";
+                reg = <0x00000051>;
+                #clock-cells = <0x00000000>;
+            };
         };
         i2c@21b0000 {
-            compatible = "fsl,vf610-i2c";
+            compatible = "fsl,vf610-i2c", "fsl,ls1046a-vf610-i2c";
             #address-cells = <0x00000001>;
             #size-cells = <0x00000000>;
             reg = <0x00000000 0x021b0000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000003b 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
-            status = "disabled";
+            fsl-scl-gpio = <0x00000013 0x0000000c 0x00000000>;
+            status = "okay";
         };
         serial@21c0500 {
             compatible = "fsl,ns16550", "ns16550a";
@@ -546,12 +549,14 @@
             reg = <0x00000000 0x021d0500 0x00000000 0x00000100>;
             interrupts = <0x00000000 0x00000037 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
+            status = "okay";
         };
         serial@21d0600 {
             compatible = "fsl,ns16550", "ns16550a";
             reg = <0x00000000 0x021d0600 0x00000000 0x00000100>;
             interrupts = <0x00000000 0x00000037 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
+            status = "okay";
         };
         gpio@2300000 {
             compatible = "fsl,qoriq-gpio";
@@ -561,6 +566,8 @@
             #gpio-cells = <0x00000002>;
             interrupt-controller;
             #interrupt-cells = <0x00000002>;
+            linux,phandle = <0x00000040>;
+            phandle = <0x00000040>;
         };
         gpio@2310000 {
             compatible = "fsl,qoriq-gpio";
@@ -588,6 +595,8 @@
             #gpio-cells = <0x00000002>;
             interrupt-controller;
             #interrupt-cells = <0x00000002>;
+            linux,phandle = <0x00000013>;
+            phandle = <0x00000013>;
         };
         serial@2950000 {
             compatible = "fsl,ls1021a-lpuart";
@@ -595,7 +604,7 @@
             interrupts = <0x00000000 0x00000030 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000000>;
             clock-names = "ipg";
-            status = "okay";
+            status = "disabled";
         };
         serial@2960000 {
             compatible = "fsl,ls1021a-lpuart";
@@ -637,6 +646,14 @@
             clock-names = "ipg";
             status = "disabled";
         };
+        ftm0@29d0000 {
+            compatible = "fsl,ls1046a-ftm-alarm";
+            reg = <0x00000000 0x029d0000 0x00000000 0x00010000 0x00000000 0x01ee2140 0x00000000 0x00000004>;
+            reg-names = "ftm", "pmctrl";
+            interrupts = <0x00000000 0x00000056 0x00000004>;
+            big-endian;
+            status = "disabled";
+        };
         watchdog@2ad0000 {
             compatible = "fsl,imx21-wdt";
             reg = <0x00000000 0x02ad0000 0x00000000 0x00010000>;
@@ -654,7 +671,8 @@
             big-endian;
             clock-names = "dmamux0", "dmamux1";
             clocks = <0x00000002 0x00000004 0x00000001 0x00000002 0x00000004 0x00000001>;
-            phandle = <0x00000010>;
+            linux,phandle = <0x00000012>;
+            phandle = <0x00000012>;
         };
         usb@2f00000 {
             compatible = "snps,dwc3";
@@ -663,6 +681,9 @@
             dr_mode = "host";
             snps,quirk-frame-length-adjustment = <0x00000020>;
             snps,dis_rxdet_inp3_quirk;
+            usb3-lpm-capable;
+            snps,dis-u1u2-when-u3-quirk;
+            snps,incr-burst-type-adjustment = <0x00000001 0x00000004 0x00000008 0x00000010>;
         };
         usb@3000000 {
             compatible = "snps,dwc3";
@@ -671,6 +692,9 @@
             dr_mode = "host";
             snps,quirk-frame-length-adjustment = <0x00000020>;
             snps,dis_rxdet_inp3_quirk;
+            usb3-lpm-capable;
+            snps,dis-u1u2-when-u3-quirk;
+            snps,incr-burst-type-adjustment = <0x00000001 0x00000004 0x00000008 0x00000010>;
         };
         usb@3100000 {
             compatible = "snps,dwc3";
@@ -679,6 +703,9 @@
             dr_mode = "host";
             snps,quirk-frame-length-adjustment = <0x00000020>;
             snps,dis_rxdet_inp3_quirk;
+            usb3-lpm-capable;
+            snps,dis-u1u2-when-u3-quirk;
+            snps,incr-burst-type-adjustment = <0x00000001 0x00000004 0x00000008 0x00000010>;
         };
         sata@3200000 {
             compatible = "fsl,ls1046a-ahci";
@@ -687,41 +714,57 @@
             interrupts = <0x00000000 0x00000045 0x00000004>;
             clocks = <0x00000002 0x00000004 0x00000001>;
         };
+        qdma@8380000 {
+            compatible = "fsl,ls1046a-qdma", "fsl,ls1021a-qdma";
+            reg = <0x00000000 0x08380000 0x00000000 0x00001000 0x00000000 0x08390000 0x00000000 0x00010000 0x00000000 0x083a0000 0x00000000 0x00040000>;
+            interrupts = <0x00000000 0x00000099 0x00000004 0x00000000 0x00000027 0x00000004>;
+            interrupt-names = "qdma-error", "qdma-queue";
+            channels = <0x00000008>;
+            queues = <0x00000002>;
+            status-sizes = <0x00000040>;
+            queue-sizes = <0x00000040 0x00000040>;
+            big-endian;
+        };
         msi-controller@1580000 {
             compatible = "fsl,ls1046a-msi";
             msi-controller;
             reg = <0x00000000 0x01580000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x00000074 0x00000004 0x00000000 0x0000006f 0x00000004 0x00000000 0x00000070 0x00000004 0x00000000 0x00000071 0x00000004>;
-            phandle = <0x00000011>;
+            linux,phandle = <0x00000014>;
+            phandle = <0x00000014>;
         };
         msi-controller@1590000 {
             compatible = "fsl,ls1046a-msi";
             msi-controller;
             reg = <0x00000000 0x01590000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x0000007e 0x00000004 0x00000000 0x00000079 0x00000004 0x00000000 0x0000007a 0x00000004 0x00000000 0x0000007b 0x00000004>;
-            phandle = <0x00000012>;
+            linux,phandle = <0x00000015>;
+            phandle = <0x00000015>;
         };
         msi-controller@15a0000 {
             compatible = "fsl,ls1046a-msi";
             msi-controller;
             reg = <0x00000000 0x015a0000 0x00000000 0x00010000>;
             interrupts = <0x00000000 0x000000a0 0x00000004 0x00000000 0x0000009b 0x00000004 0x00000000 0x0000009c 0x00000004 0x00000000 0x0000009d 0x00000004>;
-            phandle = <0x00000013>;
+            linux,phandle = <0x00000016>;
+            phandle = <0x00000016>;
         };
         pcie@3400000 {
             compatible = "fsl,ls1046a-pcie", "snps,dw-pcie";
             reg = <0x00000000 0x03400000 0x00000000 0x00100000 0x00000040 0x00000000 0x00000000 0x00002000>;
             reg-names = "regs", "config";
-            interrupts = <0x00000000 0x00000076 0x00000004 0x00000000 0x00000075 0x00000004>;
-            interrupt-names = "aer", "pme";
+            interrupts = <0x00000000 0x00000075 0x00000004 0x00000000 0x00000076 0x00000004>;
+            interrupt-names = "pme", "aer";
             #address-cells = <0x00000003>;
             #size-cells = <0x00000002>;
             device_type = "pci";
             dma-coherent;
             num-lanes = <0x00000004>;
+            num-ib-windows = <0x00000006>;
+            num-ob-windows = <0x00000006>;
             bus-range = <0x00000000 0x000000ff>;
             ranges = <0x81000000 0x00000000 0x00000000 0x00000040 0x00010000 0x00000000 0x00010000 0x82000000 0x00000000 0x40000000 0x00000040 0x40000000 0x00000000 0x40000000>;
-            msi-parent = <0x00000011 0x00000012 0x00000013>;
+            msi-parent = <0x00000014 0x00000015 0x00000016>;
             #interrupt-cells = <0x00000001>;
             interrupt-map-mask = <0x00000000 0x00000000 0x00000000 0x00000007>;
             interrupt-map = <0x00000000 0x00000000 0x00000000 0x00000001 0x00000001 0x00000000 0x0000006e 0x00000004 0x00000000 0x00000000 0x00000000 0x00000002 0x00000001 0x00000000 0x0000006e 0x00000004 0x00000000 0x00000000 0x00000000 0x00000003 0x00000001 0x00000000 0x0000006e 0x00000004 0x00000000 0x00000000 0x00000000 0x00000004 0x00000001 0x00000000 0x0000006e 0x00000004>;
@@ -730,16 +773,18 @@
             compatible = "fsl,ls1046a-pcie", "snps,dw-pcie";
             reg = <0x00000000 0x03500000 0x00000000 0x00100000 0x00000048 0x00000000 0x00000000 0x00002000>;
             reg-names = "regs", "config";
-            interrupts = <0x00000000 0x00000080 0x00000004 0x00000000 0x0000007f 0x00000004>;
-            interrupt-names = "aer", "pme";
+            interrupts = <0x00000000 0x0000007f 0x00000004 0x00000000 0x00000080 0x00000004>;
+            interrupt-names = "pme", "aer";
             #address-cells = <0x00000003>;
             #size-cells = <0x00000002>;
             device_type = "pci";
             dma-coherent;
             num-lanes = <0x00000002>;
+            num-ib-windows = <0x00000006>;
+            num-ob-windows = <0x00000006>;
             bus-range = <0x00000000 0x000000ff>;
             ranges = <0x81000000 0x00000000 0x00000000 0x00000048 0x00010000 0x00000000 0x00010000 0x82000000 0x00000000 0x40000000 0x00000048 0x40000000 0x00000000 0x40000000>;
-            msi-parent = <0x00000012 0x00000013 0x00000011>;
+            msi-parent = <0x00000014 0x00000015 0x00000016>;
             #interrupt-cells = <0x00000001>;
             interrupt-map-mask = <0x00000000 0x00000000 0x00000000 0x00000007>;
             interrupt-map = <0x00000000 0x00000000 0x00000000 0x00000001 0x00000001 0x00000000 0x00000078 0x00000004 0x00000000 0x00000000 0x00000000 0x00000002 0x00000001 0x00000000 0x00000078 0x00000004 0x00000000 0x00000000 0x00000000 0x00000003 0x00000001 0x00000000 0x00000078 0x00000004 0x00000000 0x00000000 0x00000000 0x00000004 0x00000001 0x00000000 0x00000078 0x00000004>;
@@ -748,16 +793,18 @@
             compatible = "fsl,ls1046a-pcie", "snps,dw-pcie";
             reg = <0x00000000 0x03600000 0x00000000 0x00100000 0x00000050 0x00000000 0x00000000 0x00002000>;
             reg-names = "regs", "config";
-            interrupts = <0x00000000 0x000000a2 0x00000004 0x00000000 0x000000a1 0x00000004>;
-            interrupt-names = "aer", "pme";
+            interrupts = <0x00000000 0x000000a1 0x00000004 0x00000000 0x000000a2 0x00000004>;
+            interrupt-names = "pme", "aer";
             #address-cells = <0x00000003>;
             #size-cells = <0x00000002>;
             device_type = "pci";
             dma-coherent;
             num-lanes = <0x00000002>;
+            num-ib-windows = <0x00000006>;
+            num-ob-windows = <0x00000006>;
             bus-range = <0x00000000 0x000000ff>;
             ranges = <0x81000000 0x00000000 0x00000000 0x00000050 0x00010000 0x00000000 0x00010000 0x82000000 0x00000000 0x40000000 0x00000050 0x40000000 0x00000000 0x40000000>;
-            msi-parent = <0x00000013 0x00000011 0x00000012>;
+            msi-parent = <0x00000014 0x00000015 0x00000016>;
             #interrupt-cells = <0x00000001>;
             interrupt-map-mask = <0x00000000 0x00000000 0x00000000 0x00000007>;
             interrupt-map = <0x00000000 0x00000000 0x00000000 0x00000001 0x00000001 0x00000000 0x0000009a 0x00000004 0x00000000 0x00000000 0x00000000 0x00000002 0x00000001 0x00000000 0x0000009a 0x00000004 0x00000000 0x00000000 0x00000000 0x00000003 0x00000001 0x00000000 0x0000009a 0x00000004 0x00000000 0x00000000 0x00000000 0x00000004 0x00000001 0x00000000 0x0000009a 0x00000004>;
@@ -766,79 +813,156 @@
             #address-cells = <0x00000001>;
             #size-cells = <0x00000001>;
             cell-index = <0x00000000>;
-            compatible = "fsl,fman";
-            ranges = <0x00000000 0x00000000 0x01a00000 0x000fe000>;
-            reg = <0x00000000 0x01a00000 0x00000000 0x000fe000>;
+            compatible = "fsl,fman", "simple-bus";
+            ranges = <0x00000000 0x00000000 0x01a00000 0x00100000>;
+            reg = <0x00000000 0x01a00000 0x00000000 0x00100000>;
             interrupts = <0x00000000 0x0000002c 0x00000004 0x00000000 0x0000002d 0x00000004>;
             clocks = <0x00000002 0x00000003 0x00000000>;
             clock-names = "fmanclk";
             fsl,qman-channel-range = <0x00000800 0x00000010>;
-            ptimer-handle = <0x00000014>;
+            cc {
+                compatible = "fsl,fman-cc";
+            };
             muram@0 {
                 compatible = "fsl,fman-muram";
                 reg = <0x00000000 0x00060000>;
             };
+            bmi@80000 {
+                compatible = "fsl,fman-bmi";
+                reg = <0x00080000 0x00000400>;
+            };
+            qmi@80400 {
+                compatible = "fsl,fman-qmi";
+                reg = <0x00080400 0x00000400>;
+            };
             port@82000 {
-                cell-index = <0x00000002>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000000>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00082000 0x00001000>;
+                fsl,qman-channel-id = <0x00000809>;
             };
             port@83000 {
-                cell-index = <0x00000003>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000001>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00083000 0x00001000>;
+                fsl,qman-channel-id = <0x0000080a>;
             };
             port@84000 {
-                cell-index = <0x00000004>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000002>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00084000 0x00001000>;
+                fsl,qman-channel-id = <0x0000080b>;
             };
             port@85000 {
-                cell-index = <0x00000005>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000003>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00085000 0x00001000>;
+                fsl,qman-channel-id = <0x0000080c>;
             };
             port@86000 {
-                cell-index = <0x00000006>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000004>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00086000 0x00001000>;
+                fsl,qman-channel-id = <0x0000080d>;
             };
             port@87000 {
-                cell-index = <0x00000007>;
-                compatible = "fsl,fman-v3-port-oh";
+                cell-index = <0x00000005>;
+                compatible = "fsl,fman-port-oh";
                 reg = <0x00087000 0x00001000>;
+                fsl,qman-channel-id = <0x0000080e>;
+            };
+            policer@c0000 {
+                compatible = "fsl,fman-policer";
+                reg = <0x000c0000 0x00001000>;
+            };
+            keygen@c1000 {
+                compatible = "fsl,fman-keygen";
+                reg = <0x000c1000 0x00001000>;
+            };
+            dma@c2000 {
+                compatible = "fsl,fman-dma";
+                reg = <0x000c2000 0x00001000>;
+            };
+            fpm@c3000 {
+                compatible = "fsl,fman-fpm";
+                reg = <0x000c3000 0x00001000>;
+            };
+            parser@c7000 {
+                compatible = "fsl,fman-parser";
+                reg = <0x000c7000 0x00001000>;
+            };
+            vsps@dc000 {
+                compatible = "fsl,fman-vsps";
+                reg = <0x000dc000 0x00001000>;
             };
             mdio@fc000 {
                 #address-cells = <0x00000001>;
                 #size-cells = <0x00000000>;
                 compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
                 reg = <0x000fc000 0x00001000>;
+                mdio1-ethernet-phy@1 {
+                    reg = <0x00000001>;
+                    linux,phandle = <0x00000022>;
+                    phandle = <0x00000022>;
+                };
+                mdio1-ethernet-phy@2 {
+                    reg = <0x00000002>;
+                    linux,phandle = <0x00000026>;
+                    phandle = <0x00000026>;
+                };
+                mdio1-ethernet-phy@3 {
+                    reg = <0x00000003>;
+                    linux,phandle = <0x0000002a>;
+                    phandle = <0x0000002a>;
+                };
             };
             mdio@fd000 {
                 #address-cells = <0x00000001>;
                 #size-cells = <0x00000000>;
                 compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
                 reg = <0x000fd000 0x00001000>;
+                mdio2-ethernet-phy@1 {
+                    reg = <0x00000001>;
+                    linux,phandle = <0x0000002e>;
+                    phandle = <0x0000002e>;
+                };
+                mdio2-ethernet-phy@2 {
+                    reg = <0x00000002>;
+                    linux,phandle = <0x0000001e>;
+                    phandle = <0x0000001e>;
+                };
+            };
+            ptp-timer@fe000 {
+                compatible = "fsl,fman-ptp-timer", "fsl,fman-rtc";
+                reg = <0x000fe000 0x00001000>;
+                linux,phandle = <0x00000019>;
+                phandle = <0x00000019>;
             };
             port@88000 {
                 cell-index = <0x00000008>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x00088000 0x00001000>;
-                phandle = <0x00000015>;
+                linux,phandle = <0x00000017>;
+                phandle = <0x00000017>;
             };
             port@a8000 {
                 cell-index = <0x00000028>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000a8000 0x00001000>;
-                phandle = <0x00000016>;
+                fsl,qman-channel-id = <0x00000802>;
+                linux,phandle = <0x00000018>;
+                phandle = <0x00000018>;
             };
             ethernet@e0000 {
                 cell-index = <0x00000000>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000e0000 0x00001000>;
-                fsl,fman-ports = <0x00000015 0x00000016>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x00000017>;
+                fsl,fman-ports = <0x00000017 0x00000018>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x0000001a>;
+                status = "disabled";
+                linux,phandle = <0x00000035>;
+                phandle = <0x00000035>;
             };
             mdio@e1000 {
                 #address-cells = <0x00000001>;
@@ -847,28 +971,36 @@
                 reg = <0x000e1000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x00000017>;
+                    linux,phandle = <0x0000001a>;
+                    phandle = <0x0000001a>;
                 };
             };
             port@89000 {
                 cell-index = <0x00000009>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x00089000 0x00001000>;
-                phandle = <0x00000018>;
+                linux,phandle = <0x0000001b>;
+                phandle = <0x0000001b>;
             };
             port@a9000 {
                 cell-index = <0x00000029>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000a9000 0x00001000>;
-                phandle = <0x00000019>;
+                fsl,qman-channel-id = <0x00000803>;
+                linux,phandle = <0x0000001c>;
+                phandle = <0x0000001c>;
             };
             ethernet@e2000 {
                 cell-index = <0x00000001>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000e2000 0x00001000>;
-                fsl,fman-ports = <0x00000018 0x00000019>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x0000001a>;
+                fsl,fman-ports = <0x0000001b 0x0000001c>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x0000001d>;
+                phy-handle = <0x0000001e>;
+                phy-connection-type = "sgmii";
+                linux,phandle = <0x00000036>;
+                phandle = <0x00000036>;
             };
             mdio@e3000 {
                 #address-cells = <0x00000001>;
@@ -877,28 +1009,36 @@
                 reg = <0x000e3000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x0000001a>;
+                    linux,phandle = <0x0000001d>;
+                    phandle = <0x0000001d>;
                 };
             };
             port@8a000 {
                 cell-index = <0x0000000a>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x0008a000 0x00001000>;
-                phandle = <0x0000001b>;
+                linux,phandle = <0x0000001f>;
+                phandle = <0x0000001f>;
             };
             port@aa000 {
                 cell-index = <0x0000002a>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000aa000 0x00001000>;
-                phandle = <0x0000001c>;
+                fsl,qman-channel-id = <0x00000804>;
+                linux,phandle = <0x00000020>;
+                phandle = <0x00000020>;
             };
             ethernet@e4000 {
                 cell-index = <0x00000002>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000e4000 0x00001000>;
-                fsl,fman-ports = <0x0000001b 0x0000001c>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x0000001d>;
+                fsl,fman-ports = <0x0000001f 0x00000020>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x00000021>;
+                phy-handle = <0x00000022>;
+                phy-connection-type = "rgmii-txid";
+                linux,phandle = <0x00000037>;
+                phandle = <0x00000037>;
             };
             mdio@e5000 {
                 #address-cells = <0x00000001>;
@@ -907,28 +1047,36 @@
                 reg = <0x000e5000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x0000001d>;
+                    linux,phandle = <0x00000021>;
+                    phandle = <0x00000021>;
                 };
             };
             port@8b000 {
                 cell-index = <0x0000000b>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x0008b000 0x00001000>;
-                phandle = <0x0000001e>;
+                linux,phandle = <0x00000023>;
+                phandle = <0x00000023>;
             };
             port@ab000 {
                 cell-index = <0x0000002b>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000ab000 0x00001000>;
-                phandle = <0x0000001f>;
+                fsl,qman-channel-id = <0x00000805>;
+                linux,phandle = <0x00000024>;
+                phandle = <0x00000024>;
             };
             ethernet@e6000 {
                 cell-index = <0x00000003>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000e6000 0x00001000>;
-                fsl,fman-ports = <0x0000001e 0x0000001f>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x00000020>;
+                fsl,fman-ports = <0x00000023 0x00000024>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x00000025>;
+                phy-handle = <0x00000026>;
+                phy-connection-type = "rgmii-txid";
+                linux,phandle = <0x00000038>;
+                phandle = <0x00000038>;
             };
             mdio@e7000 {
                 #address-cells = <0x00000001>;
@@ -937,28 +1085,36 @@
                 reg = <0x000e7000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x00000020>;
+                    linux,phandle = <0x00000025>;
+                    phandle = <0x00000025>;
                 };
             };
             port@8c000 {
                 cell-index = <0x0000000c>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x0008c000 0x00001000>;
-                phandle = <0x00000021>;
+                linux,phandle = <0x00000027>;
+                phandle = <0x00000027>;
             };
             port@ac000 {
                 cell-index = <0x0000002c>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000ac000 0x00001000>;
-                phandle = <0x00000022>;
+                fsl,qman-channel-id = <0x00000806>;
+                linux,phandle = <0x00000028>;
+                phandle = <0x00000028>;
             };
             ethernet@e8000 {
                 cell-index = <0x00000004>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000e8000 0x00001000>;
-                fsl,fman-ports = <0x00000021 0x00000022>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x00000023>;
+                fsl,fman-ports = <0x00000027 0x00000028>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x00000029>;
+                phy-handle = <0x0000002a>;
+                phy-connection-type = "sgmii";
+                linux,phandle = <0x00000039>;
+                phandle = <0x00000039>;
             };
             mdio@e9000 {
                 #address-cells = <0x00000001>;
@@ -967,28 +1123,36 @@
                 reg = <0x000e9000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x00000023>;
+                    linux,phandle = <0x00000029>;
+                    phandle = <0x00000029>;
                 };
             };
             port@8d000 {
                 cell-index = <0x0000000d>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-1g-rx";
                 reg = <0x0008d000 0x00001000>;
-                phandle = <0x00000024>;
+                linux,phandle = <0x0000002b>;
+                phandle = <0x0000002b>;
             };
             port@ad000 {
                 cell-index = <0x0000002d>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-1g-tx";
                 reg = <0x000ad000 0x00001000>;
-                phandle = <0x00000025>;
+                fsl,qman-channel-id = <0x00000807>;
+                linux,phandle = <0x0000002c>;
+                phandle = <0x0000002c>;
             };
             ethernet@ea000 {
                 cell-index = <0x00000005>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000ea000 0x00001000>;
-                fsl,fman-ports = <0x00000024 0x00000025>;
-                ptp-timer = <0x00000014>;
-                pcsphy-handle = <0x00000026>;
+                fsl,fman-ports = <0x0000002b 0x0000002c>;
+                ptp-timer = <0x00000019>;
+                pcsphy-handle = <0x0000002d>;
+                phy-handle = <0x0000002e>;
+                phy-connection-type = "sgmii";
+                linux,phandle = <0x0000003a>;
+                phandle = <0x0000003a>;
             };
             mdio@eb000 {
                 #address-cells = <0x00000001>;
@@ -997,29 +1161,37 @@
                 reg = <0x000eb000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x00000026>;
+                    linux,phandle = <0x0000002d>;
+                    phandle = <0x0000002d>;
                 };
             };
             port@90000 {
                 cell-index = <0x00000010>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-10g-rx";
                 reg = <0x00090000 0x00001000>;
                 fsl,fman-10g-port;
-                phandle = <0x00000027>;
+                linux,phandle = <0x0000002f>;
+                phandle = <0x0000002f>;
             };
             port@b0000 {
                 cell-index = <0x00000030>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-10g-tx";
                 reg = <0x000b0000 0x00001000>;
                 fsl,fman-10g-port;
-                phandle = <0x00000028>;
+                fsl,qman-channel-id = <0x00000800>;
+                linux,phandle = <0x00000030>;
+                phandle = <0x00000030>;
             };
             ethernet@f0000 {
                 cell-index = <0x00000008>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000f0000 0x00001000>;
-                fsl,fman-ports = <0x00000027 0x00000028>;
-                pcsphy-handle = <0x00000029>;
+                fsl,fman-ports = <0x0000002f 0x00000030>;
+                pcsphy-handle = <0x00000031>;
+                fixed-link = <0x00000000 0x00000001 0x000003e8 0x00000000 0x00000000>;
+                phy-connection-type = "xgmii";
+                linux,phandle = <0x0000003b>;
+                phandle = <0x0000003b>;
             };
             mdio@f1000 {
                 #address-cells = <0x00000001>;
@@ -1028,29 +1200,37 @@
                 reg = <0x000f1000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x00000029>;
+                    linux,phandle = <0x00000031>;
+                    phandle = <0x00000031>;
                 };
             };
             port@91000 {
                 cell-index = <0x00000011>;
-                compatible = "fsl,fman-v3-port-rx";
+                compatible = "fsl,fman-v3-port-rx", "fsl,fman-port-10g-rx";
                 reg = <0x00091000 0x00001000>;
                 fsl,fman-10g-port;
-                phandle = <0x0000002a>;
+                linux,phandle = <0x00000032>;
+                phandle = <0x00000032>;
             };
             port@b1000 {
                 cell-index = <0x00000031>;
-                compatible = "fsl,fman-v3-port-tx";
+                compatible = "fsl,fman-v3-port-tx", "fsl,fman-port-10g-tx";
                 reg = <0x000b1000 0x00001000>;
                 fsl,fman-10g-port;
-                phandle = <0x0000002b>;
+                fsl,qman-channel-id = <0x00000801>;
+                linux,phandle = <0x00000033>;
+                phandle = <0x00000033>;
             };
             ethernet@f2000 {
                 cell-index = <0x00000009>;
                 compatible = "fsl,fman-memac";
                 reg = <0x000f2000 0x00001000>;
-                fsl,fman-ports = <0x0000002a 0x0000002b>;
-                pcsphy-handle = <0x0000002c>;
+                fsl,fman-ports = <0x00000032 0x00000033>;
+                pcsphy-handle = <0x00000034>;
+                fixed-link = <0x00000000 0x00000001 0x000003e8 0x00000000 0x00000000>;
+                phy-connection-type = "xgmii";
+                linux,phandle = <0x0000003c>;
+                phandle = <0x0000003c>;
             };
             mdio@f3000 {
                 #address-cells = <0x00000001>;
@@ -1059,16 +1239,54 @@
                 reg = <0x000f3000 0x00001000>;
                 ethernet-phy@0 {
                     reg = <0x00000000>;
-                    phandle = <0x0000002c>;
+                    linux,phandle = <0x00000034>;
+                    phandle = <0x00000034>;
                 };
             };
         };
-        ptp-timer@1afe000 {
-            compatible = "fsl,fman-ptp-timer";
-            reg = <0x00000000 0x01afe000 0x00000000 0x00001000>;
-            interrupts = <0x00000000 0x0000002c 0x00000004>;
-            clocks = <0x00000002 0x00000003 0x00000000>;
-            phandle = <0x00000014>;
+        fsl,dpaa {
+            compatible = "fsl,ls1043a-dpaa", "simple-bus", "fsl,dpaa";
+            ethernet@0 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x00000035>;
+                dma-coherent;
+                status = "disabled";
+            };
+            ethernet@1 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x00000036>;
+                dma-coherent;
+            };
+            ethernet@2 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x00000037>;
+                dma-coherent;
+            };
+            ethernet@3 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x00000038>;
+                dma-coherent;
+            };
+            ethernet@4 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x00000039>;
+                dma-coherent;
+            };
+            ethernet@5 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x0000003a>;
+                dma-coherent;
+            };
+            ethernet@8 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x0000003b>;
+                dma-coherent;
+            };
+            ethernet@9 {
+                compatible = "fsl,dpa-ethernet";
+                fsl,fman-mac = <0x0000003c>;
+                dma-coherent;
+            };
         };
     };
     reserved-memory {
@@ -1076,25 +1294,31 @@
         #size-cells = <0x00000002>;
         ranges;
         bman-fbpr {
-            compatible = "shared-dma-pool";
+            compatible = "fsl,bman-fbpr";
             size = <0x00000000 0x01000000>;
             alignment = <0x00000000 0x01000000>;
             no-map;
-            phandle = <0x0000000e>;
+            alloc-ranges = <0x00000000 0x00000000 0x00010000 0x00000000>;
+            linux,phandle = <0x0000000c>;
+            phandle = <0x0000000c>;
         };
         qman-fqd {
-            compatible = "shared-dma-pool";
+            compatible = "fsl,qman-fqd";
             size = <0x00000000 0x00800000>;
             alignment = <0x00000000 0x00800000>;
             no-map;
-            phandle = <0x0000000c>;
+            alloc-ranges = <0x00000000 0x00000000 0x00010000 0x00000000>;
+            linux,phandle = <0x0000000a>;
+            phandle = <0x0000000a>;
         };
         qman-pfdr {
-            compatible = "shared-dma-pool";
+            compatible = "fsl,qman-pfdr";
             size = <0x00000000 0x02000000>;
             alignment = <0x00000000 0x02000000>;
             no-map;
-            phandle = <0x0000000d>;
+            alloc-ranges = <0x00000000 0x00000000 0x00010000 0x00000000>;
+            linux,phandle = <0x0000000b>;
+            phandle = <0x0000000b>;
         };
     };
     firmware {
@@ -1105,5 +1329,65 @@
     };
     chosen {
         stdout-path = "serial0:115200n8";
+    };
+    clock {
+        compatible = "fixed-clock";
+        #clock-cells = <0x00000000>;
+        clock-frequency = <0x00007d00>;
+        clock-accuracy = <0x00000064>;
+        linux,phandle = <0x0000003d>;
+        phandle = <0x0000003d>;
+    };
+    ext_clk {
+        compatible = "fixed-clock";
+        #clock-cells = <0x00000000>;
+        clock-frequency = <0x00000000>;
+        clock-accuracy = <0x00000064>;
+        linux,phandle = <0x0000003e>;
+        phandle = <0x0000003e>;
+    };
+    pwm@2a30000 {
+        compatible = "fsl,vf610-ftm-pwm";
+        #pwm-cells = <0x00000003>;
+        reg = <0x00000000 0x02a30000 0x00000000 0x00001000>;
+        clock-names = "ftm_sys", "ftm_fix", "ftm_ext", "ftm_cnt_clk_en";
+        clocks = <0x00000002 0x00000004 0x00000000 0x0000003d 0x0000003e 0x00000002 0x00000004 0x00000000>;
+        big-endian;
+        status = "okay";
+        linux,phandle = <0x0000003f>;
+        phandle = <0x0000003f>;
+    };
+    pwm_fan {
+        compatible = "pwm-fan";
+        cooling-min-state = <0x00000000>;
+        cooling-max-state = <0x00000003>;
+        #cooling-cells = <0x00000002>;
+        pwms = <0x0000003f 0x00000000 0x000f4240 0x00000000>;
+        cooling-levels = <0x00000066 0x00000099 0x000000cc 0x000000fa>;
+        linux,phandle = <0x00000011>;
+        phandle = <0x00000011>;
+    };
+    leds {
+        status = "okay";
+        compatible = "gpio-leds";
+        USER_LED {
+            label = "USER_LED";
+            gpios = <0x00000040 0x0000001f 0x00000000>;
+            default-state = "on";
+        };
+        5GPWR_ON {
+            label = "5GPWR_ON";
+            gpios = <0x00000040 0x00000019 0x00000000>;
+            default-state = "off";
+        };
+        5GPWR_RESET {
+            label = "5GPWR_RESET";
+            gpios = <0x00000040 0x0000001a 0x00000000>;
+        };
+        5G_PWR {
+            label = "5G_PWR";
+            gpios = <0x00000040 0x0000001d 0x00000000>;
+            default-state = "on";
+        };
     };
 };
