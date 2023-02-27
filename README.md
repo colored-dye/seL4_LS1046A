@@ -2,13 +2,20 @@
 
 Forlinx OK1046A-C2 board.
 
-`dts/freescale/`: Device tree source. From https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+```
+dts/
+├── dtb
+│   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).
+├── dtb2dts
+│   └── freescale	-- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
+└── dts-linux
+    └── freescale	-- Device tree source. Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+```
 
-`dtb/freescale/`: Compiled device tree. Copied from a compiled kernel(4.19.238).
-
-`dtb2dts/freescale/`: DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 
 ## seL4 kernel (`kernel/`)
+
+Version: 12.1.0-dev
 
 `src/plat/ls1046a/config.cmake`:
 
