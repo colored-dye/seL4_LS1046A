@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["--dtb", "kernel/build/kernel.dtb", 
+                "--compat-strings", "--compat-strings-out", "kernel/build/kernel_compat.txt", 
+                "--c-header", "--header-out", "kernel/build/gen_headers/plat/machine/devices_gen.h", 
+                "--hardware-config", "kernel/tools/hardware.yml", 
+                "--hardware-schema", "kernel/tools/hardware_schema.yml", 
+                "--yaml", "--yaml-out", "kernel/build/gen_headers/plat/machine/platform_gen.yaml", 
+                "--sel4arch", "aarch64",
+                 "--addrspace-max", "17592186044416"],
+        }
+    ]
+}
