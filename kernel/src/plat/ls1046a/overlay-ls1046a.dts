@@ -7,7 +7,10 @@
         seL4,kernel-devices =
             "serial0",
             &{/interrupt-controller@1400000},
-
             &{/timer};
+    };
+
+    memory@80000000 {
+        reg = <0x00000000 0x80000000 0x00000001 0x00000000>; /* 2GB */
     };
 };
