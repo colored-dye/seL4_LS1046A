@@ -13,17 +13,16 @@
 // UART Transmitter Holding Register.
 // Data is written to this register.
 // UTHRa: 0x400 + a * 0x100 (a=1,2)
-#define UTHR1       0x500
+#define UTHR1       0x0
 // #define UTHR2       0x600
 
 // UART Line Status Register.
 // Read-only registers that 
 // ULSRa: 0x405 + a * 0x100 (a=1,2)
-#define ULSR1       0x505
+#define ULSR1       0x5
 // #define ULSR2       0x605
 
 #define ULSR_THRE   BIT(5) // Transmitter Holding Register Empty
-// Unused:
 // #define ULSR_BI     BIT(4) // Break Interrupt
 // #define ULSR_FE     BIT(3) // Framing Error
 // #define ULSR_PE     BIT(2) // Parity Error
