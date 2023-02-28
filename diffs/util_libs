@@ -1,0 +1,90 @@
+diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
+--- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-02-28 15:38:50.278573855 +0800
+@@ -0,0 +1,9 @@
++#pragma once
++
++enum clk_id {
++    CLK_MASTER,
++};
++
++enum clock_gate {
++    NCLKGATES
++};
+diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
+--- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-02-28 15:27:24.940123386 +0800
+@@ -0,0 +1,12 @@
++/*
++ * Copyright 2017, Data61, CSIRO (ABN 41 687 119 230)
++ *
++ * SPDX-License-Identifier: BSD-2-Clause
++ */
++
++#pragma once
++
++enum i2c_id {
++    NI2C
++};
++
+diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
+--- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-02-28 15:48:03.191278851 +0800
+@@ -0,0 +1,12 @@
++#pragma once
++
++#define UART1_PADDR 0x021c0500
++
++#define UART1_IRQ   86
++
++enum chardev_id {
++    NS16550A_UART1,
++};
++
++#define DEFAULT_SERIAL_PADDR UART1_PADDR
++#define DEFAULT_SERIAL_INTERRUPT UART1_IRQ
+diff -Nur ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
+--- ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-02-28 15:28:19.856609569 +0800
+@@ -0,0 +1,41 @@
++/*
++ * Copyright 2019, Data61, CSIRO (ABN 41 687 119 230)
++ *
++ * SPDX-License-Identifier: BSD-2-Clause
++ */
++
++/**
++ * Contains the definition for all character devices on this platform.
++ * Currently this is just a simple patch.
++ */
++
++#include "../../chardev.h"
++#include "../../common.h"
++#include <utils/util.h>
++
++#include "../../chardev.h"
++
++static const int uart0_irqs[] = {UART0_IRQ, -1};
++
++#define UART_DEFN(devid) {          \
++    .id      = PL001_UART##devid,    \
++    .paddr   = UART##devid##_PADDR, \
++    .size    = BIT(12),             \
++    .irqs    = uart##devid##_irqs,  \
++    .init_fn = &uart_init           \
++}
++
++static const struct dev_defn dev_defn[] = {
++    UART_DEFN(0),
++};
++
++struct ps_chardevice *ps_cdev_init(enum chardev_id id, const ps_io_ops_t *o, struct ps_chardevice *d)
++{
++    unsigned int i;
++    for (i = 0; i < ARRAY_SIZE(dev_defn); i++) {
++        if (dev_defn[i].id == id) {
++            return (dev_defn[i].init_fn(dev_defn + i, o, d)) ? NULL : d;
++        }
++    }
++    return NULL;
++}

@@ -10,12 +10,10 @@ else
 fi
 
 DIFFS="$TOP_DIR/diffs"
+PROJECTS="$TOP_DIR/projects"
 
-mkdir -p $DIFFS
-
-for proj in `ls $TOP_DIR/projects`
+for proj in `ls $DIFFS`
 do
-    echo $proj
-    cd $TOP_DIR/projects/$proj
-    git diff > $DIFFS/$proj
+    cd $PROJECTS/$proj
+    patch -p1 < $DIFFS/$proj
 done
