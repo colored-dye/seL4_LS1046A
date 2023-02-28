@@ -10,13 +10,17 @@
 #include <machine/io.h>
 #include <plat/machine/devices_gen.h>
 
-#define UTHR        0x400 // UART Transmitter Holding Register.
-                          // Data is written to this register.
-                          // UTHRa: 0x400 + a * 0x100 (a=1,2)
+// UART Transmitter Holding Register.
+// Data is written to this register.
+// UTHRa: 0x400 + a * 0x100 (a=1,2)
+#define UTHR1       0x500
+// #define UTHR2       0x600
 
-#define ULSR        0x405 // UART Line Status Register.
-                          // Read-only registers that 
-                          // ULSRa: 0x405 + a * 0x100 (a=1,2)
+// UART Line Status Register.
+// Read-only registers that 
+// ULSRa: 0x405 + a * 0x100 (a=1,2)
+#define ULSR1       0x505
+// #define ULSR2       0x605
 
 #define ULSR_THRE   BIT(5) // Transmitter Holding Register Empty
 // Unused:
@@ -32,17 +36,17 @@
 #ifdef CONFIG_PRINTING
 void uart_drv_putchar(unsigned char c)
 {
-    while ((*UART_REG(ULSR) & ULSR_THRE) == 0);
+    while ((*UART_REG(ULSR1) & ULSR_THRE) == 0);
 
-    *UART_REG(UTHR) = c;
+    *UART_REG(UTHR1) = c;
 }
 #endif /* CONFIG_PRINTING */
 
 #ifdef CONFIG_DEBUG_BUILD
 unsigned char uart_drv_getchar(void)
 {
-    while ((*UART_REG(ULSR) & ULSR_DR) == 0);
+    while ((*UART_REG(ULSR1) & ULSR_DR) == 0);
 
-    return *UART_REG(UTHR);
+    return *UART_REG(UTHR1);
 }
 #endif /* CONFIG_DEBUG_BUILD */
