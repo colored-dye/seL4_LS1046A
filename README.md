@@ -5,6 +5,39 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 ## DTS & DTB files
 
 ```
+├── apps
+│   └── hello
+├── build
+│   ├── apps
+│   └── CMakeFiles
+├── diffs	-- Patches from the original commits
+├── dts
+│   ├── dtb
+│   │   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).
+│   ├── dtb2dts
+│   │   └── freescale	-- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
+│   └── dts-linux
+│	    └── freescale	-- Device tree source.
+│				   Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+├── kernel
+│   ├── configs
+│   ├── include
+│   ├── libsel4
+│   ├── LICENSES
+│   ├── manual
+│   ├── src
+│   └── tools
+├── projects
+│   ├── capdl
+│   ├── musllibc
+│   ├── seL4_libs
+│   ├── seL4_projects_libs
+│   ├── sel4runtime
+│   ├── sel4-tutorials
+│   └── util_libs
+├── scripts
+└── tools
+    └── seL4
 dts/
 ├── dtb
 │   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).

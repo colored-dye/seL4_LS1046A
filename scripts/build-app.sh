@@ -11,29 +11,27 @@ fi
 
 
 BUILD_DIR="$TOP_DIR/build"
-KERNEL_DIR="$TOP_DIR/kernel"
-BUILD_KERNEL_DIR="$BUILD_DIR/kernel"
+APP_DIR="$TOP_DIR/apps/hello"
+BUILD_APP_DIR="$BUILD_DIR/apps/hello"
 
 echo "TOP_DIR: $TOP_DIR"
-echo "Kernel build directory: $BUILD_KERNEL_DIR"
+echo "App build directory: $BUILD_KERNEL_DIR"
 
-rm -rf $BUILD_KERNEL_DIR
-mkdir -p $BUILD_KERNEL_DIR
-cd $BUILD_KERNEL_DIR
+rm -rf $BUILD_APP_DIR
+mkdir -p $BUILD_APP_DIR
+cd $BUILD_APP_DIR
 
-cmake $KERNEL_DIR \
+cmake "$APP_DIR" \
     -GNinja \
-    -DKernelArch=arm \
+    -DSEL4_CACHE_DIR="$TOP_DIR/.sel4_cache" \
     -DKernelArchARM=1 \
     -DKernelSel4ArchAarch64=1 \
     -DKernelWordSize=64 \
     -DKernelArmCortexA72=1 \
     -DKernelArchArmV8a=1 \
     -Darch=aarch64 \
-    -DKernelSel4Arch=aarch64 \
-    -DCMAKE_TOOLCHAIN_FILE="$KERNEL_DIR/gcc.cmake" \
-    -DKernelPlatform=ls1046a \
+    -DCMAKE_TOOLCHAIN_FILE="$TOP_DIR/kernel/gcc.cmake" \
+    -DPLATFORM=ls1046a \
+    -DTUT_BOARD=ls1046a \
     -DCROSS_COMPILER_PREFIX=aarch64-linux-gnu- \
-    # -DKernelSel4ArchArmHyp=1 # Temporarily disable hypervisor support
-
-ninja
+    -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials"

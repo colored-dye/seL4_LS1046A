@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7.2)
 
-declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
+declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelSel4ArchAarch64)
 
 if(KernelPlatformOK1046AC2)
     if("${KernelSel4Arch}" STREQUAL aarch64)

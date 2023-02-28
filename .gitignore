@@ -1,2 +1,6 @@
-/build/
+.sel4_cache/
+build/
 __pycache__/
+/projects/*
+# !/projects/sel4-tutorials/
+.fetch-log

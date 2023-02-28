@@ -1,0 +1,24 @@
+diff --git a/settings.cmake b/settings.cmake
+index da07102..f6d7533 100644
+--- a/settings.cmake
++++ b/settings.cmake
+@@ -57,6 +57,11 @@ elseif(${TUT_BOARD} STREQUAL "zynq7000")
+     set(KernelSel4Arch "aarch32" CACHE STRING "" FORCE)
+     set(KernelPlatform "zynq7000" CACHE STRING "" FORCE)
+     ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "ls1046a")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "ls1046a" CACHE STRING "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
+ else()
+     message(FATAL_ERROR "Unsupported board ${TUT_BOARD}.")
+ endif()
+@@ -87,5 +92,5 @@ if(FORCE_IOMMU)
+     set(KernelIOMMU ON CACHE BOOL "" FORCE)
+ endif()
+ 
+-find_package(sel4-tutorials REQUIRED)
+-sel4_tutorials_regenerate_tutorial(${project_dir}/${TUTORIAL_DIR})
++# find_package(sel4-tutorials REQUIRED)
++# sel4_tutorials_regenerate_tutorial(${project_dir}/${TUTORIAL_DIR})
