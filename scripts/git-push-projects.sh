@@ -14,10 +14,12 @@ DIFFS="$TOP_DIR/diffs"
 mkdir -p $DIFFS
 
 PROJECTS_DIR="$TOP_DIR/projects"
-BACKUP_PROJECTS_DIR="$TOP_DIR/backup/projects"
+BACKUP_PROJECTS_DIR="../backup/projects"
 
+cd $PROJECTS_DIR
 for proj in `ls $PROJECTS_DIR`
 do
     echo $proj
-    diff -Nur --exclude=.git $BACKUP_PROJECTS_DIR/$proj $PROJECTS_DIR/$proj > $DIFFS/$proj
+    
+    diff -Nur --exclude=.git $BACKUP_PROJECTS_DIR/$proj $proj > $DIFFS/$proj
 done

@@ -15,5 +15,5 @@ PROJECTS="$TOP_DIR/projects"
 for proj in `ls $DIFFS`
 do
     cd $PROJECTS/$proj
-    patch -p1 < $DIFFS/$proj
+    patch -p 1 < $DIFFS/$proj
 done
