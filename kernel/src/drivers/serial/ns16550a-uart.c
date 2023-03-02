@@ -22,6 +22,8 @@
 #define ULSR1       0x5
 // #define ULSR2       0x605
 
+// #define BIT(n) (1u << (n))
+
 #define ULSR_THRE   BIT(5) // Transmitter Holding Register Empty
 // #define ULSR_BI     BIT(4) // Break Interrupt
 // #define ULSR_FE     BIT(3) // Framing Error

@@ -1,6 +1,6 @@
-diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
---- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-02-28 15:38:50.278573855 +0800
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
+--- /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
++++ /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-02-28 15:38:50.278573855 +0800
 @@ -0,0 +1,9 @@
 +#pragma once
 +
@@ -11,9 +11,9 @@ diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/cloc
 +enum clock_gate {
 +    NCLKGATES
 +};
-diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
---- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-02-28 15:27:24.940123386 +0800
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
+--- /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
++++ /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-02-28 15:27:24.940123386 +0800
 @@ -0,0 +1,12 @@
 +/*
 + * Copyright 2017, Data61, CSIRO (ABN 41 687 119 230)
@@ -27,26 +27,27 @@ diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.
 +    NI2C
 +};
 +
-diff -Nur ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
---- ../util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-02-28 15:48:03.191278851 +0800
-@@ -0,0 +1,12 @@
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
+--- /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
++++ /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-02 14:47:48.847187853 +0800
+@@ -0,0 +1,13 @@
 +#pragma once
 +
 +#define UART1_PADDR 0x021c0500
 +
 +#define UART1_IRQ   86
 +
++// Only 1~4
 +enum chardev_id {
 +    NS16550A_UART1,
 +};
 +
-+#define DEFAULT_SERIAL_PADDR UART1_PADDR
-+#define DEFAULT_SERIAL_INTERRUPT UART1_IRQ
-diff -Nur ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
---- ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-02-28 15:28:19.856609569 +0800
-@@ -0,0 +1,41 @@
++#define DEFAULT_SERIAL_PADDR        UART1_PADDR
++#define DEFAULT_SERIAL_INTERRUPT    UART1_IRQ
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c
+--- /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
++++ /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-02 14:53:55.778441048 +0800
+@@ -0,0 +1,39 @@
 +/*
 + * Copyright 2019, Data61, CSIRO (ABN 41 687 119 230)
 + *
@@ -62,12 +63,10 @@ diff -Nur ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libpl
 +#include "../../common.h"
 +#include <utils/util.h>
 +
-+#include "../../chardev.h"
-+
-+static const int uart0_irqs[] = {UART0_IRQ, -1};
++static const int uart1_irqs[] = {UART1_IRQ, -1};
 +
 +#define UART_DEFN(devid) {          \
-+    .id      = PL001_UART##devid,    \
++    .id      = NS16550A_UART##devid,    \
 +    .paddr   = UART##devid##_PADDR, \
 +    .size    = BIT(12),             \
 +    .irqs    = uart##devid##_irqs,  \
@@ -75,7 +74,7 @@ diff -Nur ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libpl
 +}
 +
 +static const struct dev_defn dev_defn[] = {
-+    UART_DEFN(0),
++    UART_DEFN(1),
 +};
 +
 +struct ps_chardevice *ps_cdev_init(enum chardev_id id, const ps_io_ops_t *o, struct ps_chardevice *d)
@@ -87,4 +86,110 @@ diff -Nur ../util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libpl
 +        }
 +    }
 +    return NULL;
++}
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c
+--- /home/colored-dye/LS1046A/backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	1970-01-01 08:00:00.000000000 +0800
++++ /home/colored-dye/LS1046A/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-02 15:54:36.728440909 +0800
+@@ -0,0 +1,102 @@
++#include <string.h>
++#include <stdlib.h>
++#include <platsupport/serial.h>
++#include "../../chardev.h"
++
++/*
++ * NS16550A UART functions
++ */
++
++/*
++ * Register memory map
++ * Offset from base address
++ * Default reset value: 0
++ */
++
++#define URBR1     0x00     /* receiver buffer register                 */
++#define UTHR1     0x00     /* transmit holding register                */
++#define UDLB1     0x00     /* divisor least significant byte register  */
++#define UIER1     0x01     /* interrupt enable register                */
++#define UDMB1     0x01     /* divisor most significant byte register   */
++#define UIIR1     0x02     /* interrupt identification register        */
++                                    /* Reset value: 1                           */
++#define UFCR1     0x02     /* FIFO control register                    */
++#define UAFR1     0x02     /* alternate function register              */
++#define ULCR1     0x03     /* line control register                    */
++#define UMCR1     0x04     /* modem control register                   */
++#define ULSR1     0x05     /* line status register                     */
++                                    /* Reset value: LSR_THRE | LSR_TEMT = 6     */
++#define UMSR1     0x06     /* modem status register                    */
++#define USCR1     0x07     /* scratch register                         */
++#define UDSR1     0x10     /* DMA status register                      */
++                                    /* Reset value: 1                           */
++
++/*********************************************************************************************************
++  Line Status Register
++*********************************************************************************************************/
++
++#define LSR_DR          BIT(0)       /* data ready                           */
++#define LSR_OE          BIT(1)       /* overrun error                        */
++#define LSR_PE          BIT(2)       /* parity error                         */
++#define LSR_FE          BIT(3)       /* framing error                        */
++#define LSR_BI          BIT(4)       /* break interrupt                      */
++#define LSR_THRE        BIT(5)       /* transmit holding register empty      */
++#define LSR_TEMT        BIT(6)       /* transmitter empty                    */
++#define LSR_FERR        BIT(7)       /* fifo mode, set when PE,FE or BI err  */
++
++#define UART_REG(x) ((volatile uint32_t *)(DEFAULT_SERIAL_PADDR + (x)))
++
++int uart_getchar(ps_chardevice_t *d)
++{
++    int ch = EOF;
++
++    uint_32_t poll_status = *(UART_REG(ULSR1));
++
++    // Get byte if data ready
++    // Return EOF if not ready, no poll
++    if (poll_status & LSR_DR) {
++        ch = *(UART_REG(URBR1)) & MASK(8);
++    }
++
++    return ch;
++}
++
++int uart_putchar(int *dev, int c)
++{
++    // Wait until THR register is empty
++    while ((*UART_REG(ULSR1) & LSR_THRE) == 0)
++        ;
++
++    *UART_REG(UTHR1) = c & MASK(8);
++
++    return 0;
++}
++
++static void uart_handle_irq(ps_chardevice_t *dev)
++{
++
++}
++
++int uart_init(
++    const struct dev_defn *defn,
++    const ps_io_ops_t *ops,
++    ps_chardevice_t *dev
++)
++{
++    memset(dev, 0, sizeof(ps_chardevice_t));
++    void *vaddr = chardev_map(defn, ops);
++    if (vaddr == NULL) {
++        return -1;
++    }
++    dev->id = defn->id;
++    dev->vaddr = vaddr;
++    dev->read = &uart_read;
++    dev->write = &uart_write;
++    dev->handle_irq = &uart_handle_irq;
++    dev->irqs = defn->irqs;
++    dev->ioops = *ops;
++    dev->flags = SERIAL_AUTO_CR;
++    // dev->clk = NULL;
++
++    return 0;
 +}

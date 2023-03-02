@@ -19,7 +19,7 @@ while IFS=" " read -r path url branch commit; do
                     echo -e "\e[31mFailed\e[0m"
                 else
                     cd $path
-                    git checkout $commit >>.fetch-log 2>&1
+                    git checkout $commit >>"$TOP_DIR.fetch-log" 2>&1
                     cd $TOP_DIR
                     echo -e "\e[32mFinished\e[0m"
                 fi

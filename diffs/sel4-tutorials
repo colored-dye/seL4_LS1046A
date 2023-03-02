@@ -1,8 +1,7 @@
-diff --git a/settings.cmake b/settings.cmake
-index da07102..f6d7533 100644
---- a/settings.cmake
-+++ b/settings.cmake
-@@ -57,6 +57,11 @@ elseif(${TUT_BOARD} STREQUAL "zynq7000")
+diff -Nur '--exclude=.git' /home/colored-dye/LS1046A/backup/projects/sel4-tutorials/settings.cmake /home/colored-dye/LS1046A/projects/sel4-tutorials/settings.cmake
+--- /home/colored-dye/LS1046A/backup/projects/sel4-tutorials/settings.cmake	2023-03-02 13:42:55.531241080 +0800
++++ /home/colored-dye/LS1046A/projects/sel4-tutorials/settings.cmake	2023-02-28 14:57:23.597485115 +0800
+@@ -57,6 +57,11 @@
      set(KernelSel4Arch "aarch32" CACHE STRING "" FORCE)
      set(KernelPlatform "zynq7000" CACHE STRING "" FORCE)
      ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
@@ -14,7 +13,7 @@ index da07102..f6d7533 100644
  else()
      message(FATAL_ERROR "Unsupported board ${TUT_BOARD}.")
  endif()
-@@ -87,5 +92,5 @@ if(FORCE_IOMMU)
+@@ -87,5 +92,5 @@
      set(KernelIOMMU ON CACHE BOOL "" FORCE)
  endif()
  

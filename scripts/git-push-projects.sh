@@ -13,9 +13,11 @@ DIFFS="$TOP_DIR/diffs"
 
 mkdir -p $DIFFS
 
-for proj in `ls $TOP_DIR/projects`
+PROJECTS_DIR="$TOP_DIR/projects"
+BACKUP_PROJECTS_DIR="$TOP_DIR/backup/projects"
+
+for proj in `ls $PROJECTS_DIR`
 do
     echo $proj
-    cd $TOP_DIR/projects/$proj
-    git diff > $DIFFS/$proj
+    diff -Nur --exclude=.git $BACKUP_PROJECTS_DIR/$proj $PROJECTS_DIR/$proj > $DIFFS/$proj
 done

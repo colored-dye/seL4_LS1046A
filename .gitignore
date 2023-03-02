@@ -2,5 +2,5 @@
 build/
 __pycache__/
 /projects/*
-# !/projects/sel4-tutorials/
+/backup/*
 .fetch-log
