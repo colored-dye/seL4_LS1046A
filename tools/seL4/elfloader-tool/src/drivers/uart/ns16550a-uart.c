@@ -12,16 +12,15 @@
 #include <printf.h>
 #include <types.h>
 
-#define UTHR        0x400 // UART Transmitter Holding Register.
-                          // Data is written to this register.
-                          // UTHRa: 0x400 + a * 0x100 (a=1,2)
+#define UTHR        0x0 // UART Transmitter Holding Register.
+                        // Data is written to this register.
+                        // UTHRa: 0x400 + a * 0x100 (a=1,2)
 
-#define ULSR        0x405 // UART Line Status Register.
-                          // Read-only registers that 
-                          // ULSRa: 0x405 + a * 0x100 (a=1,2)
+#define ULSR        0x5 // UART Line Status Register.
+                        // Read-only registers that 
+                        // ULSRa: 0x405 + a * 0x100 (a=1,2)
 
 #define ULSR_THRE   BIT(5) // Transmitter Holding Register Empty
-// Unused:
 // #define ULSR_BI     BIT(4) // Break Interrupt
 // #define ULSR_FE     BIT(3) // Framing Error
 // #define ULSR_PE     BIT(2) // Parity Error
