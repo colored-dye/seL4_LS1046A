@@ -11,6 +11,57 @@
     };
 
     memory@80000000 {
-        reg = <0x00000000 0x80000000 0x00000000 0x40000000>;
+        reg = <0x00000000 0x80000000 0x00000000 0x40000000>; /* 1GB */
     };
+
+    reserved-memory {
+		#address-cells = <0x02>;
+		#size-cells = <0x02>;
+		ranges;
+
+        // Secure Boot ROM
+		reserved-memory@0{
+			reg = < 0x00000000 0x00000000 0x00000000 0x00100000 >;
+			no-map;
+		};
+
+        // Extended Boot ROM
+		reserved-memory@100000 {
+			reg = < 0x00000000 0x00100000 0x00000000 0x00F00000 >;
+			no-map;
+		};
+
+        // CCSR Register Space
+        reserved-memory@1000000 {
+            reg = < 0x00000000 0x01000000 0x00000000 0x0F000000 >;
+            no-map;
+        };
+
+        // OCRAM1
+        reserved-memory@10000000 {
+            reg = < 0x00000000 0x10000000 0x00000000 0x00010000 >;
+            no-map;
+        };
+
+        // OCRAM2
+        reserved-memory@10010000 {
+            reg = < 0x00000000 0x10000000 0x00000000 0x00010000 >;
+            no-map;
+        };
+
+        reserved-memory@11000000 {
+            reg = < 0x00000000 0x11000000 0x00000000 0x01000000 >;
+            no-map;
+        };
+
+        reserved-memory@13000000 {
+            reg = < 0x00000000 0x13000000 0x00000000 0x0d000000 >;
+            no-map;
+        };
+
+        reserved-memory@24000000 {
+            reg = < 0x00000000 0x24000000 0x00000000 0x1c000000 >;
+            no-map;
+        };
+	};
 };

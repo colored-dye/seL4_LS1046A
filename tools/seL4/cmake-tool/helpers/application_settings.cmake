@@ -36,6 +36,10 @@ function(ApplyData61ElfLoaderSettings kernel_platform kernel_sel4_arch)
         set(ElfloaderMode "hypervisor" CACHE STRING "" FORCE)
         set(ElfloaderMonitorHook ON CACHE BOOL "" FORCE)
     endif()
+    # Manually set image start address
+    # if(KernelPlatformOK1046AC2)
+    #     set(IMAGE_START_ADDR 0x81000000 CACHE INTERNAL "" FORCE)
+    # endif()
     if((KernelPlatformImx8mm-evk OR KernelPlatImx8mq) AND KernelSel4ArchAarch32)
         set(ElfloaderArmV8LeaveAarch64 ON CACHE BOOL "" FORCE)
         # This applies to imx8mm, imx8mq (EVK and MaaXBoard) when in aarch32 configuration

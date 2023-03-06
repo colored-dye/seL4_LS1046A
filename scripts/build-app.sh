@@ -31,7 +31,7 @@ cmake "$APP_DIR" \
     -DKernelArchArmV8a=1 \
     -Darch=aarch64 \
     -DCMAKE_TOOLCHAIN_FILE="$TOP_DIR/kernel/gcc.cmake" \
-    -DPLATFORM=qemu-arm-virt \
-    -DTUT_BOARD=qemu-arm-virt \
+    -DPLATFORM=ls1046a \
+    -DTUT_BOARD=ls1046a \
     -DCROSS_COMPILER_PREFIX=aarch64-linux-gnu- \
     -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials"

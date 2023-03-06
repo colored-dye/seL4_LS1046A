@@ -1,10 +1,20 @@
 diff -Nur '--exclude=.git' ../backup/projects/sel4-tutorials/settings.cmake sel4-tutorials/settings.cmake
 --- ../backup/projects/sel4-tutorials/settings.cmake	2023-03-02 13:42:55.531241080 +0800
-+++ sel4-tutorials/settings.cmake	2023-02-28 14:57:23.597485115 +0800
-@@ -57,6 +57,11 @@
++++ sel4-tutorials/settings.cmake	2023-03-06 08:41:50.466852549 +0800
+@@ -57,6 +57,21 @@
      set(KernelSel4Arch "aarch32" CACHE STRING "" FORCE)
      set(KernelPlatform "zynq7000" CACHE STRING "" FORCE)
      ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "rpi4")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "bcm2711" CACHE STRING "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "qemu-arm-virt")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "qemu-arm-virt" CACHE STRING "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
 +elseif(${TUT_BOARD} STREQUAL "ls1046a")
 +    set(KernelArch "arm" CACHE STRING "" FORCE)
 +    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
@@ -13,7 +23,13 @@ diff -Nur '--exclude=.git' ../backup/projects/sel4-tutorials/settings.cmake sel4
  else()
      message(FATAL_ERROR "Unsupported board ${TUT_BOARD}.")
  endif()
-@@ -87,5 +92,5 @@
+@@ -82,10 +97,10 @@
+ 
+ # We will attempt to generate a simulation script, so try and generate a simulation
+ # compatible configuration
+-ApplyCommonSimulationSettings(${KernelSel4Arch})
++# ApplyCommonSimulationSettings(${KernelSel4Arch})
+ if(FORCE_IOMMU)
      set(KernelIOMMU ON CACHE BOOL "" FORCE)
  endif()
  

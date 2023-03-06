@@ -92,6 +92,7 @@
         device_type = "memory";
         /* Real size filled by bootloader */
         /* reg = <0x00000000 0x80000000 0x00000000 0x00000000>; */
+        /* In our case, constant value filled manually in overlay */
     };
     sysclk {
         compatible = "fixed-clock";

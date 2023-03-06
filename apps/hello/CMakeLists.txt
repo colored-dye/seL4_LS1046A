@@ -4,7 +4,7 @@ include(${SEL4_TUTORIALS_DIR}/settings.cmake)
 
 cmake_minimum_required(VERSION 3.7.2)
 # declare the hello-world CMake project and the languages it is written in (just C)
-project(hello-world C ASM)
+project(hello-world C)
 
 # In future tutorials, these setup steps will be replaced with
 # sel4_tutorials_setup_roottask_tutorial_environment()
@@ -16,6 +16,9 @@ find_package(util_libs REQUIRED)
 # find_package(seL4_libs REQUIRED)
 # find_package(sel4-tutorials REQUIRED)
 
+sel4_configure_platform_settings()
+
+message("${IMAGE_START_ADDR}")
 sel4_import_kernel()
 elfloader_import_project()
 
@@ -32,6 +35,7 @@ add_executable(hello-world src/hello.c)
 
 # List of libraries to link with the application.
 target_link_libraries(hello-world
+    sel4_autoconf
     sel4runtime
     sel4
     muslc
@@ -48,12 +52,12 @@ include(rootserver)
 DeclareRootserver(hello-world)
 
 # utility CMake functions for the tutorials (not required in normal, non-tutorial applications)
-set(FINISH_COMPLETION_TEXT "
-FINISH_COMPLETION_TEXT: Hello, World!
-")
-set(START_COMPLETION_TEXT "
-START_COMPLETION_TEXT: Hello, World!
-")
+# set(FINISH_COMPLETION_TEXT "
+# FINISH_COMPLETION_TEXT: Hello, World!
+# ")
+# set(START_COMPLETION_TEXT "
+# START_COMPLETION_TEXT: Hello, World!
+# ")
 # configure_file(${SEL4_TUTORIALS_DIR}/tools/expect.py ${CMAKE_BINARY_DIR}/check @ONLY)
 # include(simulation)
 # GenerateSimulateScript()
