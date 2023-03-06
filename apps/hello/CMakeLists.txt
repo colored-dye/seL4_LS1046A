@@ -47,7 +47,6 @@ target_link_libraries(hello-world
 include(rootserver)
 DeclareRootserver(hello-world)
 
-
 # utility CMake functions for the tutorials (not required in normal, non-tutorial applications)
 set(FINISH_COMPLETION_TEXT "
 FINISH_COMPLETION_TEXT: Hello, World!
