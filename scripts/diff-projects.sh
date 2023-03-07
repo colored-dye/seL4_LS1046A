@@ -24,7 +24,7 @@ BACKUP_KERNEL_DIR="backup/kernel"
 
 echo "$TOP_DIR/kernel"
 cd $TOP_DIR
-diff -Nur --exclude=.git --exclude=.github $BACKUP_KERNEL_DIR $KERNEL_DIR > $DIFFS/kernel.patch
+diff -Nur --exclude=.git --exclude=.github --exclude-from=$KERNEL_DIR/.gitignore $BACKUP_KERNEL_DIR $KERNEL_DIR > $DIFFS/kernel.patch
 
 #
 # Diff projects/
@@ -52,5 +52,5 @@ for tool in `ls $TOOLS_DIR`
 do
     echo $TOOLS_DIR/$tool
 
-    diff -Nur --exclude=.git --exclude=.github $BACKUP_TOOLS_DIR/$tool $tool > $DIFFS/tools/$tool.patch
+    diff -Nur --exclude=.git --exclude=.github --exclude=*.pyc --exclude-from=$tool/.gitignore $BACKUP_TOOLS_DIR/$tool $tool > $DIFFS/tools/$tool.patch
 done

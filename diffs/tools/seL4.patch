@@ -1,4 +1,4 @@
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/cmake-tool/helpers/application_settings.cmake seL4/cmake-tool/helpers/application_settings.cmake
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/cmake-tool/helpers/application_settings.cmake seL4/cmake-tool/helpers/application_settings.cmake
 --- ../backup/tools/seL4/cmake-tool/helpers/application_settings.cmake	2023-03-07 16:02:43.842833792 +0800
 +++ seL4/cmake-tool/helpers/application_settings.cmake	2023-03-07 14:51:42.786985697 +0800
 @@ -10,7 +10,7 @@
@@ -29,9 +29,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/cmake-tool/h
          "-KernelSel4Arch"
          "pc99:x86_64,ia32"
      )
-Binary files ../backup/tools/seL4/cmake-tool/helpers/__pycache__/elf_sift.cpython-38.pyc and seL4/cmake-tool/helpers/__pycache__/elf_sift.cpython-38.pyc differ
-Binary files ../backup/tools/seL4/cmake-tool/helpers/__pycache__/platform_sift.cpython-38.pyc and seL4/cmake-tool/helpers/__pycache__/platform_sift.cpython-38.pyc differ
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-tool/CMakeLists.txt seL4/elfloader-tool/CMakeLists.txt
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/elfloader-tool/CMakeLists.txt seL4/elfloader-tool/CMakeLists.txt
 --- ../backup/tools/seL4/elfloader-tool/CMakeLists.txt	2023-03-07 16:02:43.842833792 +0800
 +++ seL4/elfloader-tool/CMakeLists.txt	2023-03-07 10:40:05.365968792 +0800
 @@ -421,7 +421,7 @@
@@ -43,7 +41,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-to
          elfloader_Config
          sel4_autoconf
  )
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S
 --- ../backup/tools/seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S	2023-03-07 16:02:43.846833918 +0800
 +++ seL4/elfloader-tool/src/arch-arm/armv/armv8-a/64/mmu.S	2023-03-07 14:29:08.822955598 +0800
 @@ -48,6 +48,7 @@
@@ -54,7 +52,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-to
      /*
       * Invalidate the local I-cache so that any instructions fetched
       * speculatively are discarded.
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds
 --- ../backup/tools/seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds	2023-03-07 16:02:43.862834425 +0800
 +++ seL4/elfloader-tool/src/binaries/efi/gnuefi/elf_aarch64_efi.lds	2023-03-07 13:34:54.665020352 +0800
 @@ -34,6 +34,15 @@
@@ -90,7 +88,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-to
    /DISCARD/ :
    {
      *(.rel.reloc)
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c
 --- ../backup/tools/seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c	1970-01-01 08:00:00.000000000 +0800
 +++ seL4/elfloader-tool/src/drivers/uart/ns16550a-uart.c	2023-03-07 13:43:44.933448249 +0800
 @@ -0,0 +1,69 @@
@@ -163,7 +161,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-to
 +};
 +
 +ELFLOADER_DRIVER(uart_ns16550a);
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/tools/seL4/elfloader-tool/src/plat/ls1046a/platform_init.c seL4/elfloader-tool/src/plat/ls1046a/platform_init.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' '--exclude-from=seL4/.gitignore' ../backup/tools/seL4/elfloader-tool/src/plat/ls1046a/platform_init.c seL4/elfloader-tool/src/plat/ls1046a/platform_init.c
 --- ../backup/tools/seL4/elfloader-tool/src/plat/ls1046a/platform_init.c	1970-01-01 08:00:00.000000000 +0800
 +++ seL4/elfloader-tool/src/plat/ls1046a/platform_init.c	2023-02-27 14:06:35.656196472 +0800
 @@ -0,0 +1,15 @@

@@ -1,4 +1,4 @@
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h
 --- backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	2023-02-28 08:35:41.789192041 +0800
 @@ -0,0 +1,11 @@
@@ -13,9 +13,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/libsel4/sel4_plat_i
 +#include <autoconf.h>
 +/* 4x Cortex-A72. */
 +#include <sel4/arch/constants_cortex_a72.h>
-Binary files backup/kernel/libsel4/tools/__pycache__/condition.cpython-38.pyc and kernel/libsel4/tools/__pycache__/condition.cpython-38.pyc differ
-Binary files backup/kernel/manual/tools/libsel4_tools/__pycache__/condition.cpython-38.pyc and kernel/manual/tools/libsel4_tools/__pycache__/condition.cpython-38.pyc differ
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/serial/config.cmake kernel/src/drivers/serial/config.cmake
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/serial/config.cmake kernel/src/drivers/serial/config.cmake
 --- backup/kernel/src/drivers/serial/config.cmake	2023-03-07 15:44:00.634205556 +0800
 +++ kernel/src/drivers/serial/config.cmake	2023-02-27 14:24:11.487166405 +0800
 @@ -44,3 +44,8 @@
@@ -27,7 +25,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/serial/
 +    PREFIX src/drivers/serial
 +    CFILES "ns16550a-uart.c"
 +)
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/serial/ns16550a-uart.c kernel/src/drivers/serial/ns16550a-uart.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/serial/ns16550a-uart.c kernel/src/drivers/serial/ns16550a-uart.c
 --- backup/kernel/src/drivers/serial/ns16550a-uart.c	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/src/drivers/serial/ns16550a-uart.c	2023-03-07 14:52:39.884510065 +0800
 @@ -0,0 +1,53 @@
@@ -84,7 +82,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/serial/
 +    return *UART_REG(UTHR1);
 +}
 +#endif /* CONFIG_DEBUG_BUILD */
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/smmu/smmuv2.c kernel/src/drivers/smmu/smmuv2.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/smmu/smmuv2.c kernel/src/drivers/smmu/smmuv2.c
 --- backup/kernel/src/drivers/smmu/smmuv2.c	2023-03-07 15:44:00.694205088 +0800
 +++ kernel/src/drivers/smmu/smmuv2.c	2023-03-07 15:32:42.345341770 +0800
 @@ -4,6 +4,7 @@
@@ -100,7 +98,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/drivers/smmu/sm
  }
  
 +#endif
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/plat/ls1046a/config.cmake kernel/src/plat/ls1046a/config.cmake
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/ls1046a/config.cmake kernel/src/plat/ls1046a/config.cmake
 --- backup/kernel/src/plat/ls1046a/config.cmake	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/src/plat/ls1046a/config.cmake	2023-03-07 15:12:12.240383402 +0800
 @@ -0,0 +1,34 @@
@@ -138,7 +136,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/plat/ls1046a/co
 +    DEP "KernelPlatformOK1046AC2"
 +    CFILES src/arch/arm/machine/gic_v2.c src/arch/arm/machine/l2c_nop.c
 +)
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts kernel/src/plat/ls1046a/overlay-ls1046a.dts
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts kernel/src/plat/ls1046a/overlay-ls1046a.dts
 --- backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/src/plat/ls1046a/overlay-ls1046a.dts	2023-03-07 11:16:18.531685816 +0800
 @@ -0,0 +1,68 @@
@@ -210,7 +208,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/src/plat/ls1046a/ov
 +        };
 +	};
 +};
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/dts/ok1046a-c2.dts kernel/tools/dts/ok1046a-c2.dts
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/dts/ok1046a-c2.dts kernel/tools/dts/ok1046a-c2.dts
 --- backup/kernel/tools/dts/ok1046a-c2.dts	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/tools/dts/ok1046a-c2.dts	2023-03-07 15:03:42.892929316 +0800
 @@ -0,0 +1,1396 @@
@@ -1611,37 +1609,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/dts/ok1046a-c
 +    };
 +};
 \ No newline at end of file
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/c_header.cpython-310.pyc and kernel/tools/hardware/outputs/__pycache__/c_header.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/c_header.cpython-38.pyc and kernel/tools/hardware/outputs/__pycache__/c_header.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/compat_strings.cpython-310.pyc and kernel/tools/hardware/outputs/__pycache__/compat_strings.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/compat_strings.cpython-38.pyc and kernel/tools/hardware/outputs/__pycache__/compat_strings.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/elfloader.cpython-310.pyc and kernel/tools/hardware/outputs/__pycache__/elfloader.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/elfloader.cpython-38.pyc and kernel/tools/hardware/outputs/__pycache__/elfloader.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/__init__.cpython-310.pyc and kernel/tools/hardware/outputs/__pycache__/__init__.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/__init__.cpython-38.pyc and kernel/tools/hardware/outputs/__pycache__/__init__.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/yaml.cpython-310.pyc and kernel/tools/hardware/outputs/__pycache__/yaml.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/outputs/__pycache__/yaml.cpython-38.pyc and kernel/tools/hardware/outputs/__pycache__/yaml.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/config.cpython-310.pyc and kernel/tools/hardware/__pycache__/config.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/config.cpython-38.pyc and kernel/tools/hardware/__pycache__/config.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/device.cpython-310.pyc and kernel/tools/hardware/__pycache__/device.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/device.cpython-38.pyc and kernel/tools/hardware/__pycache__/device.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/fdt.cpython-310.pyc and kernel/tools/hardware/__pycache__/fdt.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/fdt.cpython-38.pyc and kernel/tools/hardware/__pycache__/fdt.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/__init__.cpython-310.pyc and kernel/tools/hardware/__pycache__/__init__.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/__init__.cpython-38.pyc and kernel/tools/hardware/__pycache__/__init__.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/irq.cpython-310.pyc and kernel/tools/hardware/__pycache__/irq.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/irq.cpython-38.pyc and kernel/tools/hardware/__pycache__/irq.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/memory.cpython-310.pyc and kernel/tools/hardware/__pycache__/memory.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/__pycache__/memory.cpython-38.pyc and kernel/tools/hardware/__pycache__/memory.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/cpu.cpython-310.pyc and kernel/tools/hardware/utils/__pycache__/cpu.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/cpu.cpython-38.pyc and kernel/tools/hardware/utils/__pycache__/cpu.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/__init__.cpython-310.pyc and kernel/tools/hardware/utils/__pycache__/__init__.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/__init__.cpython-38.pyc and kernel/tools/hardware/utils/__pycache__/__init__.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/memory.cpython-310.pyc and kernel/tools/hardware/utils/__pycache__/memory.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/memory.cpython-38.pyc and kernel/tools/hardware/utils/__pycache__/memory.cpython-38.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/rule.cpython-310.pyc and kernel/tools/hardware/utils/__pycache__/rule.cpython-310.pyc differ
-Binary files backup/kernel/tools/hardware/utils/__pycache__/rule.cpython-38.pyc and kernel/tools/hardware/utils/__pycache__/rule.cpython-38.pyc differ
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/hardware.yml kernel/tools/hardware.yml
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/hardware.yml kernel/tools/hardware.yml
 --- backup/kernel/tools/hardware.yml	2023-03-07 15:44:00.658205368 +0800
 +++ kernel/tools/hardware.yml	2023-03-06 10:19:15.454742127 +0800
 @@ -99,6 +99,7 @@
@@ -1652,7 +1620,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/hardware.yml 
      interrupts:
        KERNEL_PMU_IRQ: boot-cpu
    # Tegra SMMU (memory-controllers/nvidia,tegra30-mc.txt)
-diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/helpers.cmake kernel/tools/helpers.cmake
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/helpers.cmake kernel/tools/helpers.cmake
 --- backup/kernel/tools/helpers.cmake	2023-03-07 15:44:00.694205088 +0800
 +++ kernel/tools/helpers.cmake	2023-03-07 15:38:31.244386439 +0800
 @@ -590,11 +590,11 @@
@@ -1669,6 +1637,3 @@ diff -Nur '--exclude=.git' '--exclude=.github' backup/kernel/tools/helpers.cmake
      # Set our GENERATED_FILES property to include the GENERATED_FILES of all of our input
      # configurations, as well as the files we generated
      set_property(
-Binary files backup/kernel/tools/__pycache__/condition.cpython-38.pyc and kernel/tools/__pycache__/condition.cpython-38.pyc differ
-Binary files backup/kernel/tools/__pycache__/lex.cpython-38.pyc and kernel/tools/__pycache__/lex.cpython-38.pyc differ
-Binary files backup/kernel/tools/__pycache__/umm.cpython-38.pyc and kernel/tools/__pycache__/umm.cpython-38.pyc differ

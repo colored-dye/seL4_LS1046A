@@ -5,3 +5,4 @@
 build/
 __pycache__/
 .fetch-log
+*.pyc
