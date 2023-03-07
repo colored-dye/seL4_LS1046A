@@ -1,0 +1,49 @@
+diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/sel4-tutorials/settings.cmake sel4-tutorials/settings.cmake
+--- ../backup/projects/sel4-tutorials/settings.cmake	2023-03-02 13:42:55.531241080 +0800
++++ sel4-tutorials/settings.cmake	2023-03-06 16:03:13.374200624 +0800
+@@ -57,11 +57,27 @@
+     set(KernelSel4Arch "aarch32" CACHE STRING "" FORCE)
+     set(KernelPlatform "zynq7000" CACHE STRING "" FORCE)
+     ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "rpi4")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "bcm2711" CACHE STRING "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "qemu-arm-virt")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "qemu-arm-virt" CACHE STRING "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
++elseif(${TUT_BOARD} STREQUAL "ls1046a")
++    set(KernelArch "arm" CACHE STRING "" FORCE)
++    set(KernelSel4Arch "aarch64" CACHE STRING "" FORCE)
++    set(KernelPlatform "ls1046a" CACHE STRING "" FORCE)
++    set(KernelPlatformOK1046AC2 ON CACHE BOOL "" FORCE)
++    ApplyData61ElfLoaderSettings(${KernelPlatform} ${KernelSel4Arch})
+ else()
+     message(FATAL_ERROR "Unsupported board ${TUT_BOARD}.")
+ endif()
+ 
+-include(${project_dir}/kernel/configs/seL4Config.cmake)
++# include(${project_dir}/kernel/configs/seL4Config.cmake)
+ set(CapDLLoaderMaxObjects 20000 CACHE STRING "" FORCE)
+ set(KernelRootCNodeSizeBits 16 CACHE STRING "")
+ 
+@@ -82,10 +98,10 @@
+ 
+ # We will attempt to generate a simulation script, so try and generate a simulation
+ # compatible configuration
+-ApplyCommonSimulationSettings(${KernelSel4Arch})
+-if(FORCE_IOMMU)
+-    set(KernelIOMMU ON CACHE BOOL "" FORCE)
+-endif()
++# ApplyCommonSimulationSettings(${KernelSel4Arch})
++# if(FORCE_IOMMU)
++#     set(KernelIOMMU ON CACHE BOOL "" FORCE)
++# endif()
+ 
+-find_package(sel4-tutorials REQUIRED)
+-sel4_tutorials_regenerate_tutorial(${project_dir}/${TUTORIAL_DIR})
++# find_package(sel4-tutorials REQUIRED)
++# sel4_tutorials_regenerate_tutorial(${project_dir}/${TUTORIAL_DIR})

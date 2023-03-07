@@ -1,7 +1,7 @@
+/projects/*
+/backup/*
+!/backup/USB/
 .sel4_cache/
 build/
 __pycache__/
-/projects/*
-/backup/*
-/u-boot/
 .fetch-log
