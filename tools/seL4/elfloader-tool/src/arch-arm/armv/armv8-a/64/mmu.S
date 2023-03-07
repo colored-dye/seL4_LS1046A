@@ -48,6 +48,7 @@ BEGIN_FUNC(arm_enable_mmu)
     /* Ensure I-cache, D-cache and mmu are disabled for EL1/Stage1 */
     disable_mmu sctlr_el1 , x8
 
+    /* bl invalidate_dcache */
     /*
      * Invalidate the local I-cache so that any instructions fetched
      * speculatively are discarded.

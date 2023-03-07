@@ -7,11 +7,12 @@
         seL4,kernel-devices =
             "serial0",
             &{/interrupt-controller@1400000},
+            // &{/soc/memory-controller@1080000},
             &{/timer};
     };
 
     memory@80000000 {
-        reg = <0x00000000 0x80000000 0x00000000 0x40000000>; /* 1GB */
+        reg = <0x00000000 0x80000000 0x00000000 0x60000000>; /* 1.5GB */
     };
 
     reserved-memory {

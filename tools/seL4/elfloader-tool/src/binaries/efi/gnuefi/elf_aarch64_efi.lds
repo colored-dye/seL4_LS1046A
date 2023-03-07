@@ -34,6 +34,15 @@ SECTIONS
    *(.got.plt)
    *(.got)
 
+    /* __start__driver_list = .;
+    *(_driver_list)
+    __stop__driver_list = .;
+
+    . = ALIGN(8);
+    _archive_start = .;
+    *(._archive_cpio)
+    _archive_end = .; */
+
    /* the EFI loader doesn't seem to like a .bss section, so we stick
       it all into .data: */
    . = ALIGN(16);
@@ -42,6 +51,7 @@ SECTIONS
    *(.scommon)
    *(.dynbss)
    *(.bss)
+   /* *(.bss.*) */
    *(COMMON)
    . = ALIGN(16);
    _bss_end = .;
@@ -61,6 +71,8 @@ SECTIONS
   .dynstr   : { *(.dynstr) }
   . = ALIGN(4096);
   .note.gnu.build-id : { *(.note.gnu.build-id) }
+
+  /* _end = .; */
   /DISCARD/ :
   {
     *(.rel.reloc)

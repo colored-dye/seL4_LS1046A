@@ -12,7 +12,7 @@ if(KernelPlatformOK1046AC2)
     set(KernelArmCortexA72 ON)
     set(KernelArchArmV8a ON)
     config_set(KernelARMPlatform ARM_PLAT ls1046a)
-    set(KernelArmMachFeatureModifiers "+crc" CACHE INTERNAL "")
+    # set(KernelArmMachFeatureModifiers "+crc" CACHE INTERNAL "")
     list(APPEND KernelDTSList "tools/dts/ok1046a-c2.dts")
     list(APPEND KernelDTSList "src/plat/ls1046a/overlay-ls1046a.dts")
 

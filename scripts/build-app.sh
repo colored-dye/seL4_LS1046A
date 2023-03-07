@@ -34,4 +34,6 @@ cmake "$APP_DIR" \
     -DPLATFORM=ls1046a \
     -DTUT_BOARD=ls1046a \
     -DCROSS_COMPILER_PREFIX=aarch64-linux-gnu- \
-    -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials"
+    -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials" \
+    # -DKernelSel4ArchArmHyp=1 \
+    # -DKernelArmHypervisorSupport=1

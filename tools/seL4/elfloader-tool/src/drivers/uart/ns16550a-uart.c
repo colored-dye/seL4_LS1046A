@@ -27,7 +27,7 @@
 // #define ULSR_OE     BIT(1) // Overrun Error
 #define ULSR_DR     BIT(0) // Data Ready
 
-#define UART_REG(mmio, x) ((volatile uint32_t *)(((uintptr_t)mmio) + (x)))
+#define UART_REG(mmio, x) ((volatile uint8_t *)(((uint8_t *)mmio) + (x)))
 
 static int uart_ns16550a_putchar(struct elfloader_device *dev, unsigned int c)
 {

@@ -421,7 +421,7 @@ target_link_libraries(
     elfloader
     PRIVATE
         cpio
-        gcc
+        # gcc
         elfloader_Config
         sel4_autoconf
 )
