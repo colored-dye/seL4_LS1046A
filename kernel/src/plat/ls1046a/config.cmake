@@ -17,14 +17,14 @@ if(KernelPlatformOK1046AC2)
     list(APPEND KernelDTSList "src/plat/ls1046a/overlay-ls1046a.dts")
 
     declare_default_headers(
-        TIMER_FREQUENCY 100000000
+        TIMER_FREQUENCY 25000000
         MAX_IRQ 232
         NUM_PPI 32
         TIMER drivers/timer/arm_generic.h
         INTERRUPT_CONTROLLER arch/machine/gic_v2.h
         KERNEL_WCET 10u
         CLK_MAGIC 1441151881llu
-        CLK_SHIFT 57u
+        CLK_SHIFT 55u
     )
 endif()
 

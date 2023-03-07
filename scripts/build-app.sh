@@ -21,6 +21,8 @@ rm -rf $BUILD_APP_DIR
 mkdir -p $BUILD_APP_DIR
 cd $BUILD_APP_DIR
 
+echo "Configuration start"
+
 cmake "$APP_DIR" \
     -GNinja \
     -DSEL4_CACHE_DIR="$TOP_DIR/.sel4_cache" \
@@ -37,3 +39,14 @@ cmake "$APP_DIR" \
     -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials" \
     # -DKernelSel4ArchArmHyp=1 \
     # -DKernelArmHypervisorSupport=1
+
+echo "Configuration complete"
+
+##########################
+
+echo "##########################"
+echo "Build start"
+
+ninja -C $BUILD_APP_DIR
+
+echo "Build complete"

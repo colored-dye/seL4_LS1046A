@@ -32,7 +32,7 @@
 #define ULSR_DR     BIT(0) // Data Ready
 
 // UART_PPTR: UART physical base address, defined in `tools/hardware.yml`
-#define UART_REG(x) ((volatile uint32_t *)(UART_PPTR + (x)))
+#define UART_REG(x) ((volatile uint8_t *)(UART_PPTR + (x)))
 
 #ifdef CONFIG_PRINTING
 void uart_drv_putchar(unsigned char c)
