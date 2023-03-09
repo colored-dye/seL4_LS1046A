@@ -6,25 +6,25 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 
 ```
 ├── apps
-│   ├── empty			-- Empty user space program, ends with a stack dump.
-│   ├── hello			-- Print "Hello, World", ends with a stack dump.
-│   ├── hello-camkes-1	-- CAmkES components, Echo server and Client, says something, with safe exit.
-│   └── hello-camkes-2	-- Client communicates with Echo server through Event and Dataport, ends with a write-permission violation.
+│   ├── empty               -- Empty user space program, ends with a stack dump.
+│   ├── hello               -- Print "Hello, World", ends with a stack dump.
+│   ├── hello-camkes-1      -- CAmkES components, Echo server and Client, says something, with safe exit.
+│   └── hello-camkes-2      -- Client communicates with Echo server through Event and Dataport, ends with a write-permission violation.
 ├── backup
 │   ├── kernel
 │   ├── projects
 │   ├── tools
 │   └── USB
 ├── build
-├── diffs				-- Patches for the our changes to the original repos.
+├── diffs                   -- Patches for the our changes to the original repos.
 ├── dts
 │   ├── dtb
-│   │   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).
+│   │   └── freescale       -- Compiled device tree. Copied from a compiled kernel(4.19.238).
 │   ├── dtb2dts
-│   │   └── freescale	-- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
+│   │   └── freescale       -- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 │   └── dts-linux
-│	    └── freescale	-- Device tree source.
-│				   Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+│        └── freescale      -- Device tree source.
+│                            Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
 ├── kernel
 │   ├── configs
 │   ├── include
@@ -48,12 +48,12 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
     └── seL4
 dts/
 ├── dtb
-│   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).
+│   └── freescale           -- Compiled device tree. Copied from a compiled kernel(4.19.238).
 ├── dtb2dts
-│   └── freescale	-- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
+│   └── freescale           -- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 └── dts-linux
-    └── freescale	-- Device tree source.
-					   Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+    └── freescale           -- Device tree source.
+                               Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
 ```
 
 
@@ -75,37 +75,37 @@ Copied from `dts/dtb2dts/freescale/fsl-ok1046a-1133-5a59-c2.dts`.
 
 1. `config.cmake`
 
-	```cmake
-	declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
+    ```cmake
+    declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
 
-	declare_default_headers(
-		TIMER_FREQUENCY xxx
-		MAX_IRQ xxx
-		NUM_PPI xxx
-		TIMER xxx
-		INTERRUPT_CONTROLLER xxx
-		KERNEL_WCET xxx
-		CLK_MAGIC xxx
-		CLK_SHIFT xxx
-	)
-	```
+    declare_default_headers(
+        TIMER_FREQUENCY xxx
+        MAX_IRQ xxx
+        NUM_PPI xxx
+        TIMER xxx
+        INTERRUPT_CONTROLLER xxx
+        KERNEL_WCET xxx
+        CLK_MAGIC xxx
+        CLK_SHIFT xxx
+    )
+    ```
 
 2. `overlay-ls1046a.dts`
 
-	- Add offset and size for `/memory@80000000` node;
-	- Add `/reserved-memory` nodes;
-	- `/chosen` node:
-		```dts
-		chosen {
-			seL4,elfloader-devices =
-				"serial0";
+    - Add offset and size for `/memory@80000000` node;
+    - Add `/reserved-memory` nodes;
+    - `/chosen` node:
+        ```dts
+        chosen {
+            seL4,elfloader-devices =
+                "serial0";
 
-			seL4,kernel-devices =
-				"serial0",
-				&{/interrupt-controller@1400000},
-				&{/timer};
-		};
-		```
+            seL4,kernel-devices =
+                "serial0",
+                &{/interrupt-controller@1400000},
+                &{/timer};
+        };
+        ```
 
 ### libsel4
 
@@ -132,14 +132,14 @@ Commit: 074a54aedcef97bfcc4ea0724a4c5d75fa311b3e
 
 1. `helpers/application_settings.cmake`:
 
-	In `ApplyData61ElfLoaderSettings`, set ElfLoader image type to binary.
+    In `ApplyData61ElfLoaderSettings`, set ElfLoader image type to binary.
 
 ### `elfloader-tool`
 
 1. drivers
 
-	Add an ns16550a UART driver, modified from the kernel version, without `getchar()`.
+    Add an ns16550a UART driver, modified from the kernel version, without `getchar()`.
 
 2. Platform-specific init functions
 
-	In `src/plat/ls1046a/platform_init.c`, add `platform_init()` and `non_boot_init` functions, similar to `rpi4`.
+    In `src/plat/ls1046a/platform_init.c`, add `platform_init()` and `non_boot_init` functions, similar to `rpi4`.

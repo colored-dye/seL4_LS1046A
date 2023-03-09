@@ -3,7 +3,9 @@
 /backup/*
 !/backup/USB/
 .sel4_cache/
+.cache/
 build/
 __pycache__/
 .fetch-log
 *.pyc
+compile_commands.json
