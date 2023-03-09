@@ -1,4 +1,5 @@
 /projects/*
+/tools/*
 /backup/*
 !/backup/USB/
 .sel4_cache/

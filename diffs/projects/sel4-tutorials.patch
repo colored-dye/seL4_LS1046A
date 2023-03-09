@@ -1,4 +1,4 @@
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/sel4-tutorials/settings.cmake sel4-tutorials/settings.cmake
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/sel4-tutorials/settings.cmake sel4-tutorials/settings.cmake
 --- ../backup/projects/sel4-tutorials/settings.cmake	2023-03-02 13:42:55.531241080 +0800
 +++ sel4-tutorials/settings.cmake	2023-03-06 16:03:13.374200624 +0800
 @@ -57,11 +57,27 @@

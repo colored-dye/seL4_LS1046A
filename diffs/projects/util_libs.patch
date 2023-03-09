@@ -1,4 +1,4 @@
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-09 10:58:54.332483184 +0800
 @@ -0,0 +1,10 @@
@@ -12,7 +12,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +enum clock_gate {
 +    NCLKGATES,
 +};
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-03-02 16:35:29.651896745 +0800
 @@ -0,0 +1,12 @@
@@ -28,7 +28,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +    NI2C
 +};
 +
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-09 11:00:24.251546614 +0800
 @@ -0,0 +1,14 @@
@@ -46,7 +46,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +
 +#define DEFAULT_SERIAL_PADDR        UART1_PADDR
 +#define DEFAULT_SERIAL_INTERRUPT    UART1_IRQ
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/chardev.h util_libs/libplatsupport/src/chardev.h
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/chardev.h util_libs/libplatsupport/src/chardev.h
 --- ../backup/projects/util_libs/libplatsupport/src/chardev.h	2023-03-02 08:36:59.269732400 +0800
 +++ util_libs/libplatsupport/src/chardev.h	2023-03-09 10:52:32.600484800 +0800
 @@ -31,6 +31,11 @@
@@ -61,7 +61,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
  int uart_init(
      const struct dev_defn *defn,
      const ps_io_ops_t *ops,
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
 --- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-02 16:35:29.651896745 +0800
 @@ -0,0 +1,39 @@
@@ -104,7 +104,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +    }
 +    return NULL;
 +}
-diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c util_libs/libplatsupport/src/plat/ls1046a/serial.c
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c util_libs/libplatsupport/src/plat/ls1046a/serial.c
 --- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-09 10:57:29.001373701 +0800
 @@ -0,0 +1,102 @@

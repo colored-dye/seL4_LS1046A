@@ -6,11 +6,17 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 
 ```
 ├── apps
-│   └── hello
+│   ├── empty			-- Empty user space program, ends with a stack dump.
+│   ├── hello			-- Print "Hello, World", ends with a stack dump.
+│   ├── hello-camkes-1	-- CAmkES components, Echo server and Client, says something, with safe exit.
+│   └── hello-camkes-2	-- Client communicates with Echo server through Event and Dataport, ends with a write-permission violation.
+├── backup
+│   ├── kernel
+│   ├── projects
+│   ├── tools
+│   └── USB
 ├── build
-│   ├── apps
-│   └── CMakeFiles
-├── diffs	-- Patches from the original commits
+├── diffs				-- Patches for the our changes to the original repos.
 ├── dts
 │   ├── dtb
 │   │   └── freescale	-- Compiled device tree. Copied from a compiled kernel(4.19.238).
@@ -30,6 +36,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 ├── projects
 │   ├── capdl
 │   ├── musllibc
+│   ├── projects_libs
 │   ├── seL4_libs
 │   ├── seL4_projects_libs
 │   ├── sel4runtime
@@ -37,6 +44,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 │   └── util_libs
 ├── scripts
 └── tools
+    ├── camkes
     └── seL4
 dts/
 ├── dtb

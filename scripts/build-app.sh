@@ -13,6 +13,7 @@ APP="$1"
 
 if [ "$APP" == "" ]; then
     echo "Please enter app name!"
+    echo "Usage: ./build-app.sh <app>"
     echo "List of available apps: empty;hello"
     exit 1
 fi
@@ -30,6 +31,9 @@ cd $BUILD_APP_DIR
 
 echo "Configuration start"
 
+# plat="qemu-arm-virt"
+plat="ls1046a"
+
 cmake "$APP_DIR" \
     -GNinja \
     -DSEL4_CACHE_DIR="$TOP_DIR/.sel4_cache" \
@@ -40,8 +44,8 @@ cmake "$APP_DIR" \
     -DKernelArchArmV8a=1 \
     -Darch=aarch64 \
     -DCMAKE_TOOLCHAIN_FILE="$TOP_DIR/kernel/gcc.cmake" \
-    -DPLATFORM=ls1046a \
-    -DTUT_BOARD=ls1046a \
+    -DPLATFORM=$plat \
+    -DTUT_BOARD=$plat \
     -DCROSS_COMPILER_PREFIX=aarch64-linux-gnu- \
     -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials" \
     # -DKernelMaxNumNodes=4 \

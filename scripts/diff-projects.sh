@@ -38,7 +38,7 @@ for proj in `ls $PROJECTS_DIR`
 do
     echo $PROJECTS_DIR/$proj
     
-    diff -Nur --exclude=.git --exclude=.github $BACKUP_PROJECTS_DIR/$proj $proj > $DIFFS/projects/$proj.patch
+    diff -Nur --exclude=.git --exclude=.github --exclude=*.pyc $BACKUP_PROJECTS_DIR/$proj $proj > $DIFFS/projects/$proj.patch
 done
 
 #
