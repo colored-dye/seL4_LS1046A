@@ -9,10 +9,17 @@ else
     exit 1
 fi
 
+APP="$1"
+
+if [ "$APP" == "" ]; then
+    echo "Please enter app name!"
+    echo "List of available apps: empty;hello"
+    exit 1
+fi
 
 BUILD_DIR="$TOP_DIR/build"
-APP_DIR="$TOP_DIR/apps/hello"
-BUILD_APP_DIR="$BUILD_DIR/apps/hello"
+APP_DIR="$TOP_DIR/apps/$APP"
+BUILD_APP_DIR="$BUILD_DIR/apps/$APP"
 
 echo "TOP_DIR: $TOP_DIR"
 echo "App build directory: $BUILD_KERNEL_DIR"
@@ -37,6 +44,7 @@ cmake "$APP_DIR" \
     -DTUT_BOARD=ls1046a \
     -DCROSS_COMPILER_PREFIX=aarch64-linux-gnu- \
     -DSEL4_TUTORIALS_DIR="$TOP_DIR/projects/sel4-tutorials" \
+    # -DKernelMaxNumNodes=4 \
     # -DKernelSel4ArchArmHyp=1 \
     # -DKernelArmHypervisorSupport=1
 
