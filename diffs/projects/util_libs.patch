@@ -1,15 +1,16 @@
 diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-02 16:35:29.651896745 +0800
-@@ -0,0 +1,9 @@
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-09 10:58:54.332483184 +0800
+@@ -0,0 +1,10 @@
 +#pragma once
 +
 +enum clk_id {
 +    CLK_MASTER,
++    NCLOCKS,
 +};
 +
 +enum clock_gate {
-+    NCLKGATES
++    NCLKGATES,
 +};
 diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
@@ -29,21 +30,37 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +
 diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-02 16:35:29.651896745 +0800
-@@ -0,0 +1,13 @@
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-09 11:00:24.251546614 +0800
+@@ -0,0 +1,14 @@
 +#pragma once
 +
 +#define UART1_PADDR 0x021c0500
 +
-+#define UART1_IRQ   86
++#define UART1_IRQ   86  // DUART1 use the same IRQ
 +
 +// Only 1~4
 +enum chardev_id {
 +    NS16550A_UART1,
++    PS_SERIAL_DEFAULT = NS16550A_UART1,
 +};
 +
 +#define DEFAULT_SERIAL_PADDR        UART1_PADDR
 +#define DEFAULT_SERIAL_INTERRUPT    UART1_IRQ
+diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/chardev.h util_libs/libplatsupport/src/chardev.h
+--- ../backup/projects/util_libs/libplatsupport/src/chardev.h	2023-03-02 08:36:59.269732400 +0800
++++ util_libs/libplatsupport/src/chardev.h	2023-03-09 10:52:32.600484800 +0800
+@@ -31,6 +31,11 @@
+                PS_MEM_NORMAL);
+ }
+ 
++/*
++ * param[in] defn
++ * param[in] ops
++ * param[out] dev
++*/
+ int uart_init(
+     const struct dev_defn *defn,
+     const ps_io_ops_t *ops,
 diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
 --- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-02 16:35:29.651896745 +0800
@@ -89,7 +106,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +}
 diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c util_libs/libplatsupport/src/plat/ls1046a/serial.c
 --- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	1970-01-01 08:00:00.000000000 +0800
-+++ util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-02 16:35:29.651896745 +0800
++++ util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-09 10:57:29.001373701 +0800
 @@ -0,0 +1,102 @@
 +#include <string.h>
 +#include <stdlib.h>
@@ -106,23 +123,23 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 + * Default reset value: 0
 + */
 +
-+#define URBR1     0x00     /* receiver buffer register                 */
-+#define UTHR1     0x00     /* transmit holding register                */
-+#define UDLB1     0x00     /* divisor least significant byte register  */
-+#define UIER1     0x01     /* interrupt enable register                */
-+#define UDMB1     0x01     /* divisor most significant byte register   */
-+#define UIIR1     0x02     /* interrupt identification register        */
-+                                    /* Reset value: 1                           */
-+#define UFCR1     0x02     /* FIFO control register                    */
-+#define UAFR1     0x02     /* alternate function register              */
-+#define ULCR1     0x03     /* line control register                    */
-+#define UMCR1     0x04     /* modem control register                   */
-+#define ULSR1     0x05     /* line status register                     */
-+                                    /* Reset value: LSR_THRE | LSR_TEMT = 6     */
-+#define UMSR1     0x06     /* modem status register                    */
-+#define USCR1     0x07     /* scratch register                         */
-+#define UDSR1     0x10     /* DMA status register                      */
-+                                    /* Reset value: 1                           */
++#define URBR1     0x00      /* receiver buffer register                 */
++#define UTHR1     0x00      /* transmit holding register                */
++#define UDLB1     0x00      /* divisor least significant byte register  */
++#define UIER1     0x01      /* interrupt enable register                */
++#define UDMB1     0x01      /* divisor most significant byte register   */
++#define UIIR1     0x02      /* interrupt identification register        */
++                            /* Reset value: 1                           */
++#define UFCR1     0x02      /* FIFO control register                    */
++#define UAFR1     0x02      /* alternate function register              */
++#define ULCR1     0x03      /* line control register                    */
++#define UMCR1     0x04      /* modem control register                   */
++#define ULSR1     0x05      /* line status register                     */
++                            /* Reset value: LSR_THRE | LSR_TEMT = 6     */
++#define UMSR1     0x06      /* modem status register                    */
++#define USCR1     0x07      /* scratch register                         */
++#define UDSR1     0x10      /* DMA status register                      */
++                            /* Reset value: 1                           */
 +
 +/*********************************************************************************************************
 +  Line Status Register
@@ -137,37 +154,37 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +#define LSR_TEMT        BIT(6)       /* transmitter empty                    */
 +#define LSR_FERR        BIT(7)       /* fifo mode, set when PE,FE or BI err  */
 +
-+#define UART_REG(x) ((volatile uint32_t *)(DEFAULT_SERIAL_PADDR + (x)))
++#define REG_PTR(x) ((volatile uint8_t *)(DEFAULT_SERIAL_PADDR + (x)))
 +
 +int uart_getchar(ps_chardevice_t *d)
 +{
 +    int ch = EOF;
 +
-+    uint_32_t poll_status = *(UART_REG(ULSR1));
++    uint8_t poll_status = *(REG_PTR(ULSR1));
 +
 +    // Get byte if data ready
 +    // Return EOF if not ready, no poll
 +    if (poll_status & LSR_DR) {
-+        ch = *(UART_REG(URBR1)) & MASK(8);
++        ch = *(REG_PTR(URBR1)) & MASK(8);
 +    }
 +
 +    return ch;
 +}
 +
-+int uart_putchar(int *dev, int c)
++int uart_putchar(ps_chardevice_t *dev, int c)
 +{
 +    // Wait until THR register is empty
-+    while ((*UART_REG(ULSR1) & LSR_THRE) == 0)
++    while ((*REG_PTR(ULSR1) & LSR_THRE) == 0)
 +        ;
 +
-+    *UART_REG(UTHR1) = c & MASK(8);
++    *REG_PTR(UTHR1) = c & MASK(8);
 +
 +    return 0;
 +}
 +
 +static void uart_handle_irq(ps_chardevice_t *dev)
 +{
-+
++    /* nothing to do */
 +}
 +
 +int uart_init(
@@ -188,7 +205,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' ../backup/projects/util_libs/libp
 +    dev->handle_irq = &uart_handle_irq;
 +    dev->irqs = defn->irqs;
 +    dev->ioops = *ops;
-+    dev->flags = SERIAL_AUTO_CR;
++    // dev->flags = SERIAL_AUTO_CR;
 +    // dev->clk = NULL;
 +
 +    return 0;
