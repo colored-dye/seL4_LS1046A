@@ -53,7 +53,9 @@ dts/
 
 URL: https://github.com/seL4/seL4
 
-Version: 12.1.0-dev.
+Version: 12.1.0-dev
+
+Branch: master
 
 Commit: dd41d4de63949e689e54844089f851425e2ab748
 
@@ -63,26 +65,73 @@ Copied from `dts/dtb2dts/freescale/fsl-ok1046a-1133-5a59-c2.dts`.
 
 ### `src/plat/ls1046a/`
 
-`config.cmake`:
+1. `config.cmake`
 
-```cmake
-declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
+	```cmake
+	declare_platform(ls1046a KernelPlatformOK1046AC2 PLAT_LS1046A KernelArchARM)
 
-declare_default_headers(
-	TIMER_FREQUENCY xxx
-	MAX_IRQ xxx
-	NUM_PPI xxx
-	TIMER xxx
-	INTERRUPT_CONTROLLER xxx
-	KERNEL_WCET xxx
-	CLK_MAGIC xxx
-	CLK_SHIFT xxx
-)
-```
+	declare_default_headers(
+		TIMER_FREQUENCY xxx
+		MAX_IRQ xxx
+		NUM_PPI xxx
+		TIMER xxx
+		INTERRUPT_CONTROLLER xxx
+		KERNEL_WCET xxx
+		CLK_MAGIC xxx
+		CLK_SHIFT xxx
+	)
+	```
+
+2. `overlay-ls1046a.dts`
+
+	- Add offset and size for `/memory@80000000` node;
+	- Add `/reserved-memory` nodes;
+	- `/chosen` node:
+		```dts
+		chosen {
+			seL4,elfloader-devices =
+				"serial0";
+
+			seL4,kernel-devices =
+				"serial0",
+				&{/interrupt-controller@1400000},
+				&{/timer};
+		};
+		```
+
+### libsel4
+
+`libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h`
+
+### Kernel drivers
+
+1. GIC: GIC-400, compatible with GICv2.
+
+2. Timer: `arm,armv8-timer`, compatible with `generic_timer`.
+
+3. UART: `fsl,ns16550;ns16550a`. Manually implemented.
+
 
 ## seL4 tools
 
 URL: https://github.com/seL4/seL4_tools
 
+Branch: master
+
 Commit: 074a54aedcef97bfcc4ea0724a4c5d75fa311b3e
 
+### `cmake-tool`
+
+1. `helpers/application_settings.cmake`:
+
+	In `ApplyData61ElfLoaderSettings`, set ElfLoader image type to binary.
+
+### `elfloader-tool`
+
+1. drivers
+
+	Add an ns16550a UART driver, modified from the kernel version, without `getchar()`.
+
+2. Platform-specific init functions
+
+	In `src/plat/ls1046a/platform_init.c`, add `platform_init()` and `non_boot_init` functions, similar to `rpi4`.
