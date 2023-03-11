@@ -62,3 +62,19 @@ echo "Build start"
 ninja -C $BUILD_APP_DIR
 
 echo "Build complete"
+
+##########################
+
+echo "##########################"
+
+DEST_DIR="/mnt/hgfs/shared"
+
+echo "Copy to shared folder: $DEST_DIR"
+
+cp $BUILD_APP_DIR/images/* $DEST_DIR
+
+if test $? -eq 0; then
+    echo "Copy complete"
+else
+    echo "Copy failed"
+fi

@@ -24,7 +24,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 │   │   └── freescale       -- DTS dumped from DTB, using `dtbdump.py` or `dtc`.
 │   └── dts-linux
 │        └── freescale      -- Device tree source.
-│                            Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
+│                              Copied from https://github.com/torvalds/linux/tree/v5.19/arch/arm64/boot/dts/freescale.
 ├── kernel
 │   ├── configs
 │   ├── include

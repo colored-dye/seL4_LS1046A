@@ -1,0 +1,26 @@
+import <std_connector.camkes>;
+import <global-connectors.camkes>;
+
+import <Timer.idl4>;
+import <TimeServer/TimeServer.camkes>;
+
+import "components/dispatch_periodic/dispatch_periodic.camkes";
+import "components/Encrypt/Encrypt.camkes";
+
+assembly {
+    composition {
+        component dispatch_periodic dispatch_periodic_inst;
+        component TimeServer time_server;
+        component Encrypt Encrypt_inst;
+
+        connection seL4TimeServer Encrypt_periodic_dispatcher_timer(from Encrypt_inst.timer, to time_server.the_timer);
+        connection seL4Notification Encrypt_periodic_dispatcher_echo_int(from dispatch_periodic_inst.Encrypt_periodic_dispatcher, to Encrypt_inst.timer_complete);
+
+        connection seL4TimeServer periodic_dispatch_timer(from dispatch_periodic_inst.timer, to time_server.the_timer);
+        connection seL4GlobalAsynchCallback echo_int(from time_server.timer_notification, to dispatch_periodic_inst.timer_complete);
+    }
+
+    configuration {
+        time_server.timers_per_client = 1;
+    }
+}

@@ -1,5 +1,6 @@
 backup/kernel https://github.com/seL4/seL4 master dd41d4de63949e689e54844089f851425e2ab748
 backup/projects/capdl https://github.com/seL4/capdl master 3fa3a1b5b57c67175d109e2fe15a42aa641ee601
+backup/projects/global-components https://github.com/seL4/global-components master 908195f62996eb6211a3c053a15634dd5b1f53ba
 backup/projects/musllibc https://github.com/seL4/musllibc sel4 3d6b939e8f05cb1d2a1a8c8166609bf2e652e975
 backup/projects/projects_libs https://github.com/seL4/projects_libs master daa7e44e0e6f0d5c80a9167380b1b16fd1ec7549
 backup/projects/seL4_libs https://github.com/seL4/seL4_libs master 2ca525429e7b4f5abbc1fc694d3aeaff5eb6e7db
