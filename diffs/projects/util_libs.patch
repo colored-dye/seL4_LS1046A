@@ -1,3 +1,21 @@
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/CMakeLists.txt util_libs/libplatsupport/CMakeLists.txt
+--- ../backup/projects/util_libs/libplatsupport/CMakeLists.txt	2023-03-02 08:36:59.181734410 +0800
++++ util_libs/libplatsupport/CMakeLists.txt	2023-03-12 15:08:27.001237816 +0800
+@@ -88,6 +88,14 @@
+     endif()
+ endif()
+ 
++# LS1046A platform use arm generic timer
++if(KernelPlatformOK1046AC2 
++    AND KernelArmExportPCNTUser
++    AND KernelArmExportPTMRUser
++)
++    list(APPEND deps src/arch/arm/generic_ltimer.c)
++endif()
++
+ if(KernelPlatformExynos5422)
+     list(APPEND deps src/mach/${LibPlatSupportMach}/clock/exynos_5422_clock.c)
+ elseif(KernelPlatformExynos4 OR KernelPlatformExynos5410 OR KernelPlatformExynos5250)
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
 --- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-09 10:58:54.332483184 +0800
