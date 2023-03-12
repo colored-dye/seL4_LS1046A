@@ -7,8 +7,8 @@ find_package(sel4-tutorials REQUIRED)
 project(comm C ASM)
 
 # Export generic timer to user
-set(KernelArmExportPCNTUser True CACHE BOOL "" FORCE)
-set(KernelArmExportPTMRUser True CACHE BOOL "" FORCE)
+set(KernelArmExportPCNTUser TRUE CACHE BOOL "" FORCE)
+set(KernelArmExportPTMRUser TRUE CACHE BOOL "" FORCE)
 
 find_package(camkes-tool REQUIRED)
 camkes_tool_setup_camkes_build_environment()
