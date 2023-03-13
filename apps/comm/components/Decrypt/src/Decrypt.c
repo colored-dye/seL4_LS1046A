@@ -27,11 +27,41 @@ bool self2server_enqueue(const SMACCM_DATA__GIDL_container * tb_self2server) {
     return tb_result;
 }
 
+void callback_periodic_pop(const int64_t *n_var0) {
+    uint8_t n_local0[80] = {};
+    uint8_t *n_ref1 = n_local0;
+    bool n_r2 = true;
+
+    if (n_r2) {
+        if (!self2server_enqueue((SMACCM_DATA__GIDL_container*) n_local0)) {
+            printf("self2server_enqueue failed\n");
+        }
+    }
+}
+
 void component_entry(const int64_t *n_var0)
 {
     printf("Decrypt\n");
-    printf("Enter %s:%s\n", __FILE__, __FUNCTION__);
-    printf("Arg: %ld\n", *n_var0);
+    // printf("Enter %s:%s\n", __FILE__, __FUNCTION__);
+    // printf("Arg: %ld\n", *n_var0);
+
+    // uart2self_dequeue();
+
+    // component_entry_aux
+    struct SMACCM_DATA__UART_Packet_i n_local0 = {
+        .buf = {1, 2, 3, 4,},
+        .buf_len = 4,
+    };
+
+    struct SMACCM_DATA__UART_Packet_i *n_ref1 = &n_local0;
+    bool n_r2 = true;
+
+    if (n_r2) {
+        // callback_input_uart2self_dequeue_handler(n_ref1);
+    }
+
+    callback_periodic_pop(n_var0);
+
     return;
 }
 

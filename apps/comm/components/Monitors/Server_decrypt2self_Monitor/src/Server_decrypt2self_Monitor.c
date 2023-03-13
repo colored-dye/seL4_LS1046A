@@ -22,7 +22,7 @@ bool mon_dequeue(SMACCM_DATA__GIDL_container * m) {
   if (mon_get_sender_id() != MONITOR_READ_ACCESS) {
     #ifndef TB_VERIFY
     // #ifdef CONFIG_APP_SMACCMPILOT_TK1_TB_DEBUG
-    fprintf(stderr, "Monitor tb_Server_decrypt2self: attempt to dequeue without permission\n");
+    fprintf(stderr, "Monitor Server_decrypt2self: attempt to dequeue without permission\n");
     // #endif // CONFIG_APP_SMACCMPILOT_TK1_TB_DEBUG
     #endif // !TB_VERIFY
     return false;
@@ -40,13 +40,13 @@ bool mon_enqueue(const SMACCM_DATA__GIDL_container * m) {
   if (mon_get_sender_id() != MONITOR_WRITE_ACCESS) {
     #ifndef TB_VERIFY
     // #ifdef CONFIG_APP_SMACCMPILOT_TK1_TB_DEBUG
-    fprintf(stderr, "Monitor tb_Server_decrypt2self: attempt to enqueue without permission\n");
+    fprintf(stderr, "Monitor Server_decrypt2self: attempt to enqueue without permission\n");
     // #endif // CONFIG_APP_SMACCMPILOT_TK1_TB_DEBUG
     #endif // !TB_VERIFY
     return false;
   } else if (is_full()) {
     // #ifdef CONFIG_APP_SMACCMPILOT_TK1_TB_DEBUG
-    fprintf(stderr,"Monitor tb_Server_decrypt2self is full!\n");
+    fprintf(stderr,"Monitor Server_decrypt2self is full!\n");
     // #endif 
     return false;
   } else {

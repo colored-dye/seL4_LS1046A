@@ -1,4 +1,5 @@
 #include "Server.h"
+#include <stdint.h>
 #include <string.h>
 #include <camkes.h>
 
@@ -19,7 +20,7 @@ void timer_complete_callback(void *_ UNUSED) {
    CALLBACKOP(timer_complete_reg_callback(timer_complete_callback, NULL));
 }
 
-bool tb_self2encrypt_enqueue(const SMACCM_DATA__GIDL * tb_self2encrypt) {
+bool self2encrypt_enqueue(const SMACCM_DATA__GIDL * tb_self2encrypt) {
     bool tb_result = true ; 
 
     tb_result &= self2encrypt0_enqueue((SMACCM_DATA__GIDL_container *)tb_self2encrypt);
@@ -28,15 +29,18 @@ bool tb_self2encrypt_enqueue(const SMACCM_DATA__GIDL * tb_self2encrypt) {
 }
 
 void component_entry(const int64_t *n_var0) {
-    SMACCM_DATA__GIDL_container n_local0;
-    SMACCM_DATA__GIDL_container *n_ref1 = &n_local0;
+    uint8_t n_local0[80] = {};
+    uint8_t *n_ref1 = n_local0;
     bool n_r2 = decrypt2self0_dequeue(n_ref1);
     
-    if (n_r2) {
-        // callback_input_decrypt2self_dequeue_handler(n_ref1);
-        printf("Server:\n");
-        printf("Enter: %s:%s\n", __FILE__, __FUNCTION__);
-        printf("Arg: %ld\n", *n_var0);
+    printf("Server:\n");
+    // printf("Enter: %s:%s\n", __FILE__, __FUNCTION__);
+    // printf("Arg: %ld\n", *n_var0);
+    if (n_r2) {    
+        printf("Dequeue\n");
+        callback_input_decrypt2self_dequeue_handler(n_ref1);
+    } else {
+        printf("No dequeue\n");
     }
     return;
 }
@@ -48,7 +52,7 @@ void entrypoint_Server_periodic_dispatcher(const int64_t * in_arg) {
     component_entry((int64_t *) in_arg);
 }
 
-void entrypoint_Server_decrypt2self(const SMACCM_DATA__GIDL * in_arg) {
+void entrypoint_Server_decrypt2self0(const SMACCM_DATA__GIDL * in_arg) {
 }
 
 int run(void) {

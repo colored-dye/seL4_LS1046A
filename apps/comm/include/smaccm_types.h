@@ -35,13 +35,13 @@ if((OP) != 0) {\
 
 // typedef uint8_t SMACCM_DATA__CAN_Buffer [8]; 
 
-// typedef uint8_t SMACCM_DATA__UART_Buffer [255]; 
+typedef uint8_t SMACCM_DATA__UART_Buffer [255]; 
 
-// typedef 
-//       struct SMACCM_DATA__UART_Packet_i { 
-//          SMACCM_DATA__UART_Buffer buf  ; 
-//          int32_t buf_len  ; 
-//       } SMACCM_DATA__UART_Packet_i ; 
+typedef 
+      struct SMACCM_DATA__UART_Packet_i { 
+         SMACCM_DATA__UART_Buffer buf  ; 
+         int32_t buf_len  ; 
+      } SMACCM_DATA__UART_Packet_i ; 
 
 typedef uint8_t SMACCM_DATA__GIDL [80]; 
 
@@ -65,10 +65,10 @@ typedef uint8_t SMACCM_DATA__GIDL [80];
 //          SMACCM_DATA__CAN_Buffer f  ; 
 //       } tb_SMACCM_DATA__CAN_Buffer_container ; 
 
-// typedef 
-//       struct tb_SMACCM_DATA__UART_Buffer_container { 
-//          SMACCM_DATA__UART_Buffer f  ; 
-//       } tb_SMACCM_DATA__UART_Buffer_container ; 
+typedef 
+      struct tb_SMACCM_DATA__UART_Buffer_container { 
+         SMACCM_DATA__UART_Buffer f  ; 
+      } tb_SMACCM_DATA__UART_Buffer_container ; 
 
 typedef 
       struct SMACCM_DATA__GIDL_container { 

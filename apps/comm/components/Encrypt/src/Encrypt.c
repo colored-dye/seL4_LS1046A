@@ -25,8 +25,8 @@ void timer_complete_callback(void *_ UNUSED) {
 
 void component_entry(const int64_t *n_var0) {
     printf("Encrypt\n");
-    printf("Enter %s:%s\n", __FILE__, __FUNCTION__);
-    printf("Arg: %ld\n", *n_var0);
+    // printf("Enter %s:%s\n", __FILE__, __FUNCTION__);
+    // printf("Arg: %ld\n", *n_var0);
 }
 
 void entrypoint_Encrypt_periodic_dispatcher(const int64_t * in_arg) {

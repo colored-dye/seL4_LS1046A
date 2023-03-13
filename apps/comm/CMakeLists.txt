@@ -20,8 +20,11 @@ CAmkESAddImportPath(${CMAKE_CURRENT_LIST_DIR}/interfaces)
 
 DeclareCAmkESComponent(
     Server
-    INCLUDES include components/Server/include
-    SOURCES components/Server/src/Server.c
+    INCLUDES
+        include components/Server/include
+    SOURCES
+        components/Server/src/Server.c
+        components/Server/src/input_decrypt2self_dequeue_monitor.c
 )
 
 DeclareCAmkESComponent(
