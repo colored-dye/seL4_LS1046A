@@ -2,13 +2,9 @@ cmake_minimum_required(VERSION 3.7.2)
 
 include(settings.cmake)
 
-find_package(sel4-tutorials REQUIRED)
+# find_package(sel4-tutorials REQUIRED)
 
 project(comm C ASM)
-
-# Export generic timer to user
-set(KernelArmExportPCNTUser TRUE CACHE BOOL "" FORCE)
-set(KernelArmExportPTMRUser TRUE CACHE BOOL "" FORCE)
 
 find_package(camkes-tool REQUIRED)
 camkes_tool_setup_camkes_build_environment()
@@ -20,8 +16,43 @@ if("${GLOBAL_COMPONENTS_PATH}" STREQUAL "GLOBAL_COMPONENTS_PATH-NOTFOUND")
 endif()
 include(${GLOBAL_COMPONENTS_PATH})
 
-DeclareCAmkESComponent(Encrypt INCLUDES include SOURCES components/Encrypt/src/Encrypt.c)
-DeclareCAmkESComponent(dispatch_periodic INCLUDES include SOURCES components/dispatch_periodic/src/dispatch_periodic.c)
+CAmkESAddImportPath(${CMAKE_CURRENT_LIST_DIR}/interfaces)
+
+DeclareCAmkESComponent(
+    Server
+    INCLUDES include components/Server/include
+    SOURCES components/Server/src/Server.c
+)
+
+DeclareCAmkESComponent(
+    dispatch_periodic
+    INCLUDES include
+    SOURCES components/dispatch_periodic/src/dispatch_periodic.c
+)
+
+DeclareCAmkESComponent(
+    Encrypt
+    INCLUDES include
+    SOURCES components/Encrypt/src/Encrypt.c
+)
+
+DeclareCAmkESComponent(
+    Decrypt
+    INCLUDES include
+    SOURCES components/Decrypt/src/Decrypt.c
+)
+
+DeclareCAmkESComponent(
+    Encrypt_server2self_Monitor
+    INCLUDES include
+    SOURCES components/Monitors/Encrypt_server2self_Monitor/src/Encrypt_server2self_Monitor.c
+)
+
+DeclareCAmkESComponent(
+    Server_decrypt2self_Monitor
+    INCLUDES include
+    SOURCES components/Monitors/Server_decrypt2self_Monitor/src/Server_decrypt2self_Monitor.c
+)
 
 DeclareCAmkESRootserver(comm.camkes)
 

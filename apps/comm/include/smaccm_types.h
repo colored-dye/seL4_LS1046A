@@ -5,11 +5,11 @@
 #include <stdint.h>
 #ifndef TB_VERIFY
 #include <stddef.h>
-#endif // TB_VERIFY
+#endif // !TB_VERIFY
 
 #define __TB_OS_CAMKES__
-#define TB_MONITOR_READ_ACCESS 111
-#define TB_MONITOR_WRITE_ACCESS 222
+#define MONITOR_READ_ACCESS 111
+#define MONITOR_WRITE_ACCESS 222
 
 // Wrapper for mutex/callback calls
 // Show error messages and then abort
@@ -22,6 +22,7 @@ if((OP) != 0) {\
 #else 
 #define MUTEXOP(OP) OP
 #endif // TB_VERIFY
+
 #ifndef TB_VERIFY
 #define CALLBACKOP(OP)\
 if((OP) != 0) {\
@@ -70,7 +71,7 @@ typedef uint8_t SMACCM_DATA__GIDL [80];
 //       } tb_SMACCM_DATA__UART_Buffer_container ; 
 
 typedef 
-      struct tb_SMACCM_DATA__GIDL_container { 
+      struct SMACCM_DATA__GIDL_container { 
          SMACCM_DATA__GIDL f  ; 
       } SMACCM_DATA__GIDL_container ; 
 

@@ -1,4 +1,5 @@
 import <Timer.idl4>;
+import <Monitor_SMACCM_DATA__GIDL.idl4>;
 
 component Server {
     include <smaccm_types.h>;
@@ -8,6 +9,11 @@ component Server {
 
     uses Timer timer;
     consumes Notification timer_complete;
-    
-    uses SMACCM_DATA__GIDL self2encrypt;
+
+    // Server -> Encrypt    
+    uses Monitor_SMACCM_DATA__GIDL self2encrypt0;
+
+    // Decrypt -> Server
+    uses Monitor_SMACCM_DATA__GIDL decrypt2self0;
+    consumes QueuedData decrypt2self_notification;
 }

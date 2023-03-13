@@ -57,15 +57,16 @@ uint32_t aadl_calendar_ticks = 0;
 void tb_thread_calendar() {
     // if ((aadl_calendar_counter % (1 / aadl_tick_interval)) == 0) {
     //     CAN_Framing_periodic_dispatcher_emit();
-    // }if ((aadl_calendar_counter % (1 / aadl_tick_interval)) == 0) {
-    //     Decrypt_periodic_dispatcher_emit();
     // }
+    if ((aadl_calendar_counter % (1 / aadl_tick_interval)) == 0) {
+        Decrypt_periodic_dispatcher_emit();
+    }
     if ((aadl_calendar_counter % (5 / aadl_tick_interval)) == 0) {
         Encrypt_periodic_dispatcher_emit();
     }
-    // if ((aadl_calendar_counter % (5 / aadl_tick_interval)) == 0) {
-    //     Server_periodic_dispatcher_emit();
-    // }
+    if ((aadl_calendar_counter % (5 / aadl_tick_interval)) == 0) {
+        Server_periodic_dispatcher_emit();
+    }
 
     aadl_calendar_counter = (aadl_calendar_counter + 1) % aadl_hyperperiod_subdivisions;
     aadl_calendar_ticks++;

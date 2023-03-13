@@ -1,4 +1,4 @@
-# include_guard(GLOBAL)
+include_guard(GLOBAL)
 
 set(project_dir "${CMAKE_CURRENT_LIST_DIR}/../../")
 file(GLOB project_modules ${project_dir}/projects/*)
@@ -86,6 +86,11 @@ set(LibSel4MuslcSysDebugHalt FALSE CACHE BOOL "" FORCE)
 
 # Only configure a single domain for the domain scheduler
 set(KernelNumDomains 1 CACHE STRING "" FORCE)
+
+# Export generic timer to user
+# TODO: Implement another timer and remove these two later
+set(KernelArmExportPCNTUser TRUE CACHE BOOL "" FORCE)
+set(KernelArmExportPTMRUser TRUE CACHE BOOL "" FORCE)
 
 # We must build the debug kernel because the tutorials rely on seL4_DebugPutChar
 # and they don't initialize a platsupport driver.

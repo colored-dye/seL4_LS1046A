@@ -3,7 +3,7 @@
  * with a queue size of 1.
  */
 
-procedure Monitor_SMACCM_DATA {
+procedure Monitor_SMACCM_DATA__GIDL {
     include <stdbool.h>;
     include <smaccm_types.h>;
     bool enqueue(refin SMACCM_DATA__GIDL_container m);
