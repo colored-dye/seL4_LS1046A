@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <camkes.h>
+#include <stdlib.h>
+#include "Decrypt.h"
 
 static bool occurred_periodic_dispatcher;
 static int64_t time_periodic_dispatcher;
@@ -20,25 +22,12 @@ void timer_complete_callback(void *_ UNUSED) {
 }
 
 bool self2server_enqueue(const SMACCM_DATA__GIDL_container * tb_self2server) {
-    bool tb_result = true ; 
-
-    tb_result &= self2server0_enqueue((SMACCM_DATA__GIDL_container *)tb_self2server);
-
-    return tb_result;
+    return self2server0_enqueue((SMACCM_DATA__GIDL_container *)tb_self2server);
 }
 
-void callback_periodic_pop(const int64_t *n_var0) {
-    // uint8_t n_local0[80] = {};
-    // uint8_t *n_ref1 = n_local0;
-    SMACCM_DATA__GIDL_container n_local0;
-    SMACCM_DATA__GIDL_container *n_ref1 = &n_local0;
-    bool n_r2 = true;
-
-    if (n_r2) {
-        if (!self2server_enqueue(n_ref1)) {
-            printf("self2server_enqueue failed\n");
-        }
-    }
+void component_init(const int64_t *n_var0) {
+    printf("Decrypt init\n");
+    callback_configureStaticKey(n_var0);
 }
 
 void component_entry(const int64_t *n_var0)
@@ -71,12 +60,19 @@ void entrypoint_Decrypt_periodic_dispatcher(const int64_t * in_arg) {
     component_entry((int64_t *) in_arg);
 }
 
+void entrypoint_Decrypt_initializer(const int64_t *in) {
+    component_init(in);
+}
+
 int run(void) {
 
     // Port initialization routines
 
     // tb_timer_periodic(0, ((uint64_t)1)*NS_IN_MS);
     CALLBACKOP(timer_complete_reg_callback(timer_complete_callback, NULL));
+
+    int64_t key;
+    entrypoint_Decrypt_initializer(&key);
 
     // Initial lock to await dispatch input.
     MUTEXOP(dispatch_sem_wait());

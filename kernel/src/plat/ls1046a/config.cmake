@@ -16,6 +16,8 @@ if(KernelPlatformOK1046AC2)
     list(APPEND KernelDTSList "tools/dts/ok1046a-c2.dts")
     list(APPEND KernelDTSList "src/plat/ls1046a/overlay-ls1046a.dts")
 
+    # sys-clk frequency: 100_000_000
+    # UART uses 1/2 platform clock.
     declare_default_headers(
         TIMER_FREQUENCY 25000000
         MAX_IRQ 232

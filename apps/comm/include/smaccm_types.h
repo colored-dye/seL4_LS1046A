@@ -33,7 +33,7 @@ if((OP) != 0) {\
 #define CALLBACKOP(OP) OP
 #endif // TB_VERIFY
 
-// typedef uint8_t SMACCM_DATA__CAN_Buffer [8]; 
+typedef uint8_t SMACCM_DATA__CAN_Buffer [8]; 
 
 typedef uint8_t SMACCM_DATA__UART_Buffer [255]; 
 
@@ -45,25 +45,25 @@ typedef
 
 typedef uint8_t SMACCM_DATA__GIDL [80]; 
 
-// typedef 
-//       struct SMACCM_DATA__Camera_Bounding_Box_i { 
-//          uint16_t left  ; 
-//          uint16_t right  ; 
-//          uint16_t top  ; 
-//          uint16_t bottom  ; 
-//       } SMACCM_DATA__Camera_Bounding_Box_i ; 
+typedef 
+      struct SMACCM_DATA__Camera_Bounding_Box_i { 
+         uint16_t left  ; 
+         uint16_t right  ; 
+         uint16_t top  ; 
+         uint16_t bottom  ; 
+      } SMACCM_DATA__Camera_Bounding_Box_i ; 
 
-// typedef 
-//       struct SMACCM_DATA__CAN_Frame_i { 
-//          uint32_t id  ; 
-//          SMACCM_DATA__CAN_Buffer buf  ; 
-//          uint8_t buf_len  ; 
-//       } SMACCM_DATA__CAN_Frame_i ; 
+typedef 
+      struct SMACCM_DATA__CAN_Frame_i { 
+         uint32_t id  ; 
+         SMACCM_DATA__CAN_Buffer buf  ; 
+         uint8_t buf_len  ; 
+      } SMACCM_DATA__CAN_Frame_i ; 
 
-// typedef 
-//       struct tb_SMACCM_DATA__CAN_Buffer_container { 
-//          SMACCM_DATA__CAN_Buffer f  ; 
-//       } tb_SMACCM_DATA__CAN_Buffer_container ; 
+typedef 
+      struct tb_SMACCM_DATA__CAN_Buffer_container { 
+         SMACCM_DATA__CAN_Buffer f  ; 
+      } tb_SMACCM_DATA__CAN_Buffer_container ; 
 
 typedef 
       struct tb_SMACCM_DATA__UART_Buffer_container { 

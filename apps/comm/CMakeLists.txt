@@ -18,13 +18,17 @@ include(${GLOBAL_COMPONENTS_PATH})
 
 CAmkESAddImportPath(${CMAKE_CURRENT_LIST_DIR}/interfaces)
 
+file(
+    GLOB
+    Server_deps
+        components/Server/src/*.c
+)
 DeclareCAmkESComponent(
     Server
     INCLUDES
         include components/Server/include
     SOURCES
-        components/Server/src/Server.c
-        components/Server/src/input_decrypt2self_dequeue_monitor.c
+        ${Server_deps}
 )
 
 DeclareCAmkESComponent(
@@ -39,10 +43,16 @@ DeclareCAmkESComponent(
     SOURCES components/Encrypt/src/Encrypt.c
 )
 
+file(
+    GLOB
+    Decrypt_deps
+        components/Decrypt/src/*.c
+)
+
 DeclareCAmkESComponent(
     Decrypt
-    INCLUDES include
-    SOURCES components/Decrypt/src/Decrypt.c
+    INCLUDES include components/Decrypt/include
+    SOURCES ${Decrypt_deps}
 )
 
 DeclareCAmkESComponent(

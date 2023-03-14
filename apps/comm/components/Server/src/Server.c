@@ -20,10 +20,10 @@ void timer_complete_callback(void *_ UNUSED) {
    CALLBACKOP(timer_complete_reg_callback(timer_complete_callback, NULL));
 }
 
-bool self2encrypt_enqueue(const SMACCM_DATA__GIDL * tb_self2encrypt) {
+bool self2encrypt_enqueue(const SMACCM_DATA__GIDL_container * tb_self2encrypt) {
     bool tb_result = true ; 
 
-    tb_result &= self2encrypt0_enqueue((SMACCM_DATA__GIDL_container *)tb_self2encrypt);
+    tb_result &= self2encrypt0_enqueue(tb_self2encrypt);
 
     return tb_result;
 }
@@ -47,14 +47,26 @@ void component_entry(const int64_t *n_var0) {
     return;
 }
 
+bool self2framing_enqueue
+(const SMACCM_DATA__GIDL_container * tb_self2framing) {
+    // return tb_self2framing0_enqueue(tb_self2framing);
+}
+
+bool self2vm_reboot_enqueue(const bool *in) {
+    // return self2vm_reboot0_enqueue(in);
+}
+
 void component_init(const int64_t *n_var0)
-{ }
+{
+    printf("Server init\n");
+}
+
+void entrypoint_Server_initializer(const int64_t *in UNUSED) {
+    component_init(in);
+}
 
 void entrypoint_Server_periodic_dispatcher(const int64_t * in_arg) {
     component_entry((int64_t *) in_arg);
-}
-
-void entrypoint_Server_decrypt2self0(const SMACCM_DATA__GIDL * in_arg) {
 }
 
 int run(void) {
@@ -64,6 +76,8 @@ int run(void) {
     // tb_timer_periodic(0, ((uint64_t)5)*NS_IN_MS);
     CALLBACKOP(timer_complete_reg_callback(timer_complete_callback, NULL));
 
+    int64_t dummy;
+    entrypoint_Server_initializer(&dummy);
 
     // Initial lock to await dispatch input.
     MUTEXOP(dispatch_sem_wait());
