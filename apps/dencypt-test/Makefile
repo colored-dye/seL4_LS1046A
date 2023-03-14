@@ -1,8 +1,8 @@
-TARGET = dencrypt-test
+TARGET = build/dencrypt-test
 SRCS = src/main.c
 OBJS = build/main.o
 
-minitower_INC = libminitower/include
+minitower_INC = ../comm/usercode/libminitower/include
 
 .PHONY: all
 all: $(TARGET)
