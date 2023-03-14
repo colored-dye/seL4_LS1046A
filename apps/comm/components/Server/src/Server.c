@@ -29,8 +29,10 @@ bool self2encrypt_enqueue(const SMACCM_DATA__GIDL * tb_self2encrypt) {
 }
 
 void component_entry(const int64_t *n_var0) {
-    uint8_t n_local0[80] = {};
-    uint8_t *n_ref1 = n_local0;
+    // uint8_t n_local0[80] = {};
+    // uint8_t *n_ref1 = n_local0;
+    SMACCM_DATA__GIDL_container n_local0;
+    SMACCM_DATA__GIDL_container *n_ref1 = &n_local0;
     bool n_r2 = decrypt2self0_dequeue(n_ref1);
     
     printf("Server:\n");
