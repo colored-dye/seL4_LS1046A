@@ -3,6 +3,7 @@
 #include <camkes.h>
 #include <stdlib.h>
 #include "Decrypt.h"
+#include "smaccm_types.h"
 
 static bool occurred_periodic_dispatcher;
 static int64_t time_periodic_dispatcher;
@@ -30,26 +31,20 @@ void component_init(const int64_t *n_var0) {
     callback_configureStaticKey(n_var0);
 }
 
+void component_entry_aux(void) {
+    // SMACCM_DATA__UART_Packet_i n_local0;
+    // if (uart2self_dequeue(&n_local0)) {
+    //     printf("UART -> Decrypt\n");
+    //     callback_input_uart2self_dequeue_handler(&n_local0);
+    // } else {
+    //     printf("No data for Decrypt\n");
+    // }
+}
+
 void component_entry(const int64_t *n_var0)
 {
     printf("Decrypt\n");
-    // printf("Enter %s:%s\n", __FILE__, __FUNCTION__);
-    // printf("Arg: %ld\n", *n_var0);
-
-    // uart2self_dequeue();
-
-    // component_entry_aux
-    struct SMACCM_DATA__UART_Packet_i n_local0 = {
-        .buf = {1, 2, 3, 4,},
-        .buf_len = 4,
-    };
-
-    struct SMACCM_DATA__UART_Packet_i *n_ref1 = &n_local0;
-    bool n_r2 = true;
-
-    if (n_r2) {
-        // callback_input_uart2self_dequeue_handler(n_ref1);
-    }
+    component_entry_aux();
 
     callback_periodic_pop(n_var0);
 

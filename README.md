@@ -6,6 +6,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 
 ```
 ├── apps
+│   ├── comm                -- Communication system.
 │   ├── empty               -- Empty user space program, ends with a stack dump.
 │   ├── hello               -- Print "Hello, World", ends with a stack dump.
 │   ├── hello-camkes-1      -- CAmkES components, Echo server and Client, says something, with safe exit.
@@ -35,6 +36,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 │   └── tools
 ├── projects
 │   ├── capdl
+│   ├── global-components
 │   ├── musllibc
 │   ├── projects_libs
 │   ├── seL4_libs
