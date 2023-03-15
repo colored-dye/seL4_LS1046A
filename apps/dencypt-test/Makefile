@@ -1,11 +1,17 @@
 TARGET = build/dencrypt-test
 SRCS = src/main.c
-OBJS = build/main.o
 
 minitower_INC = ../comm/usercode/libminitower/include
 
-.PHONY: all
+.PHONY: all run clean
 all: $(TARGET)
 
 $(TARGET): $(SRCS) $(wildcard ../comm/usercode/libminitower/src/*.c)
+	@mkdir -p build
 	gcc -o $@ $^ -I$(minitower_INC)
+
+run: $(TARGET)
+	$(TARGET)
+
+clean:
+	rm -rf build
