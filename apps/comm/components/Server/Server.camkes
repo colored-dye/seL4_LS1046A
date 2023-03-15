@@ -1,0 +1,6 @@
+
+component Server {
+    control;
+
+    consumes FC_Data_Available decrypt2self;
+}

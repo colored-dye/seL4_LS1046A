@@ -1,0 +1,9 @@
+import <std_connector.camkes>;
+import <global-connectors.camkes>;
+
+assembly {
+    composition {
+        component Server server;
+        
+    }
+}
