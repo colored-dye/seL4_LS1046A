@@ -1,4 +1,3 @@
-#include "camkes-component-server.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -19,31 +18,27 @@
 // }
 
 void consume_Decrypt2Server_callback(void *in_arg UNUSED) {
+    consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_callback, NULL);
+
     recv_FC_Data_Decrypt2Server_acquire();
 
     printf("%s: %s\n", get_instance_name(), (char*)recv_FC_Data_Decrypt2Server->raw_data);
 
-    consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_callback, NULL);
+    emit_Decrypt2Server_DataReadyAck_emit();
 }
 
-void consume_Decrypt2Server__init(void) {
-    
+void consume_Decrypt2Server_DataReadyEvent__init() {
+    if (consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_callback, NULL)) {
+        printf("%s failed to register callback", get_instance_name());
+    }
 }
 
 int run(void) {
     printf("Starting %s\n", get_instance_name());
 
-    if (consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_callback, NULL)) {
-        printf("%s failed to register callback", get_instance_name());
-    }
+    // Signal Decrypt to start sending data
+    emit_Decrypt2Server_DataReadyAck_emit();
 
-    // while (1) {
-    //     if (consume_Decrypt2Server_DataReadyEvent_poll()) {
-    //         puts("Server: consume event");
-    //     } else {
-    //         puts("Server: No event yet");
-    //     }
-    // }
     while (1) {
 
     }

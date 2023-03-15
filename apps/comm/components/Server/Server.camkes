@@ -4,10 +4,8 @@ component Server {
     include <top_types.h>;
     control;
 
-    // Get decrypted FC(Flight Control) data from Decrypt
-    // provides Decrypt2Server recv_decrypted_data;
-
     consumes Decrypt2Server_DataReadyEvent consume_Decrypt2Server_DataReadyEvent;
+    emits Decrypt2Server_DataReadyAck emit_Decrypt2Server_DataReadyAck;
 
     dataport FC_Data recv_FC_Data_Decrypt2Server;
 }

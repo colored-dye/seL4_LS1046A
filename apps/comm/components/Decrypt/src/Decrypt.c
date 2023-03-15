@@ -8,34 +8,40 @@
 
 #include <top_types.h>
 
-void consume_UART2Decrypt_callback(void *in_arg UNUSED) {
+void consume_UART2Decrypt_DataReadyEvent_callback(void *in_arg UNUSED) {
     recv_UART_Data_UART2Decrypt_acquire();
 
     printf("%s: %s\n", get_instance_name(), (char*)recv_UART_Data_UART2Decrypt->raw_data);
 
-    consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_callback, NULL);
+    consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_DataReadyEvent_callback, NULL);
+
+    emit_UART2Decrypt_DataReadyAck_emit();
 }
 
-void consume_UART2Decrypt__init(void) {
-
-}
-
-int run(void) {
-    printf("Starting %s\n", get_instance_name());
-
-    if (consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_callback, NULL)) {
-        printf("%s failed to register callback\n", get_instance_name());
-    }
-
-    strcpy(send_FC_Data_Decrypt2Server->raw_data, "Hello, this is Decrypt");
+void send_to_server(int i) {
+    consume_Decrypt2Server_DataReadyAck_wait();
+    sprintf(send_FC_Data_Decrypt2Server->raw_data, "Hello, this is Decrypt [%03d]", i);
 
     send_FC_Data_Decrypt2Server_release();
 
     printf("%s: Emit data ready\n", get_instance_name());
     emit_Decrypt2Server_DataReadyEvent_emit();
+}
 
-    while (1) {
+void consume_UART2Decrypt_DataReadyEvent__init(void) {
+    if (consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_DataReadyEvent_callback, NULL)) {
+        printf("%s failed to register UART2Decrypt_DataReadyEvent callback\n", get_instance_name());
+    }
+}
 
+int run(void) {
+    printf("Starting %s\n", get_instance_name());
+
+    // Signal UART to start sending data
+    emit_UART2Decrypt_DataReadyAck_emit();
+
+    for(int i=0; i<256; i++) {
+        send_to_server(i);
     }
     
     return 0;

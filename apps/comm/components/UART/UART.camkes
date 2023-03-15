@@ -4,6 +4,7 @@ component UART {
     control;
     
     emits UART2Decrypt_DataReadyEvent emit_UART2Decrypt_DataReadyEvent;
+    consumes UART2Decrypt_DataReadyAck consume_UART2Decrypt_DataReadyAck;
 
     dataport UART_Data send_UART_Data_UART2Decrypt;
 }

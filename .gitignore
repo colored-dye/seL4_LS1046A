@@ -9,3 +9,4 @@ __pycache__/
 .fetch-log
 *.pyc
 compile_commands.json
+.log
