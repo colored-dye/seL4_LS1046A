@@ -1,7 +1,0 @@
-.git
-LICENSES/*.txt
-.licenseignore
-.reuse/dep5
-kbuild-tool/*
-*.json
-*.pyc
