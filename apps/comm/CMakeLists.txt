@@ -7,6 +7,7 @@ project(comm C ASM)
 find_package(camkes-tool REQUIRED)
 camkes_tool_setup_camkes_build_environment()
 
+# Use components in `global-components`
 find_file(GLOBAL_COMPONENTS_PATH global-components.cmake PATHS ${project_dir}/projects/global-components/ CMAKE_FIND_ROOT_PATH_BOTH)
 mark_as_advanced(FORCE GLOBAL_COMPONENTS_PATH)
 if("${GLOBAL_COMPONENTS_PATH}" STREQUAL "GLOBAL_COMPONENTS_PATH-NOTFOUND")

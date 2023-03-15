@@ -1,8 +1,9 @@
-// import <Decrypt2Server.idl4>;
 
 component Server {
     include <top_types.h>;
     control;
+
+    has mutex server;
 
     consumes Decrypt2Server_DataReadyEvent consume_Decrypt2Server_DataReadyEvent;
     emits Decrypt2Server_DataReadyAck emit_Decrypt2Server_DataReadyAck;

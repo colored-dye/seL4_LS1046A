@@ -2,6 +2,24 @@
 
 Forlinx OK1046A-C2 board with FET1046A-C core platform.
 
+## How to ... ?
+
+### How to get ported code?
+
+First, run `./scripts/get-manifest.sh manifest.txt`. This will download original official repositories to `backup/` directory.
+
+Next, run `./scripts/patch-projects.sh`. This will copy the backup projects to the disired location, and apply the patches from `diffs/` directory.
+
+If the code fails to patch correctly, you can also modify the code manually.
+
+### How to build user applications?
+
+Run `./scripts/build-app.sh <app>`. Keep the `<app>` argument empty to see a list of all the available apps.
+
+If you want to build the code for another platform, you can modify the `plat` variable in the script.
+
+The script will automatically set up all the necessary arguments and possibly some unused arguments.
+
 ## DTS & DTB files
 
 ```

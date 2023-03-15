@@ -2,6 +2,8 @@
 component UART {
     include <top_types.h>;
     control;
+
+    has mutex uart;
     
     emits UART2Decrypt_DataReadyEvent emit_UART2Decrypt_DataReadyEvent;
     consumes UART2Decrypt_DataReadyAck consume_UART2Decrypt_DataReadyAck;
