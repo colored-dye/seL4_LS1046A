@@ -1,6 +1,6 @@
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h
---- backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	1970-01-01 08:00:00.000000000 +0800
-+++ kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	2023-02-28 08:35:41.789192041 +0800
+--- backup/kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	1969-12-31 16:00:00.000000000 -0800
++++ kernel/libsel4/sel4_plat_include/ls1046a/sel4/plat/api/constants.h	2023-03-14 21:56:46.414667339 -0700
 @@ -0,0 +1,11 @@
 +/*
 + * Copyright 2020, Data61, CSIRO (ABN 41 687 119 230)
@@ -14,8 +14,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +/* 4x Cortex-A72. */
 +#include <sel4/arch/constants_cortex_a72.h>
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/serial/config.cmake kernel/src/drivers/serial/config.cmake
---- backup/kernel/src/drivers/serial/config.cmake	2023-03-07 15:44:00.634205556 +0800
-+++ kernel/src/drivers/serial/config.cmake	2023-02-27 14:24:11.487166405 +0800
+--- backup/kernel/src/drivers/serial/config.cmake	2023-03-14 21:55:24.359000865 -0700
++++ kernel/src/drivers/serial/config.cmake	2023-03-14 21:56:46.418667323 -0700
 @@ -44,3 +44,8 @@
      PREFIX src/drivers/serial
      CFILES "meson-gx-uart.c"
@@ -26,8 +26,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +    CFILES "ns16550a-uart.c"
 +)
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/serial/ns16550a-uart.c kernel/src/drivers/serial/ns16550a-uart.c
---- backup/kernel/src/drivers/serial/ns16550a-uart.c	1970-01-01 08:00:00.000000000 +0800
-+++ kernel/src/drivers/serial/ns16550a-uart.c	2023-03-07 14:52:39.884510065 +0800
+--- backup/kernel/src/drivers/serial/ns16550a-uart.c	1969-12-31 16:00:00.000000000 -0800
++++ kernel/src/drivers/serial/ns16550a-uart.c	2023-03-14 21:56:46.418667323 -0700
 @@ -0,0 +1,53 @@
 +/*
 + * Copyright 2016, General Dynamics C4 Systems
@@ -83,8 +83,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +}
 +#endif /* CONFIG_DEBUG_BUILD */
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/drivers/smmu/smmuv2.c kernel/src/drivers/smmu/smmuv2.c
---- backup/kernel/src/drivers/smmu/smmuv2.c	2023-03-07 15:44:00.694205088 +0800
-+++ kernel/src/drivers/smmu/smmuv2.c	2023-03-07 15:32:42.345341770 +0800
+--- backup/kernel/src/drivers/smmu/smmuv2.c	2023-03-14 21:55:24.511000243 -0700
++++ kernel/src/drivers/smmu/smmuv2.c	2023-03-14 21:56:46.418667323 -0700
 @@ -4,6 +4,7 @@
   * SPDX-License-Identifier: GPL-2.0-only
   */
@@ -99,8 +99,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
  
 +#endif
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/ls1046a/config.cmake kernel/src/plat/ls1046a/config.cmake
---- backup/kernel/src/plat/ls1046a/config.cmake	1970-01-01 08:00:00.000000000 +0800
-+++ kernel/src/plat/ls1046a/config.cmake	2023-03-14 08:54:45.598684413 +0800
+--- backup/kernel/src/plat/ls1046a/config.cmake	1969-12-31 16:00:00.000000000 -0800
++++ kernel/src/plat/ls1046a/config.cmake	2023-03-14 21:56:46.418667323 -0700
 @@ -0,0 +1,36 @@
 +cmake_minimum_required(VERSION 3.7.2)
 +
@@ -139,8 +139,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +    CFILES src/arch/arm/machine/gic_v2.c src/arch/arm/machine/l2c_nop.c
 +)
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts kernel/src/plat/ls1046a/overlay-ls1046a.dts
---- backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts	1970-01-01 08:00:00.000000000 +0800
-+++ kernel/src/plat/ls1046a/overlay-ls1046a.dts	2023-03-07 11:16:18.531685816 +0800
+--- backup/kernel/src/plat/ls1046a/overlay-ls1046a.dts	1969-12-31 16:00:00.000000000 -0800
++++ kernel/src/plat/ls1046a/overlay-ls1046a.dts	2023-03-14 21:56:46.418667323 -0700
 @@ -0,0 +1,68 @@
 +
 +/ {
@@ -211,8 +211,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +	};
 +};
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/dts/ok1046a-c2.dts kernel/tools/dts/ok1046a-c2.dts
---- backup/kernel/tools/dts/ok1046a-c2.dts	1970-01-01 08:00:00.000000000 +0800
-+++ kernel/tools/dts/ok1046a-c2.dts	2023-03-07 15:03:42.892929316 +0800
+--- backup/kernel/tools/dts/ok1046a-c2.dts	1969-12-31 16:00:00.000000000 -0800
++++ kernel/tools/dts/ok1046a-c2.dts	2023-03-14 21:56:46.422667305 -0700
 @@ -0,0 +1,1396 @@
 +/dts-v1/;
 +// version:		17
@@ -1612,8 +1612,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +};
 \ No newline at end of file
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/hardware.yml kernel/tools/hardware.yml
---- backup/kernel/tools/hardware.yml	2023-03-07 15:44:00.658205368 +0800
-+++ kernel/tools/hardware.yml	2023-03-06 10:19:15.454742127 +0800
+--- backup/kernel/tools/hardware.yml	2023-03-14 21:55:24.407000669 -0700
++++ kernel/tools/hardware.yml	2023-03-14 21:56:46.422667305 -0700
 @@ -99,6 +99,7 @@
        - arm,cortex-a15-pmu
        - arm,cortex-a7-pmu
@@ -1623,8 +1623,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
        KERNEL_PMU_IRQ: boot-cpu
    # Tegra SMMU (memory-controllers/nvidia,tegra30-mc.txt)
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/helpers.cmake kernel/tools/helpers.cmake
---- backup/kernel/tools/helpers.cmake	2023-03-07 15:44:00.694205088 +0800
-+++ kernel/tools/helpers.cmake	2023-03-07 15:38:31.244386439 +0800
+--- backup/kernel/tools/helpers.cmake	2023-03-14 21:55:24.511000243 -0700
++++ kernel/tools/helpers.cmake	2023-03-14 21:56:46.422667305 -0700
 @@ -590,11 +590,11 @@
      set(config_file "${config_dir}/autoconf.h")
  

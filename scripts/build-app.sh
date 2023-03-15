@@ -14,7 +14,7 @@ APP="$1"
 if [ "$APP" == "" ]; then
     echo "Please enter app name!"
     echo "Usage: ./build-app.sh <app>"
-    echo "List of available apps: empty;hello"
+    echo "List of available apps: comm;comm-smaccm;empty;hello;hello-camkes-1;hello-camkes-2"
     exit 1
 fi
 
@@ -31,8 +31,8 @@ cd $BUILD_APP_DIR
 
 echo "Configuration start"
 
-# plat="qemu-arm-virt"
-plat="ls1046a"
+plat="qemu-arm-virt"
+# plat="ls1046a"
 
 cmake "$APP_DIR" \
     -GNinja \

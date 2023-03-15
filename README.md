@@ -7,6 +7,7 @@ Forlinx OK1046A-C2 board with FET1046A-C core platform.
 ```
 ├── apps
 │   ├── comm                -- Communication system.
+│   ├── comm-smaccm         -- Follow SMACCM structure.
 │   ├── empty               -- Empty user space program, ends with a stack dump.
 │   ├── hello               -- Print "Hello, World", ends with a stack dump.
 │   ├── hello-camkes-1      -- CAmkES components, Echo server and Client, says something, with safe exit.

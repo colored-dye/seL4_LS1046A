@@ -2,5 +2,6 @@
 component Server {
     control;
 
+    // Get decrypted FC(Flight Control) data from Decrypt
     consumes FC_Data_Available decrypt2self;
 }
