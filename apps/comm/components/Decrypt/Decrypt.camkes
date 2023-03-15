@@ -1,1 +1,12 @@
+// import <Decrypt2Server.idl4>;
 
+component Decrypt {
+    include <top_types.h>;
+    control;
+
+    emits Decrypt2Server_DataReadyEvent emit_Decrypt2Server_DataReadyEvent;
+    consumes UART2Decrypt_DataReadyEvent consume_UART2Decrypt_DataReadyEvent;
+
+    dataport FC_Data send_FC_Data_Decrypt2Server;
+    dataport UART_Data recv_UART_Data_UART2Decrypt;
+}

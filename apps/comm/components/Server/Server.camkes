@@ -1,7 +1,13 @@
+// import <Decrypt2Server.idl4>;
 
 component Server {
+    include <top_types.h>;
     control;
 
     // Get decrypted FC(Flight Control) data from Decrypt
-    consumes FC_Data_Available decrypt2self;
+    // provides Decrypt2Server recv_decrypted_data;
+
+    consumes Decrypt2Server_DataReadyEvent consume_Decrypt2Server_DataReadyEvent;
+
+    dataport FC_Data recv_FC_Data_Decrypt2Server;
 }

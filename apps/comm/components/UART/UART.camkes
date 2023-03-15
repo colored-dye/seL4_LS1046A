@@ -1,0 +1,9 @@
+
+component UART {
+    include <top_types.h>;
+    control;
+    
+    emits UART2Decrypt_DataReadyEvent emit_UART2Decrypt_DataReadyEvent;
+
+    dataport UART_Data send_UART_Data_UART2Decrypt;
+}

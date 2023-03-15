@@ -27,6 +27,28 @@ DeclareCAmkESComponent(
     SOURCES ${Server_deps}
 )
 
+file(
+    GLOB
+        Decrypt_deps
+        components/Decrypt/src/*.c
+)
+DeclareCAmkESComponent(
+    Decrypt
+    INCLUDES include
+    SOURCES ${Decrypt_deps}
+)
+
+file(
+    GLOB
+        UART_deps
+        components/UART/src/*.c
+)
+DeclareCAmkESComponent(
+    UART
+    INCLUDES include
+    SOURCES ${UART_deps}
+)
+
 DeclareCAmkESRootserver(comm.camkes)
 
 GenerateCAmkESRootserver()

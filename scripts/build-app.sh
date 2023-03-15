@@ -65,6 +65,10 @@ echo "Build complete"
 
 ##########################
 
+if [ $plat != "ls1046a" ]; then
+    exit 0
+fi
+
 echo "##########################"
 
 DEST_DIR="/mnt/hgfs/shared"

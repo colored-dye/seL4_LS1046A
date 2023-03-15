@@ -1,0 +1,4 @@
+procedure Decrypt2Server {
+    include <top_types.h>;
+    void decrypt2server(refin FC_Data fc_data);
+}

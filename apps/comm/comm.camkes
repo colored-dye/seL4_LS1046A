@@ -1,9 +1,34 @@
 import <std_connector.camkes>;
 import <global-connectors.camkes>;
 
+import "components/Server/Server.camkes";
+import "components/Decrypt/Decrypt.camkes";
+import "components/UART/UART.camkes";
+
+// import <Decrypt2Server.idl4>;
+
 assembly {
     composition {
         component Server server;
+        component Decrypt decrypt;
+        component UART uart;
+
+        connection seL4Notification Decrypt2Server_DataReady (from decrypt.emit_Decrypt2Server_DataReadyEvent, to server.consume_Decrypt2Server_DataReadyEvent);
+        connection seL4Notification UART2Decrypt_DataReady (from uart.emit_UART2Decrypt_DataReadyEvent, to decrypt.consume_UART2Decrypt_DataReadyEvent);
+
+        connection seL4SharedData Decrypt2Server_FC_Data (from decrypt.send_FC_Data_Decrypt2Server, to server.recv_FC_Data_Decrypt2Server);
+        connection seL4SharedData UART2Decrypt_UART_Data (from uart.send_UART_Data_UART2Decrypt, to decrypt.recv_UART_Data_UART2Decrypt);
+    }
+
+    configuration {
+        server.priority     = 255;
+        decrypt.priority    = 255;
+        uart.priority       = 255;
+
+        server.recv_FC_Data_Decrypt2Server_access   = "R";
+        decrypt.send_FC_Data_Decrypt2Server_access  = "W";
         
+        decrypt.recv_UART_Data_UART2Decrypt_access  = "R";
+        uart.send_UART_Data_UART2Decrypt_access     = "W";
     }
 }
