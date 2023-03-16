@@ -13,6 +13,9 @@ assembly {
         component Decrypt decrypt;
         component UART uart;
 
+        // connection seL4Notification Server2Decrypt_Started      (from server.emit_Server2Decrypt_StartedEvent,      to decrypt.consume_Server2Decrypt_StartedEvent);
+        // connection seL4Notification Decrypt2UART_Started        (from decrypt.emit_Decrypt2UART_StartedEvent,       to uart.consume_Decrypt2UART_StartedEvent);
+
         // Decrypt => Server: Decrypted flight control data
         connection seL4Notification Decrypt2Server_DataReady    (from decrypt.emit_Decrypt2Server_DataReadyEvent,   to server.consume_Decrypt2Server_DataReadyEvent);
         // Decrypt <= Server: Server ACK
