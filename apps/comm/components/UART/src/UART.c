@@ -1,5 +1,5 @@
-#include "utils/attribute.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <camkes.h>
@@ -36,6 +36,12 @@ void send_to_decrypt(int i) {
     unlock();
 }
 
+void wait_for_input(void) {
+    while (rand() % 114514) {
+        
+    }
+}
+
 void consume_UART2Decrypt_DataReadyAck_callback(void *in_arg UNUSED) {
     int cntr;
 
@@ -48,6 +54,9 @@ void consume_UART2Decrypt_DataReadyAck_callback(void *in_arg UNUSED) {
         printf("[%s]: Stop sending to Decrypt\n", get_instance_name());
         return;
     }
+
+    // Pretend to wait for input
+    wait_for_input();
 
     send_to_decrypt(cntr);
 
@@ -68,8 +77,6 @@ void consume_UART2Decrypt_DataReadyAck__init(void) {
 
 int run(void) {
     printf("Starting %s\n", get_instance_name());
-
-    // send_to_decrypt(counter++);
 
     while (1) {
 

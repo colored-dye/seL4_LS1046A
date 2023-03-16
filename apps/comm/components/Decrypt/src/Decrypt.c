@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <camkes.h>
@@ -27,12 +28,14 @@ void consume_UART2Decrypt_DataReadyEvent_callback(void *in_arg UNUSED) {
     lock();
     recv_UART_Data_UART2Decrypt_acquire();
 
-    printf("[%s]: %s\n", get_instance_name(), (char*)recv_UART_Data_UART2Decrypt->raw_data);
-
-    consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_DataReadyEvent_callback, NULL);
+    printf("[%s]: %s\n", get_instance_name(), (char*) recv_UART_Data_UART2Decrypt->raw_data);
 
     emit_UART2Decrypt_DataReadyAck_emit();
     unlock();
+
+    if (consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_DataReadyEvent_callback, NULL)) {
+        printf("[%s] failed to register callback", get_instance_name());
+    }
 }
 
 void send_to_server(int i) {
@@ -50,6 +53,12 @@ void send_to_server(int i) {
 void consume_UART2Decrypt_DataReadyEvent__init(void) {
     if (consume_UART2Decrypt_DataReadyEvent_reg_callback(&consume_UART2Decrypt_DataReadyEvent_callback, NULL)) {
         printf("[%s] failed to register UART2Decrypt_DataReadyEvent callback\n", get_instance_name());
+    }
+}
+
+void wait_for_data(void) {
+    while (rand() % 1998) {
+
     }
 }
 
@@ -88,8 +97,6 @@ int run(void) {
 
     // Signal UART to start sending data
     emit_UART2Decrypt_DataReadyAck_emit();
-    
-    // send_to_server(counter++);
 
     while (1) {
 

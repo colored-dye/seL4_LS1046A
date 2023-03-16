@@ -82,5 +82,5 @@ set(KernelNumDomains 1 CACHE STRING "" FORCE)
 set(KernelArmExportPCNTUser TRUE CACHE BOOL "" FORCE)
 set(KernelArmExportPTMRUser TRUE CACHE BOOL "" FORCE)
 
+# Serial output relies on Debug settings
 ApplyCommonReleaseVerificationSettings(FALSE FALSE)
-

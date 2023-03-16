@@ -24,12 +24,15 @@ void consume_Decrypt2Server_DataReadyEvent_callback(void *in_arg UNUSED) {
 
     recv_FC_Data_Decrypt2Server_acquire();
 
-    printf("[%s]: %s\n", get_instance_name(), (char*)recv_FC_Data_Decrypt2Server->raw_data);
+    printf("[%s]: %s\n", get_instance_name(), (char*) recv_FC_Data_Decrypt2Server->raw_data);
 
     emit_Decrypt2Server_DataReadyAck_emit();
 
-    consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_DataReadyEvent_callback, NULL);
     unlock();
+
+    if (consume_Decrypt2Server_DataReadyEvent_reg_callback(&consume_Decrypt2Server_DataReadyEvent_callback, NULL)) {
+        printf("[%s] failed to register callback", get_instance_name());
+    }
 }
 
 void consume_Decrypt2Server_DataReadyEvent__init() {
