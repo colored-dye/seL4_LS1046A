@@ -1,11 +1,13 @@
-#include <stdint.h>
+#include "utils/attribute.h"
 #include <stdio.h>
 #include <string.h>
 
 #include <camkes.h>
-#include <camkes/dataport.h>
 
 #include <top_types.h>
+
+static int counter = 0;
+#define MAX_UART_COUNTER 256
 
 #define lock() \
     do { \
@@ -23,8 +25,6 @@
 
 void send_to_decrypt(int i) {
     lock();
-    // Wait for Decrypt to receive previous data and send ACK
-    consume_UART2Decrypt_DataReadyAck_wait();
 
     sprintf(send_UART_Data_UART2Decrypt->raw_data, "UART data: %03d", i);
 
@@ -36,12 +36,28 @@ void send_to_decrypt(int i) {
     unlock();
 }
 
+void consume_UART2Decrypt_DataReadyAck_callback(void *in_arg UNUSED) {
+    if (counter == MAX_UART_COUNTER) {
+        printf("%s: Stop sending to Decrypt\n", get_instance_name());
+        return;
+    }
+    send_to_decrypt(counter++);
+
+    if (consume_UART2Decrypt_DataReadyAck_reg_callback(&consume_UART2Decrypt_DataReadyAck_callback, NULL)) {
+        printf("%s failed to register callback", get_instance_name());
+    }
+}
+
+void consume_UART2Decrypt_DataReadyAck__init(void) {
+    if (consume_UART2Decrypt_DataReadyAck_reg_callback(&consume_UART2Decrypt_DataReadyAck_callback, NULL)) {
+        printf("%s failed to register callback", get_instance_name());
+    }
+}
+
 int run(void) {
     printf("Starting %s\n", get_instance_name());
 
-    for (int i=0; i<256; i++) {
-        send_to_decrypt(i);
-    }
+    send_to_decrypt(counter++);
     
     return 0;
 }
