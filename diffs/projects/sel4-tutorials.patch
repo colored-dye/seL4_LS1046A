@@ -1,6 +1,6 @@
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/sel4-tutorials/settings.cmake sel4-tutorials/settings.cmake
---- ../backup/projects/sel4-tutorials/settings.cmake	2023-03-14 21:56:16.246789655 -0700
-+++ sel4-tutorials/settings.cmake	2023-03-14 21:56:47.006664942 -0700
+--- ../backup/projects/sel4-tutorials/settings.cmake	2023-03-02 13:42:55.531241080 +0800
++++ sel4-tutorials/settings.cmake	2023-03-06 16:03:13.374200624 +0800
 @@ -57,11 +57,27 @@
      set(KernelSel4Arch "aarch32" CACHE STRING "" FORCE)
      set(KernelPlatform "zynq7000" CACHE STRING "" FORCE)

@@ -1,6 +1,6 @@
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/CMakeLists.txt util_libs/libplatsupport/CMakeLists.txt
---- ../backup/projects/util_libs/libplatsupport/CMakeLists.txt	2023-03-14 21:56:21.918766646 -0700
-+++ util_libs/libplatsupport/CMakeLists.txt	2023-03-14 21:56:47.118664487 -0700
+--- ../backup/projects/util_libs/libplatsupport/CMakeLists.txt	2023-03-02 08:36:59.181734410 +0800
++++ util_libs/libplatsupport/CMakeLists.txt	2023-03-12 15:08:27.001237816 +0800
 @@ -88,6 +88,14 @@
      endif()
  endif()
@@ -17,8 +17,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
      list(APPEND deps src/mach/${LibPlatSupportMach}/clock/exynos_5422_clock.c)
  elseif(KernelPlatformExynos4 OR KernelPlatformExynos5410 OR KernelPlatformExynos5250)
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h
---- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1969-12-31 16:00:00.000000000 -0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-14 21:56:47.118664487 -0700
+--- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/clock.h	2023-03-09 10:58:54.332483184 +0800
 @@ -0,0 +1,10 @@
 +#pragma once
 +
@@ -31,8 +31,8 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +    NCLKGATES,
 +};
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h
---- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1969-12-31 16:00:00.000000000 -0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-03-14 21:56:47.118664487 -0700
+--- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/i2c.h	2023-03-02 16:35:29.651896745 +0800
 @@ -0,0 +1,12 @@
 +/*
 + * Copyright 2017, Data61, CSIRO (ABN 41 687 119 230)
@@ -47,26 +47,39 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +};
 +
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h
---- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1969-12-31 16:00:00.000000000 -0800
-+++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-14 21:56:47.118664487 -0700
-@@ -0,0 +1,14 @@
+--- ../backup/projects/util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/plat_include/ls1046a/platsupport/plat/serial.h	2023-03-20 11:05:00.106830691 +0800
+@@ -0,0 +1,27 @@
 +#pragma once
 +
++// DUART2
 +#define UART1_PADDR 0x021c0500
++#define UART2_PADDR 0x021c0600
 +
-+#define UART1_IRQ   86  // DUART1 use the same IRQ
++// DUART2
++#define UART3_PADDR 0x021d0500
++#define UART4_PADDR 0x021d0600
++
++// DUART use the same IRQ
++#define UART1_IRQ   86
++#define UART2_IRQ   86
++#define UART3_IRQ   87
++#define UART4_IRQ   87
 +
 +// Only 1~4
 +enum chardev_id {
 +    NS16550A_UART1,
-+    PS_SERIAL_DEFAULT = NS16550A_UART1,
++    NS16550A_UART2,
++    NS16550A_UART3,
++    NS16550A_UART4,
 +};
 +
++#define PS_SERIAL_DEFAULT           NS16550A_UART1
 +#define DEFAULT_SERIAL_PADDR        UART1_PADDR
 +#define DEFAULT_SERIAL_INTERRUPT    UART1_IRQ
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/chardev.h util_libs/libplatsupport/src/chardev.h
---- ../backup/projects/util_libs/libplatsupport/src/chardev.h	2023-03-14 21:56:21.946766531 -0700
-+++ util_libs/libplatsupport/src/chardev.h	2023-03-14 21:56:47.118664487 -0700
+--- ../backup/projects/util_libs/libplatsupport/src/chardev.h	2023-03-02 08:36:59.269732400 +0800
++++ util_libs/libplatsupport/src/chardev.h	2023-03-09 10:52:32.600484800 +0800
 @@ -31,6 +31,11 @@
                 PS_MEM_NORMAL);
  }
@@ -80,9 +93,9 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
      const struct dev_defn *defn,
      const ps_io_ops_t *ops,
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
---- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1969-12-31 16:00:00.000000000 -0800
-+++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-14 21:56:47.118664487 -0700
-@@ -0,0 +1,39 @@
+--- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-20 14:33:05.549272011 +0800
+@@ -0,0 +1,45 @@
 +/*
 + * Copyright 2019, Data61, CSIRO (ABN 41 687 119 230)
 + *
@@ -99,6 +112,9 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +#include <utils/util.h>
 +
 +static const int uart1_irqs[] = {UART1_IRQ, -1};
++static const int uart2_irqs[] = {UART2_IRQ, -1};
++static const int uart3_irqs[] = {UART3_IRQ, -1};
++static const int uart4_irqs[] = {UART4_IRQ, -1};
 +
 +#define UART_DEFN(devid) {          \
 +    .id      = NS16550A_UART##devid,    \
@@ -110,6 +126,9 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +
 +static const struct dev_defn dev_defn[] = {
 +    UART_DEFN(1),
++    // UART_DEFN(2),
++    // UART_DEFN(3),
++    // UART_DEFN(4),
 +};
 +
 +struct ps_chardevice *ps_cdev_init(enum chardev_id id, const ps_io_ops_t *o, struct ps_chardevice *d)
@@ -123,13 +142,15 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +    return NULL;
 +}
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c util_libs/libplatsupport/src/plat/ls1046a/serial.c
---- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	1969-12-31 16:00:00.000000000 -0800
-+++ util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-14 21:56:47.122664472 -0700
-@@ -0,0 +1,102 @@
+--- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/serial.c	1970-01-01 08:00:00.000000000 +0800
++++ util_libs/libplatsupport/src/plat/ls1046a/serial.c	2023-03-20 14:32:50.509518791 +0800
+@@ -0,0 +1,133 @@
++#include <stdint.h>
 +#include <string.h>
 +#include <stdlib.h>
 +#include <platsupport/serial.h>
 +#include "../../chardev.h"
++#include "platsupport/chardev.h"
 +
 +/*
 + * NS16550A UART functions
@@ -172,18 +193,36 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +#define LSR_TEMT        BIT(6)       /* transmitter empty                    */
 +#define LSR_FERR        BIT(7)       /* fifo mode, set when PE,FE or BI err  */
 +
-+#define REG_PTR(x) ((volatile uint8_t *)(DEFAULT_SERIAL_PADDR + (x)))
++/*********************************************************************************************************
++  Line Control Register
++*********************************************************************************************************/
++
++#define CHAR_LEN_5  0x00                                        /* 5bits data size                      */
++#define CHAR_LEN_6  0x01                                        /* 6bits data size                      */
++#define CHAR_LEN_7  0x02                                        /* 7bits data size                      */
++#define CHAR_LEN_8  0x03                                        /* 8bits data size                      */
++#define LCR_STB     0x04                                        /* 2 stop bits                          */
++#define ONE_STOP    0x00                                        /* one stop bit                         */
++#define LCR_PEN     0x08                                        /* parity enable                        */
++#define PARITY_NONE 0x00                                        /* parity disable                       */
++#define LCR_EPS     0x10                                        /* even parity select                   */
++#define LCR_SP      0x20                                        /* stick parity select                  */
++#define LCR_SBRK    0x40                                        /* break control bit                    */
++#define LCR_DLAB    0x80                                        /* divisor latch access enable          */
++#define DLAB        LCR_DLAB
++
++#define REG_PTR(a, x) ((volatile uint8_t *)(UART##a##_PADDR + (x)))
 +
 +int uart_getchar(ps_chardevice_t *d)
 +{
 +    int ch = EOF;
 +
-+    uint8_t poll_status = *(REG_PTR(ULSR1));
++    uint8_t poll_status = *(REG_PTR(1, ULSR1));
 +
 +    // Get byte if data ready
 +    // Return EOF if not ready, no poll
 +    if (poll_status & LSR_DR) {
-+        ch = *(REG_PTR(URBR1)) & MASK(8);
++        ch = *(REG_PTR(1, URBR1)) & MASK(8);
 +    }
 +
 +    return ch;
@@ -192,10 +231,10 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +int uart_putchar(ps_chardevice_t *dev, int c)
 +{
 +    // Wait until THR register is empty
-+    while ((*REG_PTR(ULSR1) & LSR_THRE) == 0)
++    while ((*REG_PTR(1, ULSR1) & LSR_THRE) == 0)
 +        ;
 +
-+    *REG_PTR(UTHR1) = c & MASK(8);
++    *REG_PTR(1, UTHR1) = c & MASK(8);
 +
 +    return 0;
 +}
@@ -203,6 +242,16 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +static void uart_handle_irq(ps_chardevice_t *dev UNUSED)
 +{
 +    /* nothing to do */
++}
++
++static void uart_set_baud(ps_chardevice_t* dev, uint32_t baud) {
++    uint32_t platform_clk_freq = 25000000;
++    uint32_t divisor = (platform_clk_freq + (8 * baud)) / (16 * baud);
++    *REG_PTR(1, ULCR1) |= LCR_DLAB;
++    *REG_PTR(1, UDLB1) = (uint8_t)divisor;
++    *REG_PTR(1, UDMB1) = (uint8_t)(divisor >> 8);
++
++    *REG_PTR(1, ULCR1) &= ~LCR_DLAB;
 +}
 +
 +int uart_init(
@@ -225,6 +274,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
 +    dev->ioops = *ops;
 +    // dev->flags = SERIAL_AUTO_CR;
 +    // dev->clk = NULL;
++    uart_set_baud(dev, 57600);
 +
 +    return 0;
 +}

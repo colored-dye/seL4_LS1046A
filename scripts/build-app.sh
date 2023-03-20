@@ -31,8 +31,8 @@ cd $BUILD_APP_DIR
 
 echo "Configuration start"
 
-plat="qemu-arm-virt"
-# plat="ls1046a"
+# plat="qemu-arm-virt"
+plat="ls1046a"
 
 cmake "$APP_DIR" \
     -GNinja \
