@@ -98,6 +98,39 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
  }
  
 +#endif
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/bcm2711/overlay-rpi4.dts kernel/src/plat/bcm2711/overlay-rpi4.dts
+--- backup/kernel/src/plat/bcm2711/overlay-rpi4.dts	2023-03-07 15:44:00.642205493 +0800
++++ kernel/src/plat/bcm2711/overlay-rpi4.dts	2023-03-20 20:17:17.909774139 +0800
+@@ -9,10 +9,10 @@
+ / {
+ 	chosen {
+ 		seL4,elfloader-devices =
+-		    "serial1";
++		    "serial0";
+ 
+ 		seL4,kernel-devices =
+-		    "serial1",
++		    "serial0",
+ 		    &{/soc/interrupt-controller@40041000},
+ 		    &{/soc/local_intc@40000000},
+ 		    &{/timer};
+@@ -43,10 +43,12 @@
+ 
+ 	memory@0 {
+ 		device_type = "memory";
+-		reg = < 0x00000000 0x00000000 0x3b400000
+-			0x00000000 0x40000000 0xbc000000
+-			0x00000001 0x00000000 0x80000000
+-			0x00000001 0x80000000 0x80000000 >;
++		/* 3892MB/3.8GB */
++		/* No memory available above 0x1_0000_0000, because we only have 4GB DRAM. */
++		reg = < 0x00000000 0x00000000 0x3b400000 	/* 0x0000_0000 - 0x3b40_0000: 948MB */
++				0x00000000 0x44000000 0xb8000000	/* 0x4400_0000 - 0xfc00_0000: 2944MB */
++			/*0x00000001 0x00000000 0x80000000
++			0x00000001 0x80000000 0x80000000*/ >;
+ 	};
+ 
+ 	reserved-memory {
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/ls1046a/config.cmake kernel/src/plat/ls1046a/config.cmake
 --- backup/kernel/src/plat/ls1046a/config.cmake	1970-01-01 08:00:00.000000000 +0800
 +++ kernel/src/plat/ls1046a/config.cmake	2023-03-14 08:54:45.598684413 +0800
