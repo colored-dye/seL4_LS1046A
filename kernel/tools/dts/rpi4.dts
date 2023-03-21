@@ -21,6 +21,10 @@
 	aliases {
 		serial0 = "/soc/serial@7e201000";
 		serial1 = "/soc/serial@7e215040";
+		serial2 = "/soc/serial@7e201400";
+		serial3 = "/soc/serial@7e201600";
+		serial4 = "/soc/serial@7e201800";
+		serial5 = "/soc/serial@7e201a00";
 		emmc2bus = "/emmc2bus";
 		ethernet0 = "/scb/ethernet@7d580000";
 		pcie0 = "/scb/pcie@7d500000";

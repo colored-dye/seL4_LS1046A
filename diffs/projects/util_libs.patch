@@ -92,6 +92,17 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/proje
  int uart_init(
      const struct dev_defn *defn,
      const ps_io_ops_t *ops,
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/mach/bcm/pl011_uart.c util_libs/libplatsupport/src/mach/bcm/pl011_uart.c
+--- ../backup/projects/util_libs/libplatsupport/src/mach/bcm/pl011_uart.c	2023-03-02 08:36:59.269732400 +0800
++++ util_libs/libplatsupport/src/mach/bcm/pl011_uart.c	2023-03-21 11:15:47.398206559 +0800
+@@ -159,6 +159,7 @@
+     // Base UART clock according to https://github.com/raspberrypi/firmware/issues/951
+     const uint32_t freq_uart_clk = 48000000;
+     const uint32_t baud_rate = 115200;
++    // const uint32_t baud_rate = 57600;
+ 
+     double baud_div = (double) freq_uart_clk / (double)(16.0 * baud_rate);
+     double frac_div = baud_div - (uint32_t) baud_div;
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude=*.pyc' ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c util_libs/libplatsupport/src/plat/ls1046a/chardev.c
 --- ../backup/projects/util_libs/libplatsupport/src/plat/ls1046a/chardev.c	1970-01-01 08:00:00.000000000 +0800
 +++ util_libs/libplatsupport/src/plat/ls1046a/chardev.c	2023-03-20 14:33:05.549272011 +0800

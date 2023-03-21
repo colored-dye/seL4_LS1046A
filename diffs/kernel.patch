@@ -100,7 +100,7 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +#endif
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/src/plat/bcm2711/overlay-rpi4.dts kernel/src/plat/bcm2711/overlay-rpi4.dts
 --- backup/kernel/src/plat/bcm2711/overlay-rpi4.dts	2023-03-07 15:44:00.642205493 +0800
-+++ kernel/src/plat/bcm2711/overlay-rpi4.dts	2023-03-20 20:17:17.909774139 +0800
++++ kernel/src/plat/bcm2711/overlay-rpi4.dts	2023-03-21 17:18:33.169235835 +0800
 @@ -9,10 +9,10 @@
  / {
  	chosen {
@@ -1644,6 +1644,20 @@ diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore
 +    };
 +};
 \ No newline at end of file
+diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/dts/rpi4.dts kernel/tools/dts/rpi4.dts
+--- backup/kernel/tools/dts/rpi4.dts	2023-03-07 15:44:00.654205399 +0800
++++ kernel/tools/dts/rpi4.dts	2023-03-21 09:24:03.848811635 +0800
+@@ -21,6 +21,10 @@
+ 	aliases {
+ 		serial0 = "/soc/serial@7e201000";
+ 		serial1 = "/soc/serial@7e215040";
++		serial2 = "/soc/serial@7e201400";
++		serial3 = "/soc/serial@7e201600";
++		serial4 = "/soc/serial@7e201800";
++		serial5 = "/soc/serial@7e201a00";
+ 		emmc2bus = "/emmc2bus";
+ 		ethernet0 = "/scb/ethernet@7d580000";
+ 		pcie0 = "/scb/pcie@7d500000";
 diff -Nur '--exclude=.git' '--exclude=.github' '--exclude-from=kernel/.gitignore' backup/kernel/tools/hardware.yml kernel/tools/hardware.yml
 --- backup/kernel/tools/hardware.yml	2023-03-07 15:44:00.658205368 +0800
 +++ kernel/tools/hardware.yml	2023-03-06 10:19:15.454742127 +0800
